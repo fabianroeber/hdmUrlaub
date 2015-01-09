@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+        http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+	version="1.0">
+
+	<persistence-unit name="hdmUrlaub">
+		<description>
+            Persistence unit for hdmUrlaub Application
+        </description>
+
+		<class>de.hdm.hdmUrlaub.db.dbmodel.Mitarbeiter</class>
+		<class>de.hdm.hdmUrlaub.db.dbmodel.Urlaubsantrag</class>
+		<class>de.hdm.hdmUrlaub.db.dbmodel.Zeitraum</class>
+		<class>de.hdm.hdmUrlaub.db.dbmodel.Fachvorgesetzter</class>
+
+		<properties>
+			<property name="datanucleus.storeManagerType" value="true" />
+			<property name="hibernate.bytecode.use_reflection_optimizer"
+				value="false" />
+			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
+			<property name="hibernate.connection.url" value="jdbc:mysql://173.194.249.99:3306/mydb" />
+			<property name="hibernate.connection.username" value="root" />
+			<property name="hibernate.connection.password" value="1234" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="show_sql" value="true" />
+		</properties>
+
+	</persistence-unit>
+</persistence>
