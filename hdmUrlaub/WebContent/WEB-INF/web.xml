@@ -5,7 +5,7 @@
 	version="3.1">
 	<display-name>hdmUrlaub</display-name>
 	<welcome-file-list>
-		<welcome-file>getThePoint/index.xhtml</welcome-file>
+		<welcome-file>hdmUrlaub/index_mobile.xhtml</welcome-file>
 	</welcome-file-list>
 
 	<servlet-mapping>
