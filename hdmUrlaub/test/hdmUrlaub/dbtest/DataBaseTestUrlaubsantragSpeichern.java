@@ -6,7 +6,7 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import de.hdm.hdmUrlaub.db.DataAcces;
+import de.hdm.hdmUrlaub.db.DataAccess;
 import de.hdm.hdmUrlaub.db.dbmodel.Fachvorgesetzter;
 import de.hdm.hdmUrlaub.db.dbmodel.Mitarbeiter;
 import de.hdm.hdmUrlaub.db.dbmodel.Urlaubsantrag;
@@ -16,7 +16,7 @@ public class DataBaseTestUrlaubsantragSpeichern {
 
 	@Test
 	public void test() {
-		DataAcces dataAcces = new DataAcces();
+		DataAccess dataAcces = new DataAccess();
 		Fachvorgesetzter fachvorgesetzter = dataAcces.getAllFachvorgesetzter()
 				.get(1);
 		Mitarbeiter mitarbeiter = dataAcces.getAllMitarbeiter().get(0);

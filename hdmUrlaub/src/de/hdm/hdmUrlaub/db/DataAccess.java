@@ -18,7 +18,7 @@ import de.hdm.hdmUrlaub.db.dbmodel.Zeitraum;
  * @author Fabian
  *
  */
-public class DataAcces {
+public class DataAccess {
 
 	private EntityManagerFactory entityManagerFactory = null;
 
@@ -26,7 +26,7 @@ public class DataAcces {
 
 	private static final String PERSISTENCEUNIT = "hdmUrlaub";
 
-	public DataAcces() {
+	public DataAccess() {
 		getEntityManager();
 	}
 

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view renderKitId="PRIMEFACES_MOBILE" />
+
+<h:head>
+
+</h:head>
+
+<h:body>
+
+	<pm:page id="first">
+		<pm:header title="Menu"></pm:header>
+		<pm:content>
+
+			<h:form>
+
+				<p:button outcome="pm:second" value="Urlaubsantrag stellen" />
+				<p:button outcome="pm:third" value="Urlaubsübersicht" />
+
+			</h:form>
+
+		</pm:content>
+		<pm:footer>
+
+		</pm:footer>
+	</pm:page>
+
+	<pm:page id="second">
+
+		<pm:header title="Urlaubsantrag stellen"></pm:header>
+		<pm:content>
+
+
+			<pm:field>
+				<p:outputLabel for="urlaubsbeginn" value="Urlaubsbeginn: "></p:outputLabel>
+				<p:calendar id="urlaubsbeginn"></p:calendar>
+			</pm:field>
+			<pm:field>
+				<p:outputLabel for="urlaubsende" value="Urlaubsanfang: "></p:outputLabel>
+				<p:calendar id="urlaubsende"></p:calendar>
+			</pm:field>
+
+			<pm:field>
+				<p:outputLabel for="fachvorgesetzter" value="Fachvorgesetzter: " />
+				<p:selectOneMenu
+					value="#{urlaubsantragBean.selectedFachvorgesetzter}"
+					id="fachvorgesetzter">
+					<f:selectItem itemLabel="Vorgesetzten wählen" itemValue="null" />
+					<f:selectItems
+						value="#{urlaubsantragBean.getAllFachVorgesetzter()}"
+						var="fachvorg" itemValue="#{fachvorg}"
+						itemLabel="#{fachvorg.vorname}  #{fachvorg.nachname}">
+					</f:selectItems>
+				</p:selectOneMenu>
+			</pm:field>
+			<pm:field>
+				<p:button value="Speichern">
+				</p:button>
+				<p:button value="Zurück"></p:button>
+			</pm:field>
+
+		</pm:content>
+		<pm:footer>
+
+		</pm:footer>
+	</pm:page>
+
+	<pm:page id="third">
+
+		<pm:header title="Urlaubsübersicht"></pm:header>
+		<pm:content>
+
+
+
+
+		</pm:content>
+		<pm:footer>
+
+		</pm:footer>
+	</pm:page>
+
+
+</h:body>
+
+</html>

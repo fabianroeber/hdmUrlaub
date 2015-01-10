@@ -1,6 +1,5 @@
 package de.hdm.hdmUrlaub.bo;
 
-import java.util.List;
 
 public class FachvorgesetzterBo extends HdmUrlaubBusinessObject {
 
@@ -12,16 +11,14 @@ public class FachvorgesetzterBo extends HdmUrlaubBusinessObject {
 
 	private String email;
 
-	private List<UrlaubsantragBo> urlaubsantragBos;
-
 	public FachvorgesetzterBo(Integer id, String nachname, String vorname,
-			String email, List<UrlaubsantragBo> urlaubsantragBos) {
+			String email) {
 		super();
 		this.setId(id);
 		this.nachname = nachname;
 		this.vorname = vorname;
 		this.email = email;
-		this.urlaubsantragBos = urlaubsantragBos;
+
 	}
 
 	public String getNachname() {
@@ -48,11 +45,4 @@ public class FachvorgesetzterBo extends HdmUrlaubBusinessObject {
 		this.email = email;
 	}
 
-	public List<UrlaubsantragBo> getUrlaubsantragBos() {
-		return urlaubsantragBos;
-	}
-
-	public void setUrlaubsantragBos(List<UrlaubsantragBo> urlaubsantragBos) {
-		this.urlaubsantragBos = urlaubsantragBos;
-	}
 }
