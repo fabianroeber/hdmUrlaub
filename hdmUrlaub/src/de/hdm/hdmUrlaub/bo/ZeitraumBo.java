@@ -19,6 +19,8 @@ public class ZeitraumBo extends HdmUrlaubBusinessObject {
 
 	private UrlaubsantragBo urlaubsantrag;
 
+	private int anzahltage;
+
 	public ZeitraumBo() {
 		super();
 	}
@@ -54,6 +56,14 @@ public class ZeitraumBo extends HdmUrlaubBusinessObject {
 
 	public void setUrlaubsantrag(UrlaubsantragBo urlaubsantrag) {
 		this.urlaubsantrag = urlaubsantrag;
+	}
+
+	public int getAnzahltage() {
+		return anzahltage;
+	}
+
+	public void setAnzahltage(int anzahltage) {
+		this.anzahltage = anzahltage;
 	}
 
 }

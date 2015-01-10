@@ -22,10 +22,10 @@
 		<pm:content>
 
 			<h:form>
-
-				<p:button outcome="pm:second" value="Urlaubsantrag stellen" />
-				<p:button outcome="pm:third" value="Urlaubsübersicht" />
-
+				<p:menu>
+					<p:menuitem outcome="pm:second" value="Urlaubsantrag stellen"></p:menuitem>
+					<p:menuitem outcome="pm:third" value="Urlaubsübersicht"></p:menuitem>
+				</p:menu>
 			</h:form>
 
 		</pm:content>
@@ -38,21 +38,33 @@
 
 		<pm:header title="Urlaubsantrag stellen"></pm:header>
 		<pm:content>
-
-
-			<pm:field>
-				<p:outputLabel for="urlaubsbeginn" value="Urlaubsbeginn: "></p:outputLabel>
-				<p:calendar id="urlaubsbeginn"></p:calendar>
-			</pm:field>
-			<pm:field>
-				<p:outputLabel for="urlaubsende" value="Urlaubsanfang: "></p:outputLabel>
-				<p:calendar id="urlaubsende"></p:calendar>
-			</pm:field>
-
+			<h:form>
+				<pm:field>
+					<p:dataList id="zeitraumlist"
+						value="#{urlaubsantragBean.zeitraums}" var="zeitraum"
+						type="ordered">
+						<h:outputText
+							value="#{zeitraum.beginn} - #{zeitraum.ende} | #{zeitraum.anzahltage} Tage" />
+					</p:dataList>
+				</pm:field>
+				<pm:field>
+					<p:outputLabel for="beginn" value="Urlaubsbeginn: "></p:outputLabel>
+					<p:calendar id="beginn" value="#{urlaubsantragBean.beginn}"></p:calendar>
+				</pm:field>
+				<pm:field>
+					<p:outputLabel for="ende" value="Urlaubsanfang: "></p:outputLabel>
+					<p:calendar id="ende" value="#{urlaubsantragBean.ende}"></p:calendar>
+				</pm:field>
+				<pm:field>
+					<p:commandButton value="Zeitraum hinzufügen"
+						action="#{urlaubsantragBean.addZeitraum()}" update="zeitraumlist">
+					</p:commandButton>
+				</pm:field>
+			</h:form>
 			<pm:field>
 				<p:outputLabel for="fachvorgesetzter" value="Fachvorgesetzter: " />
 				<p:selectOneMenu
-					value="#{urlaubsantragBean.selectedFachvorgesetzter}"
+					value="#{urlaubsantragBean.urlaubsantrag.fachvorgesetzter}"
 					id="fachvorgesetzter">
 					<f:selectItem itemLabel="Vorgesetzten wählen" itemValue="null" />
 					<f:selectItems
@@ -65,12 +77,12 @@
 			<pm:field>
 				<p:button value="Speichern">
 				</p:button>
-				<p:button value="Zurück"></p:button>
+				<p:button value="Zurück" outcome="pm:first"></p:button>
 			</pm:field>
+
 
 		</pm:content>
 		<pm:footer>
-
 		</pm:footer>
 	</pm:page>
 
@@ -78,10 +90,9 @@
 
 		<pm:header title="Urlaubsübersicht"></pm:header>
 		<pm:content>
-
-
-
-
+			<h:form>
+				<p:button value="Zurück" outcome="pm:first"></p:button>
+			</h:form>
 		</pm:content>
 		<pm:footer>
 
