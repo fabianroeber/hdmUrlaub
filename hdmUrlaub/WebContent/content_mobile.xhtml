@@ -23,8 +23,10 @@
 
 			<h:form>
 				<p:menu>
-					<p:menuitem outcome="pm:second" value="Urlaubsantrag stellen"></p:menuitem>
-					<p:menuitem outcome="pm:third" value="Urlaubsübersicht"></p:menuitem>
+					<p:menuitem outcome="pm:second?transition=slide"
+						value="Urlaubsantrag stellen"></p:menuitem>
+					<p:menuitem outcome="pm:third?transition=slide"
+						value="Urlaubsübersicht"></p:menuitem>
 				</p:menu>
 			</h:form>
 
@@ -41,19 +43,24 @@
 			<h:form>
 				<pm:field>
 					<p:dataList id="zeitraumlist"
-						value="#{urlaubsantragBean.zeitraums}" var="zeitraum"
-						type="ordered">
-						<h:outputText
-							value="#{zeitraum.beginn} - #{zeitraum.ende} | #{zeitraum.anzahltage} Tage" />
+						value="#{urlaubsantragBean.zeitraums}" var="zeitraum">
+						<pm:field>
+							<p:outputLabel for="delete"
+								value="#{zeitraum.getBeginnAsString()} - #{zeitraum.getEndeAsString()} | #{zeitraum.getAnzahltage()} Urlaubstage">
+							</p:outputLabel>
+							<p:commandButton id="delete" icon=".ui-icon-circle-minus" title="Entfernen"></p:commandButton>
+						</pm:field>
 					</p:dataList>
 				</pm:field>
 				<pm:field>
 					<p:outputLabel for="beginn" value="Urlaubsbeginn: "></p:outputLabel>
-					<p:calendar id="beginn" value="#{urlaubsantragBean.beginn}"></p:calendar>
+					<p:calendar disabledWeekends="true" id="beginn"
+						value="#{urlaubsantragBean.beginn}"></p:calendar>
 				</pm:field>
 				<pm:field>
 					<p:outputLabel for="ende" value="Urlaubsanfang: "></p:outputLabel>
-					<p:calendar id="ende" value="#{urlaubsantragBean.ende}"></p:calendar>
+					<p:calendar disabledWeekends="true" id="ende"
+						value="#{urlaubsantragBean.ende}"></p:calendar>
 				</pm:field>
 				<pm:field>
 					<p:commandButton value="Zeitraum hinzufügen"
@@ -77,7 +84,7 @@
 			<pm:field>
 				<p:button value="Speichern">
 				</p:button>
-				<p:button value="Zurück" outcome="pm:first"></p:button>
+				<p:button value="Zurück" outcome="pm:first?transition=slide"></p:button>
 			</pm:field>
 
 
@@ -91,7 +98,7 @@
 		<pm:header title="Urlaubsübersicht"></pm:header>
 		<pm:content>
 			<h:form>
-				<p:button value="Zurück" outcome="pm:first"></p:button>
+				<p:button value="Zurück" outcome="pm:first?transition=slide"></p:button>
 			</h:form>
 		</pm:content>
 		<pm:footer>
