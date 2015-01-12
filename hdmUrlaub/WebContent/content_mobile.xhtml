@@ -17,7 +17,10 @@
 
 <h:body>
 
-	<pm:page id="first">
+
+	<pm:page id="first" swatch="a">
+
+
 		<pm:header title="Menu"></pm:header>
 		<pm:content>
 
@@ -36,7 +39,7 @@
 		</pm:footer>
 	</pm:page>
 
-	<pm:page id="second">
+	<pm:page id="second" swatch="a">
 
 		<pm:header title="Urlaubsantrag stellen"></pm:header>
 		<pm:content>
@@ -48,7 +51,8 @@
 							<p:outputLabel for="delete"
 								value="#{zeitraum.getBeginnAsString()} - #{zeitraum.getEndeAsString()} | #{zeitraum.getAnzahltage()} Urlaubstage">
 							</p:outputLabel>
-							<p:commandButton id="delete" icon=".ui-icon-circle-minus" title="Entfernen"></p:commandButton>
+							<p:commandButton id="delete" icon=".ui-icon-circle-minus"
+								title="Entfernen"></p:commandButton>
 						</pm:field>
 					</p:dataList>
 				</pm:field>
@@ -98,7 +102,9 @@
 		<pm:header title="Urlaubsübersicht"></pm:header>
 		<pm:content>
 			<h:form>
+
 				<p:button value="Zurück" outcome="pm:first?transition=slide"></p:button>
+
 			</h:form>
 		</pm:content>
 		<pm:footer>
