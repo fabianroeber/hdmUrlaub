@@ -16,11 +16,7 @@
 </h:head>
 
 <h:body>
-
-
 	<pm:page id="first" swatch="a">
-
-
 		<pm:header title="Menu"></pm:header>
 		<pm:content>
 
@@ -32,27 +28,24 @@
 						value="Urlaubsübersicht"></p:menuitem>
 				</p:menu>
 			</h:form>
-
 		</pm:content>
 		<pm:footer>
-
 		</pm:footer>
 	</pm:page>
-
 	<pm:page id="second" swatch="a">
-
 		<pm:header title="Urlaubsantrag stellen"></pm:header>
 		<pm:content>
 			<h:form>
 				<pm:field>
-					<p:dataList id="zeitraumlist"
+					<p:dataList id="zeitraumlist" rowIndexVar="row"
 						value="#{urlaubsantragBean.zeitraums}" var="zeitraum">
 						<pm:field>
 							<p:outputLabel for="delete"
 								value="#{zeitraum.getBeginnAsString()} - #{zeitraum.getEndeAsString()} | #{zeitraum.getAnzahltage()} Urlaubstage">
 							</p:outputLabel>
-							<p:commandButton id="delete" icon=".ui-icon-circle-minus"
-								title="Entfernen"></p:commandButton>
+							<p:commandButton id="delete" value="Entfernen" title="Entfernen"
+								action="#{urlaubsantragBean.removeZeitraum(row)}"
+								icon="ui-icon-minus" update="zeitraumlist"></p:commandButton>
 						</pm:field>
 					</p:dataList>
 				</pm:field>
@@ -68,13 +61,18 @@
 				</pm:field>
 				<pm:field>
 					<p:commandButton value="Zeitraum hinzufügen"
-						action="#{urlaubsantragBean.addZeitraum()}" update="zeitraumlist">
+						action="#{urlaubsantragBean.addZeitraum()}"
+						update="zeitraumlist anzahltagelabel">
 					</p:commandButton>
 				</pm:field>
+				<p:outputLabel value="Gesamtzahl Urlaubstage: " />
+				<b> <p:outputLabel id="anzahltagelabel"
+						style="font-weight: bold;" value="#{urlaubsantragBean.anzahltage}" />
+				</b>
 			</h:form>
 			<pm:field>
 				<p:outputLabel for="fachvorgesetzter" value="Fachvorgesetzter: " />
-				<p:selectOneMenu
+				<p:selectOneMenu converter="omnifaces.SelectItemsConverter"
 					value="#{urlaubsantragBean.urlaubsantrag.fachvorgesetzter}"
 					id="fachvorgesetzter">
 					<f:selectItem itemLabel="Vorgesetzten wählen" itemValue="null" />
@@ -86,29 +84,21 @@
 				</p:selectOneMenu>
 			</pm:field>
 			<pm:field>
-				<p:button value="Speichern">
-				</p:button>
+				<p:button value="Speichern"></p:button>
 				<p:button value="Zurück" outcome="pm:first?transition=slide"></p:button>
 			</pm:field>
-
-
 		</pm:content>
 		<pm:footer>
 		</pm:footer>
 	</pm:page>
-
 	<pm:page id="third">
-
 		<pm:header title="Urlaubsübersicht"></pm:header>
 		<pm:content>
 			<h:form>
-
 				<p:button value="Zurück" outcome="pm:first?transition=slide"></p:button>
-
 			</h:form>
 		</pm:content>
 		<pm:footer>
-
 		</pm:footer>
 	</pm:page>
 

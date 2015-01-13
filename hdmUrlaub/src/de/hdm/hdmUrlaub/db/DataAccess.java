@@ -1,5 +1,6 @@
 package de.hdm.hdmUrlaub.db;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
@@ -18,7 +19,9 @@ import de.hdm.hdmUrlaub.db.dbmodel.Zeitraum;
  * @author Fabian
  *
  */
-public class DataAccess {
+public class DataAccess implements Serializable {
+
+	private static final long serialVersionUID = -4014010120323805478L;
 
 	private EntityManagerFactory entityManagerFactory = null;
 

@@ -13,6 +13,7 @@ import de.hdm.hdmUrlaub.bo.UrlaubsantragBo;
 import de.hdm.hdmUrlaub.bo.ZeitraumBo;
 import de.hdm.hdmUrlaub.db.DataAccess;
 import de.hdm.hdmUrlaub.db.mapper.FachvorgesetzterMapper;
+import de.hdm.hdmUrlaub.db.mapper.UrlaubsantragMapper;
 
 /**
  * Diese Bean verwaltet die Erstellung eines {@link UrlaubsantragBo}.
@@ -28,11 +29,13 @@ public class UrlaubsAntragBean implements Serializable {
 
 	private Date beginn;
 	private Date ende;
+	private int anzahltage = 0;
 
 	private List<ZeitraumBo> zeitraums;
 	private UrlaubsantragBo urlaubsantrag;
 
 	private FachvorgesetzterMapper fachvorgesetzterMapper;
+	private UrlaubsantragMapper urlaubsantragMapper;
 
 	private DataAccess dataAccess;
 
@@ -40,18 +43,39 @@ public class UrlaubsAntragBean implements Serializable {
 		zeitraums = new ArrayList<ZeitraumBo>();
 		urlaubsantrag = new UrlaubsantragBo();
 		fachvorgesetzterMapper = new FachvorgesetzterMapper();
+		urlaubsantragMapper = new UrlaubsantragMapper();
 		dataAccess = new DataAccess();
 	}
 
+	/**
+	 * F&uuml;gt einen Zeitraum zu einem Urlaubsantrag hinzu.
+	 */
 	public void addZeitraum() {
 		ZeitraumBo zeitraumBo = new ZeitraumBo();
 		zeitraumBo.setBeginn(beginn);
 		zeitraumBo.setEnde(ende);
 		zeitraums.add(zeitraumBo);
+		anzahltage = anzahltage + zeitraumBo.getAnzahltage();
 		beginn = null;
 		ende = null;
 	}
 
+	/**
+	 * Entfernt einen Zeitraum aus dem Urlaubsantrag.
+	 * 
+	 * @param index
+	 */
+	public void removeZeitraum(int index) {
+		ZeitraumBo zeitraum = zeitraums.get(index);
+		anzahltage = anzahltage - zeitraum.getAnzahltage();
+		zeitraums.remove(index);
+	}
+
+	/**
+	 * L&auml;dt alle verf&uuml;gbaren {@link FachvorgesetzterBo}
+	 * 
+	 * @return
+	 */
 	public List<FachvorgesetzterBo> getAllFachVorgesetzter() {
 		return fachvorgesetzterMapper.getBoList(dataAccess
 				.getAllFachvorgesetzter());
@@ -87,6 +111,14 @@ public class UrlaubsAntragBean implements Serializable {
 
 	public void setEnde(Date ende) {
 		this.ende = ende;
+	}
+
+	public int getAnzahltage() {
+		return anzahltage;
+	}
+
+	public void setAnzahltage(int anzahltage) {
+		this.anzahltage = anzahltage;
 	}
 
 }
