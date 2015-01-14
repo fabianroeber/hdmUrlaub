@@ -79,22 +79,27 @@ public class UrlaubsAntragBean implements Serializable {
 	}
 
 	/**
-	 * L&auml;dt alle verf&uuml;gbaren {@link FachvorgesetzterBo}
+	 * L&auml;dt alle verf&uuml;gbaren Fachvorgesetzten
 	 * 
-	 * @return
+	 * 
+	 * @return List {@link FachvorgesetzterBo}
 	 */
 	public List<FachvorgesetzterBo> getAllFachVorgesetzter() {
 		return fachvorgesetzterMapper.getBoList(dataAccess
 				.getAllFachvorgesetzter());
 	}
 
-	public void saveUrlaubsantrag() {
+	/**
+	 * Methode zum Speichern eines Urlaubsantrags {@link UrlaubsantragBo}
+	 */
+	public String saveUrlaubsantrag() {
 		urlaubsantrag.setZeitraums(zeitraums);
 		urlaubsantrag.setMitarbeiter(loggedInMitarbeiter);
 		urlaubsantrag.setStatus(Status.OFFEN);
 		// Hier Mail verschicken!
 		dataAccess.saveUrlaubsantrag(urlaubsantragMapper
 				.getDbObject(urlaubsantrag));
+		return "pm:third?transition=slide";
 	}
 
 	public UrlaubsantragBo getUrlaubsantrag() {

@@ -27,6 +27,13 @@
 					<p:menuitem outcome="pm:third?transition=slide"
 						value="Urlaubsübersicht"></p:menuitem>
 				</p:menu>
+				<br></br>
+				<br></br>
+				<p:panel header="Kalender">
+					<p:calendar mode="inline" navigator="true"></p:calendar>
+				</p:panel>
+				<p:panel>
+				</p:panel>
 			</h:form>
 		</pm:content>
 		<pm:footer>
@@ -96,6 +103,21 @@
 		<pm:header title="Urlaubsübersicht"></pm:header>
 		<pm:content>
 			<h:form>
+
+				<p:panel>
+					<ui:repeat var="antrag"
+						value="#{urlaubsUebersichtBean.urlaubsantrags}">
+						<p:dataTable value="#{antrag.zeitraums}" var="zeitraum">
+							<p:column headerText="Beginn" priority="1">
+								<h:outputText value="#{zeitraum.getBeginnAsString()}" />
+							</p:column>
+							<p:column headerText="Ende">
+								<h:outputText value="#{zeitraum.getBeginnAsString()}" />
+							</p:column>
+						</p:dataTable>
+					</ui:repeat>
+				</p:panel>
+
 				<p:button value="Zurück" outcome="pm:first?transition=slide"></p:button>
 			</h:form>
 		</pm:content>
