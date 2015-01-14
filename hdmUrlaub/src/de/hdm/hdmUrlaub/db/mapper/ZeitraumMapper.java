@@ -15,17 +15,14 @@ import de.hdm.hdmUrlaub.db.dbmodel.Zeitraum;
  */
 public class ZeitraumMapper implements DbMapper<ZeitraumBo, Zeitraum> {
 
-	UrlaubsantragMapper urlaubsantragMapper;
-
 	public ZeitraumMapper() {
-		urlaubsantragMapper = new UrlaubsantragMapper();
+
 	}
 
 	@Override
 	public ZeitraumBo getBo(Zeitraum dbobject) {
 		return new ZeitraumBo(dbobject.getId(), dbobject.getBeginn(),
-				dbobject.getEnde(), urlaubsantragMapper.getBo(dbobject
-						.getUrlaubsantrag()));
+				dbobject.getEnde());
 	}
 
 	@Override
@@ -39,11 +36,8 @@ public class ZeitraumMapper implements DbMapper<ZeitraumBo, Zeitraum> {
 
 	@Override
 	public Zeitraum getDbObject(ZeitraumBo bo) {
-
-		Zeitraum zeitraum = new Zeitraum(urlaubsantragMapper.getDbObject(bo
-				.getUrlaubsantrag()), bo.getBeginn(), bo.getEnde());
+		Zeitraum zeitraum = new Zeitraum(bo.getBeginn(), bo.getEnde());
 		zeitraum.setId(bo.getId());
 		return zeitraum;
 	}
-
 }

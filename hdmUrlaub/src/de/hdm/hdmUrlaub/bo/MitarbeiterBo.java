@@ -1,6 +1,5 @@
 package de.hdm.hdmUrlaub.bo;
 
-import java.util.List;
 
 /**
  * Diese Klasse enth&auml;lt alle relevaten Daten zu einem Mitarbeiter der
@@ -20,8 +19,6 @@ public class MitarbeiterBo extends HdmUrlaubBusinessObject {
 	private String passwort;
 
 	private String email;
-
-	private List<UrlaubsantragBo> urlaubsantraege;
 
 	public MitarbeiterBo() {
 		super();
@@ -49,14 +46,6 @@ public class MitarbeiterBo extends HdmUrlaubBusinessObject {
 
 	public void setNachname(String nachname) {
 		this.nachname = nachname;
-	}
-
-	public List<UrlaubsantragBo> getUrlaubsantraege() {
-		return urlaubsantraege;
-	}
-
-	public void setUrlaubsantraege(List<UrlaubsantragBo> urlaubsantraege) {
-		this.urlaubsantraege = urlaubsantraege;
 	}
 
 	public String getPasswort() {

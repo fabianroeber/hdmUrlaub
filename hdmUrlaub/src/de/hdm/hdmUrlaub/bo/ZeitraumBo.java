@@ -21,8 +21,6 @@ public class ZeitraumBo extends HdmUrlaubBusinessObject {
 
 	private Date ende;
 
-	private UrlaubsantragBo urlaubsantrag;
-
 	private static final String DATE_PATTERN = "EEE dd.MM.yyyy";
 
 	public ZeitraumBo() {
@@ -30,13 +28,11 @@ public class ZeitraumBo extends HdmUrlaubBusinessObject {
 
 	}
 
-	public ZeitraumBo(Integer id, Date beginn, Date ende,
-			UrlaubsantragBo urlaubsantrag) {
+	public ZeitraumBo(Integer id, Date beginn, Date ende) {
 		super();
 		this.setId(id);
 		this.beginn = beginn;
 		this.ende = ende;
-		this.urlaubsantrag = urlaubsantrag;
 	}
 
 	/**
@@ -73,14 +69,6 @@ public class ZeitraumBo extends HdmUrlaubBusinessObject {
 
 	public void setEnde(Date ende) {
 		this.ende = ende;
-	}
-
-	public UrlaubsantragBo getUrlaubsantrag() {
-		return urlaubsantrag;
-	}
-
-	public void setUrlaubsantrag(UrlaubsantragBo urlaubsantrag) {
-		this.urlaubsantrag = urlaubsantrag;
 	}
 
 	public int getAnzahltage() {

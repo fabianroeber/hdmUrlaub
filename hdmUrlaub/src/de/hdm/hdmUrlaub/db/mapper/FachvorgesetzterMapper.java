@@ -32,7 +32,11 @@ public class FachvorgesetzterMapper implements
 
 	@Override
 	public Fachvorgesetzter getDbObject(FachvorgesetzterBo bo) {
-		//not necessary
-		return null;
+		Fachvorgesetzter fachvorgesetzter = new Fachvorgesetzter();
+		fachvorgesetzter.setId(bo.getId());
+		fachvorgesetzter.setEmail(bo.getEmail());
+		fachvorgesetzter.setNachname(bo.getNachname());
+		fachvorgesetzter.setVorname(bo.getVorname());
+		return fachvorgesetzter;
 	}
 }

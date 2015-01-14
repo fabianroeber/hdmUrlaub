@@ -33,12 +33,12 @@ public class Mitarbeiter extends HibernateObject {
 	}
 
 	public Mitarbeiter(String vorname, String nachname, String email,
-			String passwort, Set<Urlaubsantrag> urlaubsantrags) {
+			String passwort) {
 		this.vorname = vorname;
 		this.nachname = nachname;
 		this.email = email;
 		this.passwort = passwort;
-		this.urlaubsantrags = urlaubsantrags;
+
 	}
 
 	@Id

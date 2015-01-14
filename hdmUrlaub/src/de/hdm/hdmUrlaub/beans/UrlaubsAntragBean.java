@@ -9,11 +9,13 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import de.hdm.hdmUrlaub.bo.FachvorgesetzterBo;
+import de.hdm.hdmUrlaub.bo.MitarbeiterBo;
 import de.hdm.hdmUrlaub.bo.UrlaubsantragBo;
 import de.hdm.hdmUrlaub.bo.ZeitraumBo;
 import de.hdm.hdmUrlaub.db.DataAccess;
 import de.hdm.hdmUrlaub.db.mapper.FachvorgesetzterMapper;
 import de.hdm.hdmUrlaub.db.mapper.UrlaubsantragMapper;
+import de.hdm.hdmUrlaub.enums.Status;
 
 /**
  * Diese Bean verwaltet die Erstellung eines {@link UrlaubsantragBo}.
@@ -30,6 +32,7 @@ public class UrlaubsAntragBean implements Serializable {
 	private Date beginn;
 	private Date ende;
 	private int anzahltage = 0;
+	private MitarbeiterBo loggedInMitarbeiter;
 
 	private List<ZeitraumBo> zeitraums;
 	private UrlaubsantragBo urlaubsantrag;
@@ -40,6 +43,10 @@ public class UrlaubsAntragBean implements Serializable {
 	private DataAccess dataAccess;
 
 	public UrlaubsAntragBean() {
+
+		// Mitarbeiter zu Testzwecken
+		loggedInMitarbeiter = new MitarbeiterBo(1, "Fabian", "Röber");
+
 		zeitraums = new ArrayList<ZeitraumBo>();
 		urlaubsantrag = new UrlaubsantragBo();
 		fachvorgesetzterMapper = new FachvorgesetzterMapper();
@@ -79,6 +86,15 @@ public class UrlaubsAntragBean implements Serializable {
 	public List<FachvorgesetzterBo> getAllFachVorgesetzter() {
 		return fachvorgesetzterMapper.getBoList(dataAccess
 				.getAllFachvorgesetzter());
+	}
+
+	public void saveUrlaubsantrag() {
+		urlaubsantrag.setZeitraums(zeitraums);
+		urlaubsantrag.setMitarbeiter(loggedInMitarbeiter);
+		urlaubsantrag.setStatus(Status.OFFEN);
+		// Hier Mail verschicken!
+		dataAccess.saveUrlaubsantrag(urlaubsantragMapper
+				.getDbObject(urlaubsantrag));
 	}
 
 	public UrlaubsantragBo getUrlaubsantrag() {
