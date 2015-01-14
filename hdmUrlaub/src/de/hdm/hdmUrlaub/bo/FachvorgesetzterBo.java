@@ -1,6 +1,5 @@
 package de.hdm.hdmUrlaub.bo;
 
-
 public class FachvorgesetzterBo extends HdmUrlaubBusinessObject {
 
 	private static final long serialVersionUID = -4663126183151844320L;
@@ -43,6 +42,17 @@ public class FachvorgesetzterBo extends HdmUrlaubBusinessObject {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	@Override
+	public boolean equals(Object other) {
+		return (other instanceof FachvorgesetzterBo) && (getId() != null) ? getId()
+				.equals(((FachvorgesetzterBo) other).getId()) : (other == this);
+	}
+
+	@Override
+	public String toString() {
+		return String.format("FachvorgesetzterBo[%d, %s]", getId(), nachname);
 	}
 
 }

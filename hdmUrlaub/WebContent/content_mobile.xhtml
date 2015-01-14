@@ -58,12 +58,12 @@
 				</pm:field>
 				<pm:field>
 					<p:outputLabel for="beginn" value="Urlaubsbeginn: "></p:outputLabel>
-					<p:calendar disabledWeekends="true" id="beginn"
+					<p:calendar disabledWeekends="true" id="beginn" required="true"
 						value="#{urlaubsantragBean.beginn}"></p:calendar>
 				</pm:field>
 				<pm:field>
 					<p:outputLabel for="ende" value="Urlaubsanfang: "></p:outputLabel>
-					<p:calendar disabledWeekends="true" id="ende"
+					<p:calendar disabledWeekends="true" id="ende" required="true"
 						value="#{urlaubsantragBean.ende}"></p:calendar>
 				</pm:field>
 				<pm:field>
@@ -78,11 +78,12 @@
 				</b>
 			</h:form>
 			<pm:field>
+				<p:outputLabel id="fachv"
+					value="#{urlaubsantragBean.fachvorgesetzterBo.nachname}"></p:outputLabel>
 				<p:outputLabel for="fachvorgesetzter" value="Fachvorgesetzter: " />
 				<p:selectOneMenu converter="omnifaces.SelectItemsConverter"
-					value="#{urlaubsantragBean.urlaubsantrag.fachvorgesetzter}"
+					value="#{urlaubsantragBean.fachvorgesetzterBo}"
 					id="fachvorgesetzter">
-					<f:selectItem itemLabel="Vorgesetzten wählen" itemValue="null" />
 					<f:selectItems
 						value="#{urlaubsantragBean.getAllFachVorgesetzter()}"
 						var="fachvorg" itemValue="#{fachvorg}"
