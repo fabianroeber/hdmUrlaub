@@ -22,8 +22,9 @@ public class HdmUrlaubBusinessObject implements Serializable {
 	}
 
 	@Override
-	public String toString() {
-		return String.format("%s[id=%d]", getClass().getSimpleName(), getId());
+	public int hashCode() {
+		return (id != null) ? (this.getClass().hashCode() + id.hashCode())
+				: super.hashCode();
 	}
 
 }

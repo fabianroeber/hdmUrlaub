@@ -32,7 +32,9 @@ public class UrlaubsAntragBean implements Serializable {
 	private Date beginn;
 	private Date ende;
 	private int anzahltage = 0;
+	private FachvorgesetzterBo fachvorgesetzterBo;
 	private MitarbeiterBo loggedInMitarbeiter;
+	private String fachv;
 
 	private List<ZeitraumBo> zeitraums;
 	private UrlaubsantragBo urlaubsantrag;
@@ -135,6 +137,22 @@ public class UrlaubsAntragBean implements Serializable {
 
 	public void setAnzahltage(int anzahltage) {
 		this.anzahltage = anzahltage;
+	}
+
+	public FachvorgesetzterBo getFachvorgesetzterBo() {
+		return fachvorgesetzterBo;
+	}
+
+	public void setFachvorgesetzterBo(FachvorgesetzterBo fachvorgesetzterBo) {
+		this.fachvorgesetzterBo = fachvorgesetzterBo;
+	}
+
+	public String getFachv() {
+		return fachv;
+	}
+
+	public void setFachv(String fachv) {
+		this.fachv = fachv;
 	}
 
 }
