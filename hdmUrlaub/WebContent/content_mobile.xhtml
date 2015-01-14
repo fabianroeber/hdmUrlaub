@@ -12,10 +12,22 @@
 <f:view renderKitId="PRIMEFACES_MOBILE" />
 
 <h:head>
-
+	<style type="text/css">
+.highlight-calendar a {
+	background-color: #F7FE2E !important; /*for development purposes*/
+}
+</style>
+	<h:outputScript library="js" name="fcalendars.js" />
+	<script type="text/javascript">
+		var specialDays = null;
+		jQuery(function() {
+			specialDays = #{urlaubsUebersichtBean.dates};
+			window.setTimeout('bindEventsHighlights()', 500);
+		});
+	</script>
 </h:head>
-
 <h:body>
+
 	<pm:page id="first" swatch="a">
 		<pm:header title="Menu"></pm:header>
 		<pm:content>
@@ -30,7 +42,8 @@
 				<br></br>
 				<br></br>
 				<p:panel header="Kalender">
-					<p:calendar mode="inline" navigator="true"></p:calendar>
+					<p:calendar value="#{urlaubsUebersichtBean.date}" mode="inline"
+						navigator="true"></p:calendar>
 				</p:panel>
 				<p:panel>
 				</p:panel>
