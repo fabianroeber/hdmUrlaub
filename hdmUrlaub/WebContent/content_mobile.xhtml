@@ -23,6 +23,7 @@
 		jQuery(function() {
 			specialDays = #{urlaubsUebersichtBean.dates};
 			window.setTimeout('bindEventsHighlights()', 500);
+	
 		});
 	</script>
 </h:head>
@@ -31,8 +32,8 @@
 	<pm:page id="first" swatch="a">
 		<pm:header title="Menu"></pm:header>
 		<pm:content>
-
 			<h:form>
+
 				<p:menu>
 					<p:menuitem outcome="pm:second?transition=slide"
 						value="Urlaubsantrag stellen"></p:menuitem>
@@ -41,104 +42,24 @@
 				</p:menu>
 				<br></br>
 				<br></br>
-				<p:panel header="Kalender">
-					<p:calendar value="#{urlaubsUebersichtBean.date}" mode="inline"
-						navigator="true"></p:calendar>
-				</p:panel>
-				<p:panel>
-				</p:panel>
+				<div>
+					<p:panel header="Kalender">
+						<p:calendar id="firstcal" value="#{urlaubsUebersichtBean.date}"
+							mode="inline" navigator="true" disabledWeekends="true"></p:calendar>
+					</p:panel>
+				</div>
+
 			</h:form>
 		</pm:content>
 		<pm:footer>
 		</pm:footer>
 	</pm:page>
 	<pm:page id="second" swatch="a">
-		<pm:header title="Urlaubsantrag stellen"></pm:header>
-		<pm:content>
-			<h:form>
-				<pm:field>
-					<p:dataList id="zeitraumlist" rowIndexVar="row"
-						value="#{urlaubsantragBean.zeitraums}" var="zeitraum">
-						<pm:field>
-							<p:outputLabel for="delete"
-								value="#{zeitraum.getBeginnAsString()} - #{zeitraum.getEndeAsString()} | #{zeitraum.getAnzahltage()} Urlaubstage">
-							</p:outputLabel>
-							<p:commandButton id="delete" value="Entfernen" title="Entfernen"
-								action="#{urlaubsantragBean.removeZeitraum(row)}"
-								icon="ui-icon-minus" update="zeitraumlist"></p:commandButton>
-						</pm:field>
-					</p:dataList>
-				</pm:field>
-				<pm:field>
-					<p:outputLabel for="beginn" value="Urlaubsbeginn: "></p:outputLabel>
-					<p:calendar disabledWeekends="true" id="beginn" required="true"
-						value="#{urlaubsantragBean.beginn}"></p:calendar>
-				</pm:field>
-				<pm:field>
-					<p:outputLabel for="ende" value="Urlaubsanfang: "></p:outputLabel>
-					<p:calendar disabledWeekends="true" id="ende" required="true"
-						value="#{urlaubsantragBean.ende}"></p:calendar>
-				</pm:field>
-				<pm:field>
-					<p:commandButton value="Zeitraum hinzufügen"
-						action="#{urlaubsantragBean.addZeitraum()}"
-						update="zeitraumlist anzahltagelabel">
-					</p:commandButton>
-				</pm:field>
-				<p:outputLabel value="Gesamtzahl Urlaubstage: " />
-				<b> <p:outputLabel id="anzahltagelabel"
-						style="font-weight: bold;" value="#{urlaubsantragBean.anzahltage}" />
-				</b>
-			</h:form>
-			<pm:field>
-				<p:outputLabel id="fachv"
-					value="#{urlaubsantragBean.fachvorgesetzterBo.nachname}"></p:outputLabel>
-				<p:outputLabel for="fachvorgesetzter" value="Fachvorgesetzter: " />
-				<p:selectOneMenu converter="omnifaces.SelectItemsConverter"
-					value="#{urlaubsantragBean.fachvorgesetzterBo}"
-					id="fachvorgesetzter">
-					<f:selectItems
-						value="#{urlaubsantragBean.getAllFachVorgesetzter()}"
-						var="fachvorg" itemValue="#{fachvorg}"
-						itemLabel="#{fachvorg.vorname}  #{fachvorg.nachname}">
-					</f:selectItems>
-				</p:selectOneMenu>
-			</pm:field>
-			<pm:field>
-				<p:commandButton value="Speichern"
-					action="#{urlaubsantragBean.saveUrlaubsantrag()}"></p:commandButton>
-				<p:button value="Zurück" outcome="pm:first?transition=slide"></p:button>
-			</pm:field>
-		</pm:content>
-		<pm:footer>
-		</pm:footer>
+		<ui:include src="urlaubsantrag.xhtml"></ui:include>
 	</pm:page>
 	<pm:page id="third">
-		<pm:header title="Urlaubsübersicht"></pm:header>
-		<pm:content>
-			<h:form>
-
-				<p:panel>
-					<ui:repeat var="antrag"
-						value="#{urlaubsUebersichtBean.urlaubsantrags}">
-						<p:dataTable value="#{antrag.zeitraums}" var="zeitraum">
-							<p:column headerText="Beginn" priority="1">
-								<h:outputText value="#{zeitraum.getBeginnAsString()}" />
-							</p:column>
-							<p:column headerText="Ende">
-								<h:outputText value="#{zeitraum.getBeginnAsString()}" />
-							</p:column>
-						</p:dataTable>
-					</ui:repeat>
-				</p:panel>
-
-				<p:button value="Zurück" outcome="pm:first?transition=slide"></p:button>
-			</h:form>
-		</pm:content>
-		<pm:footer>
-		</pm:footer>
+		<ui:include src="urlaubuebersicht.xhtml"></ui:include>
 	</pm:page>
-
 
 </h:body>
 

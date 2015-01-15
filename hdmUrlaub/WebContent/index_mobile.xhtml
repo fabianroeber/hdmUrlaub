@@ -1,5 +1,5 @@
-<ui:composition template="template_mobile.xhtml"
-	xmlns="http://www.w3.org/1999/xhtml"
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
@@ -8,11 +8,20 @@
 	xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-	<ui:define name="content">
+
+<f:view renderKitId="PRIMEFACES_MOBILE" />
+
+<h:head>
+
+</h:head>
+<h:body>
+	<pm:header title="HdM Urlaubsantrag"></pm:header>
+	<pm:content>
 		<p:outputLabel for="user" value="HdM-Kürzel: "></p:outputLabel>
 		<p:inputText id="user"></p:inputText>
 		<p:outputLabel for="passwort" value="Passwort: "></p:outputLabel>
 		<p:password id="passwort"></p:password>
-		<p:button value="Anmelden" ></p:button>
-	</ui:define>
-</ui:composition>
+		<p:button value="Anmelden" outcome="/content_mobile.xhtml"></p:button>
+	</pm:content>
+</h:body>
+</html>

@@ -1,0 +1,72 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<pm:header title="Urlaubsantrag stellen">
+		<pm:content>
+			<h:form>
+				<pm:field>
+					<p:dataList id="zeitraumlist" rowIndexVar="row"
+						value="#{urlaubsantragBean.zeitraums}" var="zeitraum">
+						<pm:field>
+							<p:outputLabel for="delete"
+								value="#{zeitraum.getBeginnAsString()} - #{zeitraum.getEndeAsString()} | #{zeitraum.getAnzahltage()} Urlaubstage">
+							</p:outputLabel>
+							<p:commandButton id="delete" value="Entfernen" title="Entfernen"
+								action="#{urlaubsantragBean.removeZeitraum(row)}"
+								icon="ui-icon-minus" update="zeitraumlist"></p:commandButton>
+						</pm:field>
+					</p:dataList>
+				</pm:field>
+				<pm:field>
+					<p:outputLabel for="beginn" value="Urlaubsbeginn: "></p:outputLabel>
+					<p:calendar disabledWeekends="true" id="beginn" required="true"
+						value="#{urlaubsantragBean.beginn}"></p:calendar>
+				</pm:field>
+				<pm:field>
+					<p:outputLabel for="ende" value="Urlaubsanfang: "></p:outputLabel>
+					<p:calendar disabledWeekends="true" id="ende" required="true"
+						value="#{urlaubsantragBean.ende}"></p:calendar>
+				</pm:field>
+				<pm:field>
+					<p:commandButton value="Zeitraum hinzufügen"
+						action="#{urlaubsantragBean.addZeitraum()}"
+						update="zeitraumlist anzahltagelabel">
+					</p:commandButton>
+				</pm:field>
+				<p:outputLabel value="Gesamtzahl Urlaubstage: " />
+				<b> <p:outputLabel id="anzahltagelabel"
+						style="font-weight: bold;" value="#{urlaubsantragBean.anzahltage}" />
+				</b>
+
+				<pm:field>
+					<p:outputLabel id="fachv"
+						value="#{urlaubsantragBean.fachvorgesetzterBo.nachname}"></p:outputLabel>
+					<p:outputLabel for="fachvorgesetzter" value="Fachvorgesetzter: " />
+					<p:selectOneMenu converter="omnifaces.SelectItemsConverter"
+						value="#{urlaubsantragBean.fachvorgesetzterBo}"
+						id="fachvorgesetzter">
+						<f:selectItems
+							value="#{urlaubsantragBean.getAllFachVorgesetzter()}"
+							var="fachvorg" itemValue="#{fachvorg}"
+							itemLabel="#{fachvorg.vorname}  #{fachvorg.nachname}">
+						</f:selectItems>
+					</p:selectOneMenu>
+				</pm:field>
+				<pm:field>
+					<p:commandButton value="Speichern"
+						action="#{urlaubsantragBean.saveUrlaubsantrag()}"></p:commandButton>
+					<p:button value="Zurück" outcome="pm:first?transition=slide"></p:button>
+				</pm:field>
+			</h:form>
+		</pm:content>
+
+		<pm:footer>
+		</pm:footer>
+	</pm:header>
+</ui:composition>
