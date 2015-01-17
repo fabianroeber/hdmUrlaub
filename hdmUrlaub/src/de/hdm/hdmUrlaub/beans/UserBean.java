@@ -4,13 +4,11 @@ import java.security.GeneralSecurityException;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import com.unboundid.ldap.sdk.LDAPException;
 
-import de.hdm.hdmUrlaub.bo.MitarbeiterBo;
 import de.hdm.hdmUrlaub.ldap.LdapAuthentificator;
 
 /**
@@ -24,10 +22,9 @@ import de.hdm.hdmUrlaub.ldap.LdapAuthentificator;
 @SessionScoped
 public class UserBean {
 
-	@ManagedProperty(value = "#{mitarbeiterBo}")
-	private MitarbeiterBo mitarbeiterBo;
-
 	LdapAuthentificator ldapAuthentificator;
+
+	private boolean loggedIn;
 
 	public UserBean() {
 		ldapAuthentificator = new LdapAuthentificator();
@@ -37,53 +34,42 @@ public class UserBean {
 
 	private String password;
 
-	public String login() {
-
-		if (userName != null && password != null) {
-
-			if (userName.equalsIgnoreCase("devmode")) {
-
-				mitarbeiterBo = new MitarbeiterBo(1, true, "Fabian", "Röber",
-						"fabianroeber@gmail.com");
-
-				return "/content_mobile.xhtml";
-
-			} else {
-
-				try {
-					String username = ldapAuthentificator.authenticate(
-							userName, password);
-
-					// Datenbankzugriff auf Tabelle Mitarbetier TODO
-
-				} catch (LDAPException | GeneralSecurityException e) {
-					FacesContext.getCurrentInstance().addMessage(
-							null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-									"Error",
-									"Nutzer konnte nicht autorisiert werden"));
-					return "";
-
-				}
-
-			}
-
-		}
-		return "/content_mobile.xhtml";
-
-	}
+//	public String login() {
+//
+//		if (userName != null && password != null) {
+//
+//			if (userName.equalsIgnoreCase("devmode")) {
+//
+//				return "/content_mobile.xhtml";
+//
+//			} else {
+//
+//				try {
+//					String username = ldapAuthentificator.authenticate(
+//							userName, password);
+//
+//					// Datenbankzugriff auf Tabelle Mitarbetier TODO
+//
+//				} catch (LDAPException | GeneralSecurityException e) {
+//					FacesContext.getCurrentInstance().addMessage(
+//							null,
+//							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+//									"Error",
+//									"Nutzer konnte nicht autorisiert werden"));
+//					return "";
+//
+//				}
+//
+//			}
+//
+//		}
+//		return "/content_mobile.xhtml";
+//
+//	}
 
 	public String logout() {
-		mitarbeiterBo.setLoggedIn(false);
+		// TODO
 		return "/logout.xhtml";
-	}
-
-	public MitarbeiterBo getMitarbeiterBo() {
-		return mitarbeiterBo;
-	}
-
-	public void setMitarbeiterBo(MitarbeiterBo mitarbeiterBo) {
-		this.mitarbeiterBo = mitarbeiterBo;
 	}
 
 	public String getUserName() {
