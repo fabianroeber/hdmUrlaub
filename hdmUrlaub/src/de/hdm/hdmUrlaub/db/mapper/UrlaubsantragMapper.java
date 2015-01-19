@@ -52,7 +52,11 @@ public class UrlaubsantragMapper implements
 		default:
 			break;
 		}
-
+		List<ZeitraumBo> zeitraums = new ArrayList<ZeitraumBo>();
+		for (Zeitraum zeitraum : dbobject.getZeitraums()) {
+			zeitraums.add(zeitraumMapper.getBo(zeitraum));
+		}
+		urlaubsantragBo.setZeitraums(zeitraums);
 		return urlaubsantragBo;
 	}
 

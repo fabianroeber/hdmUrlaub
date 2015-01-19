@@ -10,18 +10,56 @@
 	<pm:header title="Urlaubsübersicht"></pm:header>
 	<pm:content>
 		<h:form>
-			<p:panel>
-				<ui:repeat var="antrag"
+			<p:panel header="Geplante Urlaube">
+				<!--  	<ui:repeat var="antrag"
 					value="#{urlaubsUebersichtBean.urlaubsantrags}">
 					<p:dataTable value="#{antrag.zeitraums}" var="zeitraum">
-						<p:column headerText="Beginn" priority="1">
-							<h:outputText value="#{zeitraum.getBeginnAsString()}" />
+						<f:facet name="header">
+							<p:outputLabel id="status"
+								styleClass="#{antrag.status == 'OFFEN' ? 'markOrange' : antrag.status == 'GENEHMIGT' ? 'markGreen' : antrag.status == 'ABGELEHNT' ? 'markRed' : ''}"
+								value="#{antrag.status.text}"></p:outputLabel>
+							<p:outputLabel />
+							<p:outputLabel
+								value=" durch  #{antrag.fachvorgesetzter.vorname} #{antrag.fachvorgesetzter.nachname}"></p:outputLabel>
+						</f:facet>
+						<p:column priority="1">
+							<p:outputLabel
+								value="#{zeitraum.getBeginnAsString()} bis #{zeitraum.getEndeAsString()} " />
 						</p:column>
-						<p:column headerText="Ende">
-							<h:outputText value="#{zeitraum.getBeginnAsString()}" />
+						<p:column>
+							<p:outputLabel style="font-weight: bold;"
+								value=" | #{zeitraum.getAnzahltage()} Urlaubstage" />
 						</p:column>
 					</p:dataTable>
 				</ui:repeat>
+               -->
+
+				<p:dataTable var="antrag"
+					value="#{urlaubsUebersichtBean.urlaubsantrags}">
+					<p:column headerText="Zeiträume">
+						<p:dataTable value="#{antrag.zeitraums}" var="zeitraum">
+							<p:column priority="1">
+								<p:outputLabel
+									value="#{zeitraum.getBeginnAsString()} bis #{zeitraum.getEndeAsString()} " />
+							</p:column>
+							<p:column>
+								<p:outputLabel style="font-weight: bold;"
+									value=" | #{zeitraum.getAnzahltage()} Urlaubstage" />
+							</p:column>
+						</p:dataTable>
+					</p:column>
+
+					<p:column headerText="Fachvorgesetzter">
+						<p:outputLabel
+							value="#{antrag.fachvorgesetzter.vorname} #{antrag.fachvorgesetzter.nachname}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="Status">
+						<p:button
+							styleClass="#{antrag.status == 'OFFEN' ? 'markOrange' : antrag.status == 'GENEHMIGT' ? 'markGreen' : antrag.status == 'ABGELEHNT' ? 'markRed' : ''}"
+							value="#{antrag.status.text}"></p:button>
+					</p:column>
+				</p:dataTable>
+
 			</p:panel>
 			<p:button value="Zurück" outcome="pm:first?transition=slide"></p:button>
 		</h:form>

@@ -11,54 +11,60 @@
 		<pm:header title="Urlaubsantrag stellen">
 		</pm:header>
 		<pm:content>
-			<pm:field>
-				<p:dataList id="zeitraumlist" rowIndexVar="row"
-					value="#{urlaubsantragBean.zeitraums}" var="zeitraum">
-					<pm:field>
-						<p:outputLabel for="delete"
-							value="#{zeitraum.getBeginnAsString()} - #{zeitraum.getEndeAsString()} | #{zeitraum.getAnzahltage()} Urlaubstage">
-						</p:outputLabel>
-						<p:commandButton id="delete" value="Entfernen" title="Entfernen"
-							action="#{urlaubsantragBean.removeZeitraum(row)}"
-							icon="ui-icon-minus" update="zeitraumlist"></p:commandButton>
-					</pm:field>
-				</p:dataList>
-			</pm:field>
-			<pm:field>
-				<p:outputLabel for="beginn" value="Urlaubsbeginn: "></p:outputLabel>
-				<p:calendar disabledWeekends="true" id="beginn" required="true"
-					value="#{urlaubsantragBean.beginn}"></p:calendar>
-			</pm:field>
-			<pm:field>
-				<p:outputLabel for="ende" value="Urlaubsanfang: "></p:outputLabel>
-				<p:calendar disabledWeekends="true" id="ende" required="true"
-					value="#{urlaubsantragBean.ende}"></p:calendar>
-			</pm:field>
-			<pm:field>
-				<p:commandButton value="Zeitraum hinzufügen"
-					action="#{urlaubsantragBean.addZeitraum()}"
-					update="zeitraumlist anzahltagelabel">
-				</p:commandButton>
-			</pm:field>
-			<p:outputLabel value="Gesamtzahl Urlaubstage: " />
-			<b> <p:outputLabel id="anzahltagelabel"
-					style="font-weight: bold;" value="#{urlaubsantragBean.anzahltage}" />
-			</b>
-
-			<pm:field>
-				<p:outputLabel id="fachv"
-					value="#{urlaubsantragBean.fachvorgesetzterBo.nachname}"></p:outputLabel>
-				<p:outputLabel for="fachvorgesetzter" value="Fachvorgesetzter: " />
-				<p:selectOneMenu converter="omnifaces.SelectItemsConverter"
-					value="#{urlaubsantragBean.fachvorgesetzterBo}"
-					id="fachvorgesetzter">
-					<f:selectItems
-						value="#{urlaubsantragBean.getAllFachVorgesetzter()}"
-						var="fachvorg" itemValue="#{fachvorg}"
-						itemLabel="#{fachvorg.vorname}  #{fachvorg.nachname}">
-					</f:selectItems>
-				</p:selectOneMenu>
-			</pm:field>
+			<p:panel header="Zeiträume definieren">
+				<pm:field>
+					<p:dataList id="zeitraumlist" rowIndexVar="row"
+						value="#{urlaubsantragBean.zeitraums}" var="zeitraum">
+						<pm:field>
+							<p:outputLabel for="delete"
+								value="#{zeitraum.getBeginnAsString()} - #{zeitraum.getEndeAsString()} | #{zeitraum.getAnzahltage()} Urlaubstage">
+							</p:outputLabel>
+							<p:commandButton id="delete" value="Entfernen" title="Entfernen"
+								action="#{urlaubsantragBean.removeZeitraum(row)}"
+								icon="ui-icon-minus" update="zeitraumlist"></p:commandButton>
+						</pm:field>
+					</p:dataList>
+				</pm:field>
+				<pm:field>
+					<p:outputLabel for="beginn" value="Urlaubsbeginn: "></p:outputLabel>
+					<p:calendar disabledWeekends="true" id="beginn" required="true"
+						value="#{urlaubsantragBean.beginn}"></p:calendar>
+				</pm:field>
+				<pm:field>
+					<p:outputLabel for="ende" value="Urlaubsanfang: "></p:outputLabel>
+					<p:calendar disabledWeekends="true" id="ende" required="true"
+						value="#{urlaubsantragBean.ende}"></p:calendar>
+				</pm:field>
+				<pm:field>
+					<p:commandButton value="Zeitraum hinzufügen"
+						action="#{urlaubsantragBean.addZeitraum()}"
+						update="zeitraumlist anzahltagelabel">
+					</p:commandButton>
+				</pm:field>
+				<p:outputLabel value="Gesamtzahl Urlaubstage: " />
+				<b> <p:outputLabel id="anzahltagelabel"
+						style="font-weight: bold;" value="#{urlaubsantragBean.anzahltage}" />
+				</b>
+			</p:panel>
+			<p:panel header="Fachvorgesetzen und Vertretung wählen">
+				<pm:field>
+					<p:outputLabel for="fachvorgesetzter" value="Fachvorgesetzter: " />
+					<p:selectOneMenu converter="omnifaces.SelectItemsConverter"
+						style="" value="#{urlaubsantragBean.fachvorgesetzterBo}"
+						id="fachvorgesetzter">
+						<f:selectItems
+							value="#{urlaubsantragBean.getAllFachVorgesetzter()}"
+							var="fachvorg" itemValue="#{fachvorg}"
+							itemLabel="#{fachvorg.vorname}  #{fachvorg.nachname}">
+						</f:selectItems>
+					</p:selectOneMenu>
+				</pm:field>
+				<pm:field>
+					<p:outputLabel for="vertretung" value="Vertretung: " />
+					<p:inputText id="vertretung"
+						value="#{urlaubsantragBean.urlaubsantrag.vertretung}" />
+				</pm:field>
+			</p:panel>
 			<pm:field>
 				<p:commandButton value="Speichern"
 					action="#{urlaubsantragBean.saveUrlaubsantrag()}"></p:commandButton>
