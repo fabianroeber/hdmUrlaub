@@ -12,6 +12,12 @@
 <f:view renderKitId="PRIMEFACES_MOBILE" />
 
 <h:head>
+<link rel="stylesheet" href="themes/hdm.css" />
+  <link rel="stylesheet" href="themes/hdm.min.css" />
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" /> 
+  
+
+
 	<style type="text/css">
 .highlight-calendar a {
 	background-color: #F7FE2E !important; /*for development purposes*/
@@ -28,8 +34,8 @@
 	</script>
 </h:head>
 <h:body>
-
 	<pm:page id="first" swatch="a">
+
 		<pm:header title="Menu"></pm:header>
 		<pm:content>
 			<h:form>
@@ -57,7 +63,7 @@
 	<pm:page id="second" swatch="a">
 		<ui:include src="urlaubsantrag.xhtml"></ui:include>
 	</pm:page>
-	<pm:page id="third">
+	<pm:page id="third" swatch="a">
 		<ui:include src="urlaubuebersicht.xhtml"></ui:include>
 	</pm:page>
 
