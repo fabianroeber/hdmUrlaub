@@ -1,7 +1,5 @@
 package hdmUrlaub.dbtest;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 import de.hdm.hdmUrlaub.bo.MitarbeiterBo;
