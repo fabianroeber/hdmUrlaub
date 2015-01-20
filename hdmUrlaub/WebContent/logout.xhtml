@@ -12,21 +12,24 @@
 <f:view renderKitId="PRIMEFACES_MOBILE" />
 
 <h:head>
-	<link rel="stylesheet" href="/themes/hdm.css" />
-	<link rel="stylesheet" href="/themes/hdm.min.css" />
+	<link rel="stylesheet" href="themes/hdm.css" />
+	<link rel="stylesheet" href="themes/hdm.min.css" />
 	<link rel="stylesheet"
 		href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+
 </h:head>
 <h:body>
-	<h:form>
-		<pm:page>
-			<pm:header title="Sie haben sich erfolgreich abgemeldet"></pm:header>
-			<pm:content>
-				<p:button value="Erneut anmelden" outcome="/index_mobile1"></p:button>
-			</pm:content>
-			<pm:footer>
-			</pm:footer>
-		</pm:page>
-	</h:form>
+	<pm:page swatch="a">
+		<pm:header title="Sie haben sich erfolgreich abgemeldet"></pm:header>
+		<pm:content>
+			<h:form>
+				<p:button value="Erneut anmelden" outcome="login.xhtml"></p:button>
+			</h:form>
+		</pm:content>
+		<pm:footer>
+		</pm:footer>
+	</pm:page>
+
 </h:body>
+
 </html>

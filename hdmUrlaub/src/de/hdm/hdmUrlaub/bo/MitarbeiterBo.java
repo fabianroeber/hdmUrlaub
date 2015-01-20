@@ -11,8 +11,6 @@ public class MitarbeiterBo extends HdmUrlaubBusinessObject {
 
 	private static final long serialVersionUID = 2190497750177912427L;
 
-	private boolean loggedIn;
-
 	private String vorname;
 
 	private String nachname;
@@ -20,6 +18,8 @@ public class MitarbeiterBo extends HdmUrlaubBusinessObject {
 	private String passwort;
 
 	private String email;
+
+	private String username;
 
 	public MitarbeiterBo() {
 		super();
@@ -33,14 +33,18 @@ public class MitarbeiterBo extends HdmUrlaubBusinessObject {
 
 	}
 
-	public MitarbeiterBo(Integer id, boolean loggedIn, String vorname,
-			String nachname, String email) {
+	public MitarbeiterBo(Integer id, String vorname, String nachname,
+			String email) {
 		super();
 		this.setId(1);
-		this.loggedIn = loggedIn;
 		this.vorname = vorname;
 		this.nachname = nachname;
 		this.email = email;
+	}
+
+	public MitarbeiterBo(String username) {
+		super();
+		this.username = username;
 	}
 
 	public String getVorname() {
@@ -75,12 +79,12 @@ public class MitarbeiterBo extends HdmUrlaubBusinessObject {
 		this.email = email;
 	}
 
-	public boolean isLoggedIn() {
-		return loggedIn;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setLoggedIn(boolean loggedIn) {
-		this.loggedIn = loggedIn;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }

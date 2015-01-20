@@ -11,29 +11,6 @@
 	<pm:content>
 		<h:form>
 			<p:panel header="Geplante Urlaube">
-				<!--  	<ui:repeat var="antrag"
-					value="#{urlaubsUebersichtBean.urlaubsantrags}">
-					<p:dataTable value="#{antrag.zeitraums}" var="zeitraum">
-						<f:facet name="header">
-							<p:outputLabel id="status"
-								styleClass="#{antrag.status == 'OFFEN' ? 'markOrange' : antrag.status == 'GENEHMIGT' ? 'markGreen' : antrag.status == 'ABGELEHNT' ? 'markRed' : ''}"
-								value="#{antrag.status.text}"></p:outputLabel>
-							<p:outputLabel />
-							<p:outputLabel
-								value=" durch  #{antrag.fachvorgesetzter.vorname} #{antrag.fachvorgesetzter.nachname}"></p:outputLabel>
-						</f:facet>
-						<p:column priority="1">
-							<p:outputLabel
-								value="#{zeitraum.getBeginnAsString()} bis #{zeitraum.getEndeAsString()} " />
-						</p:column>
-						<p:column>
-							<p:outputLabel style="font-weight: bold;"
-								value=" | #{zeitraum.getAnzahltage()} Urlaubstage" />
-						</p:column>
-					</p:dataTable>
-				</ui:repeat>
-               -->
-
 				<p:dataTable var="antrag"
 					value="#{urlaubsUebersichtBean.urlaubsantrags}">
 					<p:column headerText="Zeiträume">
@@ -44,7 +21,7 @@
 							</p:column>
 							<p:column>
 								<p:outputLabel style="font-weight: bold;"
-									value=" | #{zeitraum.getAnzahltage()} Urlaubstage" />
+									value=" | #{zeitraum.getAnzahltage()} Urlaubstag/e" />
 							</p:column>
 						</p:dataTable>
 					</p:column>
@@ -64,6 +41,5 @@
 			<p:button value="Zurück" outcome="pm:first?transition=slide"></p:button>
 		</h:form>
 	</pm:content>
-	<pm:footer>
-	</pm:footer>
+	<ui:include src="footer.xhtml"></ui:include>
 </ui:composition>

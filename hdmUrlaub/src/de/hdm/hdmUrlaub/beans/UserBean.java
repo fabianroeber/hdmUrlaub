@@ -11,6 +11,9 @@ import javax.faces.context.FacesContext;
 
 import com.unboundid.ldap.sdk.LDAPException;
 
+import de.hdm.hdmUrlaub.bo.MitarbeiterBo;
+import de.hdm.hdmUrlaub.db.DataAccess;
+import de.hdm.hdmUrlaub.db.mapper.MitarbeiterMapper;
 import de.hdm.hdmUrlaub.ldap.LdapAuthentificator;
 
 /**
@@ -34,6 +37,11 @@ public class UserBean implements Serializable {
 
 	private String password;
 
+	private MitarbeiterBo mitarbeiter;
+
+	@ManagedProperty(value = "#{dataAccessBean}")
+	private DataAccessBean dataAccessBean;
+
 	/**
 	 * Hier wird die Klasse {@link NavigationBean} injiziert, um Zugriff auf
 	 * Navigationsaktionen zu bekommen.
@@ -42,7 +50,7 @@ public class UserBean implements Serializable {
 	private NavigationBean navigationBean;
 
 	/**
-	 * Diese Methode versucht den Benutzer zu authentifizieren
+	 * Diese Methode regelt die Authentifizierung des Benutzers.
 	 */
 	public String login() {
 
@@ -51,6 +59,7 @@ public class UserBean implements Serializable {
 			if (userName.equalsIgnoreCase("devmode")) {
 
 				loggedIn = true;
+				organizeUserData();
 				return navigationBean.redirectToWelcome();
 
 			} else {
@@ -59,9 +68,9 @@ public class UserBean implements Serializable {
 					String ldapuser = ldapAuthentificator.authenticate(
 							userName, password);
 
-					// Datenbankzugriff auf Tabelle Mitarbetier TODO
 					if (ldapuser != null && ldapuser.equals(userName)) {
 						loggedIn = true;
+						organizeUserData();
 						return navigationBean.redirectToWelcome();
 					}
 
@@ -82,8 +91,45 @@ public class UserBean implements Serializable {
 
 	}
 
-	public void logout() {
+	/**
+	 * Diese Methode organisiert das laden der Nutzerdaten. Sie sucht nach der
+	 * erfolgreichen Authentifizierung in der Datenbank, ob der Mitarbetier
+	 * bereits vorhanden ist. Ist dies nicht der Fall, wird ein neuer
+	 * Mitarbeiter in der Datenbank persistiert.
+	 */
+	public void organizeUserData() {
+
+		getUserData();
+		if (mitarbeiter == null) {
+			registerNewUser();
+		}
+	}
+
+	/**
+	 * Meldet den Benutzer von der Anwendung ab.
+	 * 
+	 * @return
+	 */
+	public String logout() {
 		loggedIn = false;
+		return navigationBean.redirectToLogin();
+	}
+
+	/**
+	 * Diese Methode l&auml;dt die Mitarbeiterdaten aus der Datenbank.
+	 */
+	public void getUserData() {
+		mitarbeiter = new MitarbeiterMapper().getBo(dataAccessBean.dataAccess
+				.getMitarbeiterByUserName(userName));
+	}
+
+	/**
+	 * Diese Methode schreibt einen neuen Benutzer in die Datenbank.
+	 */
+	public void registerNewUser() {
+		mitarbeiter = new MitarbeiterBo(userName);
+		dataAccessBean.dataAccess.saveMitarbeiter(new MitarbeiterMapper()
+				.getDbObject(mitarbeiter));
 	}
 
 	public String getUserName() {
@@ -120,6 +166,22 @@ public class UserBean implements Serializable {
 
 	public void setNavigationBean(NavigationBean navigationBean) {
 		this.navigationBean = navigationBean;
+	}
+
+	public MitarbeiterBo getMitarbeiter() {
+		return mitarbeiter;
+	}
+
+	public void setMitarbeiter(MitarbeiterBo mitarbeiter) {
+		this.mitarbeiter = mitarbeiter;
+	}
+
+	public DataAccessBean getDataAccessBean() {
+		return dataAccessBean;
+	}
+
+	public void setDataAccessBean(DataAccessBean dataAccessBean) {
+		this.dataAccessBean = dataAccessBean;
 	}
 
 }

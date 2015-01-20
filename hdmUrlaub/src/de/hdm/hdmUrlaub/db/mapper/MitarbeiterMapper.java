@@ -26,6 +26,7 @@ public class MitarbeiterMapper implements DbMapper<MitarbeiterBo, Mitarbeiter> {
 
 		mitarbeiterBo.setPasswort(dbobject.getPasswort());
 		mitarbeiterBo.setEmail(dbobject.getEmail());
+		mitarbeiterBo.setUsername(dbobject.getUsername());
 		return mitarbeiterBo;
 	}
 
@@ -45,6 +46,7 @@ public class MitarbeiterMapper implements DbMapper<MitarbeiterBo, Mitarbeiter> {
 		Mitarbeiter mitarbeiter = new Mitarbeiter(bo.getVorname(),
 				bo.getNachname(), bo.getEmail(), bo.getPasswort());
 		mitarbeiter.setId(bo.getId());
+		mitarbeiter.setUsername(bo.getUsername());
 		return mitarbeiter;
 	}
 }

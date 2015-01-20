@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import de.hdm.hdmUrlaub.bo.MitarbeiterBo;
 import de.hdm.hdmUrlaub.db.dbmodel.Fachvorgesetzter;
 import de.hdm.hdmUrlaub.db.dbmodel.Mitarbeiter;
 import de.hdm.hdmUrlaub.db.dbmodel.Urlaubsantrag;
@@ -59,6 +60,14 @@ public class DataAccess implements Serializable {
 				Mitarbeiter.class).getResultList();
 
 		return mitarbeiters;
+	}
+
+	public Mitarbeiter getMitarbeiterByUserName(String username) {
+
+		Mitarbeiter mitarbeiter = entityManager.createQuery(
+				"SELECT mitarbeiter FROM Mitarbeiter mitarbeiter where Mitarbeiter.username = "
+						+ username + "", Mitarbeiter.class).getSingleResult();
+		return mitarbeiter;
 	}
 
 	/**

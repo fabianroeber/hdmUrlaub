@@ -14,7 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import de.hdm.hdmUrlaub.beans.UserBean;
 
 /**
- * http://www.itcuties.com/j2ee/jsf-2-login-filter-example/
+ * 
+ * Dieser Loginfilter verhindert, dass unauthorisierte Benutzer auf die Seiten,
+ * die in der Anwendung unter dem Pfad /secured liegen, erreichbar sind. Der
+ * Benutzer wird dann direkt auf die Login-Seite (login.xhtml) umgeleitet.
+ * 
+ * Nach Beispiel auf http://www.itcuties.com/j2ee/jsf-2-login-filter-example/
+ * umgesetzt.
  * 
  * @author Fabian
  *
@@ -24,20 +30,15 @@ public class LoginFilter implements Filter {
 	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
-		// Get the loginBean from session attribute
+
 		UserBean userBean = (UserBean) ((HttpServletRequest) request)
 				.getSession().getAttribute("userBean");
 
-		// For the first application request there is no loginBean in the
-		// session so user needs to log in
-		// For other requests loginBean is present but we need to check if user
-		// has logged in successfully
 		if (userBean == null || !userBean.isLoggedIn()) {
 			String contextPath = ((HttpServletRequest) request)
 					.getContextPath();

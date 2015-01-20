@@ -27,6 +27,7 @@ public class Mitarbeiter extends HibernateObject {
 	private String nachname;
 	private String email;
 	private String passwort;
+	private String username;
 	private Set<Urlaubsantrag> urlaubsantrags = new HashSet<Urlaubsantrag>(0);
 
 	public Mitarbeiter() {
@@ -86,6 +87,15 @@ public class Mitarbeiter extends HibernateObject {
 
 	public void setPasswort(String passwort) {
 		this.passwort = passwort;
+	}
+
+	@Column(name = "username", length = 45)
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mitarbeiter")
