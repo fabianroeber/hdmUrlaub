@@ -4,6 +4,7 @@ import java.security.GeneralSecurityException;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -26,50 +27,59 @@ public class UserBean {
 
 	private boolean loggedIn;
 
-	public UserBean() {
-		ldapAuthentificator = new LdapAuthentificator();
-	}
-
 	private String userName;
 
 	private String password;
 
-//	public String login() {
-//
-//		if (userName != null && password != null) {
-//
-//			if (userName.equalsIgnoreCase("devmode")) {
-//
-//				return "/content_mobile.xhtml";
-//
-//			} else {
-//
-//				try {
-//					String username = ldapAuthentificator.authenticate(
-//							userName, password);
-//
-//					// Datenbankzugriff auf Tabelle Mitarbetier TODO
-//
-//				} catch (LDAPException | GeneralSecurityException e) {
-//					FacesContext.getCurrentInstance().addMessage(
-//							null,
-//							new FacesMessage(FacesMessage.SEVERITY_ERROR,
-//									"Error",
-//									"Nutzer konnte nicht autorisiert werden"));
-//					return "";
-//
-//				}
-//
-//			}
-//
-//		}
-//		return "/content_mobile.xhtml";
-//
-//	}
+	/**
+	 * Hier wird die Klasse {@link NavigationBean} injiziert, um Zugriff auf
+	 * Navigationsaktionen zu bekommen.
+	 */
+	@ManagedProperty(value = "#{navigationBean}")
+	private NavigationBean navigationBean;
 
-	public String logout() {
-		// TODO
-		return "/logout.xhtml";
+	/**
+	 * Diese Methode
+	 */
+	public void login() {
+
+		if (userName != null && password != null) {
+
+			if (userName.equalsIgnoreCase("devmode")) {
+
+				loggedIn = true;
+				navigationBean.redirectToWelcome();
+
+			} else {
+
+				try {
+					String ldapuser = ldapAuthentificator.authenticate(
+							userName, password);
+
+					// Datenbankzugriff auf Tabelle Mitarbetier TODO
+					if (ldapuser != null) {
+						loggedIn = true;
+						navigationBean.redirectToWelcome();
+					}
+
+				} catch (LDAPException | GeneralSecurityException e) {
+					FacesContext.getCurrentInstance().addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_ERROR,
+									"Error",
+									"Nutzer konnte nicht autorisiert werden"));
+					loggedIn = false;
+					navigationBean.redirectToLogin();
+				}
+
+			}
+
+		}
+
+	}
+
+	public void logout() {
+		loggedIn = false;
 	}
 
 	public String getUserName() {
@@ -86,6 +96,18 @@ public class UserBean {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public boolean isLoggedIn() {
+		return loggedIn;
+	}
+
+	public void setLoggedIn(boolean loggedIn) {
+		this.loggedIn = loggedIn;
+	}
+
+	public UserBean() {
+		ldapAuthentificator = new LdapAuthentificator();
 	}
 
 }
