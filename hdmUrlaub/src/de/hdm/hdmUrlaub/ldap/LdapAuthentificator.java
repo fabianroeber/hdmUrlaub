@@ -1,5 +1,6 @@
 package de.hdm.hdmUrlaub.ldap;
 
+import java.io.Serializable;
 import java.security.GeneralSecurityException;
 
 import com.unboundid.ldap.sdk.LDAPConnection;
@@ -15,7 +16,12 @@ import com.unboundid.util.ssl.TrustAllTrustManager;
  * @author Fabian
  *
  */
-public class LdapAuthentificator {
+public class LdapAuthentificator implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -505154589318058831L;
+
 	/**
 	 * 
 	 * @param ldapUserId

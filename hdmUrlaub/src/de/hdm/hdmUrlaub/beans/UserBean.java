@@ -1,5 +1,6 @@
 package de.hdm.hdmUrlaub.beans;
 
+import java.io.Serializable;
 import java.security.GeneralSecurityException;
 
 import javax.faces.application.FacesMessage;
@@ -21,9 +22,11 @@ import de.hdm.hdmUrlaub.ldap.LdapAuthentificator;
  */
 @ManagedBean(name = "userBean")
 @SessionScoped
-public class UserBean {
+public class UserBean implements Serializable {
 
-	LdapAuthentificator ldapAuthentificator;
+	private static final long serialVersionUID = 6129158197703648244L;
+
+	private LdapAuthentificator ldapAuthentificator;
 
 	private boolean loggedIn;
 
@@ -39,7 +42,7 @@ public class UserBean {
 	private NavigationBean navigationBean;
 
 	/**
-	 * Diese Methode
+	 * Diese Methode versucht den Benutzer zu authentifizieren
 	 */
 	public void login() {
 
@@ -57,7 +60,7 @@ public class UserBean {
 							userName, password);
 
 					// Datenbankzugriff auf Tabelle Mitarbetier TODO
-					if (ldapuser != null) {
+					if (ldapuser != null && ldapuser.equals(userName)) {
 						loggedIn = true;
 						navigationBean.redirectToWelcome();
 					}
@@ -108,6 +111,14 @@ public class UserBean {
 
 	public UserBean() {
 		ldapAuthentificator = new LdapAuthentificator();
+	}
+
+	public NavigationBean getNavigationBean() {
+		return navigationBean;
+	}
+
+	public void setNavigationBean(NavigationBean navigationBean) {
+		this.navigationBean = navigationBean;
 	}
 
 }

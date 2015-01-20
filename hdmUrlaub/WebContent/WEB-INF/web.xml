@@ -5,26 +5,12 @@
 	version="3.1">
 	<display-name>hdmUrlaub</display-name>
 	<welcome-file-list>
-		<welcome-file>hdmUrlaub/index_mobile.xhtml</welcome-file>
+		<welcome-file>hdmUrlaub/content_mobile.xhtml</welcome-file>
 	</welcome-file-list>
-
-	<!-- Login filter -->
-	<filter>
-		<filter-name>LoginFilter</filter-name>
-		<filter-class>de.hdm.hdmUrlaub.filter.LoginFilter</filter-class>
-	</filter>
-	<!-- Set the login filter to secure all the pages in the /secured/* path 
-		of the application -->
-	<filter-mapping>
-		<filter-name>LoginFilter</filter-name>
-		<url-pattern>/secured/*</url-pattern>
-	</filter-mapping>
-
 
 	<welcome-file-list>
 		<welcome-file>secured/content_mobile.xhtml</welcome-file>
 	</welcome-file-list>
-
 
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
@@ -55,4 +41,14 @@
 		<param-name>primefaces.mobile.THEME</param-name>
 		<param-value>none</param-value>
 	</context-param>
+
+	<filter>
+		<filter-name>LoginFilter</filter-name>
+		<filter-class>de.hdm.hdmUrlaub.filter.LoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>LoginFilter</filter-name>
+		<url-pattern>/secured/*</url-pattern>
+	</filter-mapping>
+
 </web-app>

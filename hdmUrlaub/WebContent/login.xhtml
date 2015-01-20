@@ -12,24 +12,30 @@
 <f:view renderKitId="PRIMEFACES_MOBILE" />
 
 <h:head>
-	<link rel="stylesheet" href="../themes/hdm.css" />
-	<link rel="stylesheet" href="../themes/hdm.min.css" />
+	<link rel="stylesheet" href="themes/hdm.css" />
+	<link rel="stylesheet" href="themes/hdm.min.css" />
 	<link rel="stylesheet"
 		href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+
 </h:head>
 <h:body>
-	<pm:header title="HdM Urlaubsantrag"></pm:header>
-	<pm:content>
-		<p:outputLabel for="user" value="HdM-Kürzel: "></p:outputLabel>
-		<p:inputText value="#{userBean.userName}" id="user" required="true"></p:inputText>
-		<p:spacer></p:spacer>
-		<p:message for="user" />
-		<p:outputLabel for="passwort" value="Passwort: "></p:outputLabel>
-		<p:password value="#{userBean.password}" id="passwort" required="true"></p:password>
-		<p:spacer></p:spacer>
-		<p:message for="passwort"></p:message>
-		<p:commandButton value="Anmelden" action="#{userBean.login()}" />
+	<pm:page swatch="a">
+		<pm:header title="HdM Urlaubsantrag"></pm:header>
+		<pm:content>
+			<h:form>
+				<p:outputLabel for="user" value="HdM-Kürzel: "></p:outputLabel>
+				<p:inputText value="#{userBean.userName}" id="user"></p:inputText>
+				<p:spacer></p:spacer>
+				<p:message for="user" />
+				<p:outputLabel for="passwort" value="Passwort: "></p:outputLabel>
+				<p:password value="#{userBean.password}" id="passwort"></p:password>
+				<p:spacer></p:spacer>
+				<p:message for="passwort"></p:message>
+				<p:commandButton value="Anmelden" action="#{userBean.login()}" />
+			</h:form>
+		</pm:content>
+	</pm:page>
 
-	</pm:content>
 </h:body>
+
 </html>
