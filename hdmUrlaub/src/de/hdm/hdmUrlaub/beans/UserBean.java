@@ -38,6 +38,10 @@ public class UserBean implements Serializable {
 
 	private MitarbeiterBo mitarbeiter;
 
+	/**
+	 * Hier wird die Klasse {@link DataAccessBean} injiziert, die den
+	 * Datenbankzugriff bereitstellt.
+	 */
 	@ManagedProperty(value = "#{dataAccesBean}")
 	private DataAccessBean dataAccessBean;
 

@@ -6,6 +6,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 /**
+ * Dieses Bean stellt Navigationsaktionen zwischen Views und Seiten bereit.
  * @author Fabian
  *
  */
@@ -58,6 +59,10 @@ public class NavigationBean implements Serializable {
 	 */
 	public String redirectToLogout() {
 		return "/logout.xhtml?faces-redirect=true";
+	}
+
+	public String toThirdPage() {
+		return "pm:third?transition=slide";
 	}
 
 }

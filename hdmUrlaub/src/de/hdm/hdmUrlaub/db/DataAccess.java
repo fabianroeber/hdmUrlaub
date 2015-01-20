@@ -8,7 +8,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import de.hdm.hdmUrlaub.bo.MitarbeiterBo;
 import de.hdm.hdmUrlaub.db.dbmodel.Fachvorgesetzter;
 import de.hdm.hdmUrlaub.db.dbmodel.Mitarbeiter;
 import de.hdm.hdmUrlaub.db.dbmodel.Urlaubsantrag;
@@ -28,6 +27,10 @@ public class DataAccess implements Serializable {
 
 	private EntityManager entityManager = null;
 
+	/**
+	 * Deffinierte Persistence Unit in der persistence.xml (config file f&uuml;r
+	 * Hibernate-JPA)
+	 */
 	private static final String PERSISTENCEUNIT = "hdmUrlaub";
 
 	public DataAccess() {
@@ -35,15 +38,17 @@ public class DataAccess implements Serializable {
 	}
 
 	/**
-	 * Methode zum Abrufen aller {@link Urlaubsantrag}.
+	 * Methode zum Abrufen aller {@link Urlaubsantrag} eines Mitarbeiters.
 	 * 
-	 * @return {@link List} <{@link Urlaubsantrag}>
+	 * * @return {@link List} <{@link Urlaubsantrag}>
 	 */
-	public List<Urlaubsantrag> getAllUrlaubsantrags() {
+	public List<Urlaubsantrag> getAllUrlaubsantrags(Integer mitarbeiterId) {
 
-		List<Urlaubsantrag> urlaubsantrags = entityManager.createQuery(
-				"Select urlaubsantrag FROM Urlaubsantrag urlaubsantrag",
-				Urlaubsantrag.class).getResultList();
+		List<Urlaubsantrag> urlaubsantrags = entityManager
+				.createQuery(
+						"Select urlaubsantrag FROM Urlaubsantrag urlaubsantrag WHERE urlaubsantrag.mitarbeiter_id ='"
+								+ mitarbeiterId + "'", Urlaubsantrag.class)
+				.getResultList();
 
 		return urlaubsantrags;
 	}

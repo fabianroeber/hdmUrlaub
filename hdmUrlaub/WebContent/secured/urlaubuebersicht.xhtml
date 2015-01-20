@@ -11,7 +11,7 @@
 	<pm:content>
 		<h:form>
 			<p:panel header="Geplante Urlaube">
-				<p:dataTable var="antrag"
+				<p:dataTable var="antrag" id="urlaube"
 					value="#{urlaubsUebersichtBean.urlaubsantrags}">
 					<p:column headerText="Zeiträume">
 						<p:dataTable value="#{antrag.zeitraums}" var="zeitraum">

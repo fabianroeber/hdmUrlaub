@@ -16,10 +16,10 @@
 	<link rel="stylesheet" href="../themes/hdm.min.css" />
 	<link rel="stylesheet"
 		href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
-		
+
 	<style type="text/css">
 .highlight-calendar a {
-	background-color: #F7FE2E !important; /*for development purposes*/
+	background-color: #F7FE2E !important;
 }
 
 .markRed {
@@ -50,12 +50,13 @@
 		<pm:header title="Menu"></pm:header>
 		<pm:content>
 			<h:form>
-
 				<p:menu>
 					<p:menuitem outcome="pm:second?transition=slide"
 						value="Urlaubsantrag stellen"></p:menuitem>
 					<p:menuitem outcome="pm:third?transition=slide"
-						value="Urlaubsübersicht"></p:menuitem>
+						value="Urlaubsübersicht" update="urlaube">
+					<f:actionListener ></f:actionListener>
+					</p:menuitem>
 				</p:menu>
 				<br></br>
 				<br></br>

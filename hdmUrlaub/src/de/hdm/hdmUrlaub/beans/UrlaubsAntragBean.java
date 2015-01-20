@@ -6,19 +6,19 @@ import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import de.hdm.hdmUrlaub.bo.FachvorgesetzterBo;
 import de.hdm.hdmUrlaub.bo.MitarbeiterBo;
 import de.hdm.hdmUrlaub.bo.UrlaubsantragBo;
 import de.hdm.hdmUrlaub.bo.ZeitraumBo;
-import de.hdm.hdmUrlaub.db.DataAccess;
 import de.hdm.hdmUrlaub.db.mapper.FachvorgesetzterMapper;
 import de.hdm.hdmUrlaub.db.mapper.UrlaubsantragMapper;
 import de.hdm.hdmUrlaub.enums.Status;
 
 /**
- * Diese Bean verwaltet die Erstellung eines {@link UrlaubsantragBo}.
+ * Diese Bean verwaltet die Erstellung eines {@link UrlaubsantragBo}. (urlaubsantrag-xhtml)
  * 
  * @author Fabian
  * 
@@ -42,7 +42,19 @@ public class UrlaubsAntragBean implements Serializable {
 	private FachvorgesetzterMapper fachvorgesetzterMapper;
 	private UrlaubsantragMapper urlaubsantragMapper;
 
-	private DataAccess dataAccess;
+	/**
+	 * Hier wird die Klasse {@link DataAccessBean} injiziert, die den
+	 * Datenbankzugriff bereitstellt.
+	 */
+	@ManagedProperty(value = "#{dataAccesBean}")
+	private DataAccessBean dataAccessBean;
+
+	/**
+	 * Hier wird die Klasse {@link NavigationBean} injiziert, um Zugriff auf
+	 * Navigationsaktionen zu bekommen.
+	 */
+	@ManagedProperty(value = "#{navigationBean}")
+	private NavigationBean navigationBean;
 
 	public UrlaubsAntragBean() {
 
@@ -53,7 +65,7 @@ public class UrlaubsAntragBean implements Serializable {
 		urlaubsantrag = new UrlaubsantragBo();
 		fachvorgesetzterMapper = new FachvorgesetzterMapper();
 		urlaubsantragMapper = new UrlaubsantragMapper();
-		dataAccess = new DataAccess();
+
 	}
 
 	/**
@@ -87,7 +99,7 @@ public class UrlaubsAntragBean implements Serializable {
 	 * @return List {@link FachvorgesetzterBo}
 	 */
 	public List<FachvorgesetzterBo> getAllFachVorgesetzter() {
-		return fachvorgesetzterMapper.getBoList(dataAccess
+		return fachvorgesetzterMapper.getBoList(dataAccessBean.getDataAccess()
 				.getAllFachvorgesetzter());
 	}
 
@@ -99,9 +111,9 @@ public class UrlaubsAntragBean implements Serializable {
 		urlaubsantrag.setMitarbeiter(loggedInMitarbeiter);
 		urlaubsantrag.setStatus(Status.OFFEN);
 		// Hier Mail verschicken!
-		dataAccess.saveUrlaubsantrag(urlaubsantragMapper
-				.getDbObject(urlaubsantrag));
-		return "pm:third?transition=slide";
+		dataAccessBean.getDataAccess().saveUrlaubsantrag(
+				urlaubsantragMapper.getDbObject(urlaubsantrag));
+		return navigationBean.toThirdPage();
 	}
 
 	public UrlaubsantragBo getUrlaubsantrag() {
@@ -158,6 +170,22 @@ public class UrlaubsAntragBean implements Serializable {
 
 	public void setFachv(String fachv) {
 		this.fachv = fachv;
+	}
+
+	public DataAccessBean getDataAccessBean() {
+		return dataAccessBean;
+	}
+
+	public void setDataAccessBean(DataAccessBean dataAccessBean) {
+		this.dataAccessBean = dataAccessBean;
+	}
+
+	public NavigationBean getNavigationBean() {
+		return navigationBean;
+	}
+
+	public void setNavigationBean(NavigationBean navigationBean) {
+		this.navigationBean = navigationBean;
 	}
 
 }
