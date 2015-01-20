@@ -32,7 +32,7 @@ public class LoginFilter implements Filter {
 			FilterChain chain) throws IOException, ServletException {
 		// Get the loginBean from session attribute
 		UserBean userBean = (UserBean) ((HttpServletRequest) request)
-				.getSession().getAttribute("loginBean");
+				.getSession().getAttribute("userBean");
 
 		// For the first application request there is no loginBean in the
 		// session so user needs to log in
