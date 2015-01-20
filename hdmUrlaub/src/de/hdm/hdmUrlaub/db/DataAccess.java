@@ -64,9 +64,11 @@ public class DataAccess implements Serializable {
 
 	public Mitarbeiter getMitarbeiterByUserName(String username) {
 
-		Mitarbeiter mitarbeiter = entityManager.createQuery(
-				"SELECT mitarbeiter FROM Mitarbeiter mitarbeiter where Mitarbeiter.username = "
-						+ username + "", Mitarbeiter.class).getSingleResult();
+		Mitarbeiter mitarbeiter = entityManager
+				.createQuery(
+						"SELECT mitarbeiter FROM Mitarbeiter mitarbeiter where mitarbeiter.username = '"
+								+ username + "'", Mitarbeiter.class)
+				.getSingleResult();
 		return mitarbeiter;
 	}
 

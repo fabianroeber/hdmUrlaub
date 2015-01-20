@@ -8,9 +8,9 @@
 	xmlns:of="http://omnifaces.org/functions"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 	<pm:footer>
-		
+		<div align="right">
 			<p:commandButton id="logout" value="Logout '#{userBean.userName}'"
-				icon="back" action="#{userBean.logout()}" style="float: right;"></p:commandButton>
-		
+				icon="back" action="#{userBean.logout()}"></p:commandButton>
+		</div>
 	</pm:footer>
 </ui:composition>

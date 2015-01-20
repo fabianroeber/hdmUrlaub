@@ -5,6 +5,10 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+/**
+ * @author Fabian
+ *
+ */
 @ManagedBean(name = "navigationBean")
 @SessionScoped
 public class NavigationBean implements Serializable {
@@ -45,6 +49,15 @@ public class NavigationBean implements Serializable {
 	 */
 	public String toWelcome() {
 		return "/secured/content_mobile.xhtml";
+	}
+
+	/**
+	 * Go to logout page.
+	 * 
+	 * @return
+	 */
+	public String redirectToLogout() {
+		return "/logout.xhtml?faces-redirect=true";
 	}
 
 }

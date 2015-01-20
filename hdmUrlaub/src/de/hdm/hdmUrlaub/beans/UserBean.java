@@ -12,7 +12,6 @@ import javax.faces.context.FacesContext;
 import com.unboundid.ldap.sdk.LDAPException;
 
 import de.hdm.hdmUrlaub.bo.MitarbeiterBo;
-import de.hdm.hdmUrlaub.db.DataAccess;
 import de.hdm.hdmUrlaub.db.mapper.MitarbeiterMapper;
 import de.hdm.hdmUrlaub.ldap.LdapAuthentificator;
 
@@ -39,7 +38,7 @@ public class UserBean implements Serializable {
 
 	private MitarbeiterBo mitarbeiter;
 
-	@ManagedProperty(value = "#{dataAccessBean}")
+	@ManagedProperty(value = "#{dataAccesBean}")
 	private DataAccessBean dataAccessBean;
 
 	/**
@@ -112,15 +111,15 @@ public class UserBean implements Serializable {
 	 */
 	public String logout() {
 		loggedIn = false;
-		return navigationBean.redirectToLogin();
+		return navigationBean.redirectToLogout();
 	}
 
 	/**
 	 * Diese Methode l&auml;dt die Mitarbeiterdaten aus der Datenbank.
 	 */
 	public void getUserData() {
-		mitarbeiter = new MitarbeiterMapper().getBo(dataAccessBean.dataAccess
-				.getMitarbeiterByUserName(userName));
+		mitarbeiter = new MitarbeiterMapper().getBo(dataAccessBean
+				.getDataAccess().getMitarbeiterByUserName(userName));
 	}
 
 	/**
@@ -128,8 +127,8 @@ public class UserBean implements Serializable {
 	 */
 	public void registerNewUser() {
 		mitarbeiter = new MitarbeiterBo(userName);
-		dataAccessBean.dataAccess.saveMitarbeiter(new MitarbeiterMapper()
-				.getDbObject(mitarbeiter));
+		dataAccessBean.getDataAccess().saveMitarbeiter(
+				new MitarbeiterMapper().getDbObject(mitarbeiter));
 	}
 
 	public String getUserName() {
