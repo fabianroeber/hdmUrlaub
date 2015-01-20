@@ -44,14 +44,14 @@ public class UserBean implements Serializable {
 	/**
 	 * Diese Methode versucht den Benutzer zu authentifizieren
 	 */
-	public void login() {
+	public String login() {
 
 		if (userName != null && password != null) {
 
 			if (userName.equalsIgnoreCase("devmode")) {
 
 				loggedIn = true;
-				navigationBean.redirectToWelcome();
+				return navigationBean.redirectToWelcome();
 
 			} else {
 
@@ -62,7 +62,7 @@ public class UserBean implements Serializable {
 					// Datenbankzugriff auf Tabelle Mitarbetier TODO
 					if (ldapuser != null && ldapuser.equals(userName)) {
 						loggedIn = true;
-						navigationBean.redirectToWelcome();
+						return navigationBean.redirectToWelcome();
 					}
 
 				} catch (LDAPException | GeneralSecurityException e) {
@@ -72,12 +72,13 @@ public class UserBean implements Serializable {
 									"Error",
 									"Nutzer konnte nicht autorisiert werden"));
 					loggedIn = false;
-					navigationBean.redirectToLogin();
+					return navigationBean.redirectToLogin();
 				}
 
 			}
 
 		}
+		return "";
 
 	}
 

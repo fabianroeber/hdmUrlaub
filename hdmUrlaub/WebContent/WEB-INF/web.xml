@@ -37,10 +37,7 @@
 	<listener>
 		<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
 	</listener>
-	<context-param>
-		<param-name>primefaces.mobile.THEME</param-name>
-		<param-value>none</param-value>
-	</context-param>
+	
 
 	<filter>
 		<filter-name>LoginFilter</filter-name>
