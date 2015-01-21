@@ -8,7 +8,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.event.ActionEvent;
 
 import de.hdm.hdmUrlaub.bo.UrlaubsantragBo;
 import de.hdm.hdmUrlaub.db.mapper.UrlaubsantragMapper;
@@ -72,11 +71,6 @@ public class UrlaubUebersichtBean implements Serializable {
 							userBean.getMitarbeiter().getId()));
 		}
 
-	}
-
-	public String load() {
-		// getAllUrlaubsantrags();
-		return "pm:third?transition=slide";
 	}
 
 	public String getDates() {

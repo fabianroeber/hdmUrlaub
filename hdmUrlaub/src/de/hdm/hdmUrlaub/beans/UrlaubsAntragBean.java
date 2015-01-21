@@ -10,7 +10,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import de.hdm.hdmUrlaub.bo.FachvorgesetzterBo;
-import de.hdm.hdmUrlaub.bo.MitarbeiterBo;
 import de.hdm.hdmUrlaub.bo.UrlaubsantragBo;
 import de.hdm.hdmUrlaub.bo.ZeitraumBo;
 import de.hdm.hdmUrlaub.db.mapper.FachvorgesetzterMapper;
@@ -18,7 +17,8 @@ import de.hdm.hdmUrlaub.db.mapper.UrlaubsantragMapper;
 import de.hdm.hdmUrlaub.enums.Status;
 
 /**
- * Diese Bean verwaltet die Erstellung eines {@link UrlaubsantragBo}. (urlaubsantrag-xhtml)
+ * Diese Bean verwaltet die Erstellung eines {@link UrlaubsantragBo}.
+ * (urlaubsantrag-xhtml)
  * 
  * @author Fabian
  * 
@@ -33,8 +33,6 @@ public class UrlaubsAntragBean implements Serializable {
 	private Date ende;
 	private int anzahltage = 0;
 	private FachvorgesetzterBo fachvorgesetzterBo;
-	private MitarbeiterBo loggedInMitarbeiter;
-	private String fachv;
 
 	private List<ZeitraumBo> zeitraums;
 	private UrlaubsantragBo urlaubsantrag;
@@ -56,16 +54,14 @@ public class UrlaubsAntragBean implements Serializable {
 	@ManagedProperty(value = "#{navigationBean}")
 	private NavigationBean navigationBean;
 
+	@ManagedProperty(value = "#{userBean}")
+	private UserBean userBean;
+
 	public UrlaubsAntragBean() {
-
-		// Mitarbeiter zu Testzwecken
-		loggedInMitarbeiter = new MitarbeiterBo(1, "Fabian", "Röber");
-
 		zeitraums = new ArrayList<ZeitraumBo>();
 		urlaubsantrag = new UrlaubsantragBo();
 		fachvorgesetzterMapper = new FachvorgesetzterMapper();
 		urlaubsantragMapper = new UrlaubsantragMapper();
-
 	}
 
 	/**
@@ -108,8 +104,9 @@ public class UrlaubsAntragBean implements Serializable {
 	 */
 	public String saveUrlaubsantrag() {
 		urlaubsantrag.setZeitraums(zeitraums);
-		urlaubsantrag.setMitarbeiter(loggedInMitarbeiter);
 		urlaubsantrag.setStatus(Status.OFFEN);
+		urlaubsantrag.setMitarbeiter(userBean.getMitarbeiter());
+		urlaubsantrag.setFachvorgesetzter(fachvorgesetzterBo);
 		// Hier Mail verschicken!
 		dataAccessBean.getDataAccess().saveUrlaubsantrag(
 				urlaubsantragMapper.getDbObject(urlaubsantrag));
@@ -164,14 +161,6 @@ public class UrlaubsAntragBean implements Serializable {
 		this.fachvorgesetzterBo = fachvorgesetzterBo;
 	}
 
-	public String getFachv() {
-		return fachv;
-	}
-
-	public void setFachv(String fachv) {
-		this.fachv = fachv;
-	}
-
 	public DataAccessBean getDataAccessBean() {
 		return dataAccessBean;
 	}
@@ -186,6 +175,14 @@ public class UrlaubsAntragBean implements Serializable {
 
 	public void setNavigationBean(NavigationBean navigationBean) {
 		this.navigationBean = navigationBean;
+	}
+
+	public UserBean getUserBean() {
+		return userBean;
+	}
+
+	public void setUserBean(UserBean userBean) {
+		this.userBean = userBean;
 	}
 
 }
