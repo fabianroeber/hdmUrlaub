@@ -108,7 +108,7 @@ public class UrlaubsAntragBean implements Serializable {
 		urlaubsantrag.setStatus(Status.OFFEN);
 		urlaubsantrag.setMitarbeiter(userBean.getMitarbeiter());
 		urlaubsantrag.setFachvorgesetzter(fachvorgesetzterBo);
-		urlaubsantrag.setKey(UUID.randomUUID().getLeastSignificantBits());
+		urlaubsantrag.setKey(UUID.randomUUID().toString());
 
 		try {
 			dataAccessBean.getDataAccess().saveUrlaubsantrag(

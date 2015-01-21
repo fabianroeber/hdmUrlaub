@@ -31,7 +31,7 @@ public class Urlaubsantrag extends HibernateObject {
 	private Character status;
 	private Integer anzahltage;
 	private String vertretung;
-	private Long activationKey;
+	private String activationKey;
 	private String begruendung;
 	private Set<Zeitraum> zeitraums = new HashSet<Zeitraum>(0);
 
@@ -58,7 +58,7 @@ public class Urlaubsantrag extends HibernateObject {
 
 	public Urlaubsantrag(Integer id, Mitarbeiter mitarbeiter,
 			Fachvorgesetzter fachvorgesetzter, Character status,
-			Integer anzahltage, String vertretung, Long activationKey,
+			Integer anzahltage, String vertretung, String activationKey,
 			String begruendung, Set<Zeitraum> zeitraums) {
 		this.id = id;
 		this.mitarbeiter = mitarbeiter;
@@ -138,12 +138,12 @@ public class Urlaubsantrag extends HibernateObject {
 		this.zeitraums = zeitraums;
 	}
 
-	@Column(name = "activationKey")
-	public Long getActivationKey() {
+	@Column(name = "activationKey", length = 200)
+	public String getActivationKey() {
 		return activationKey;
 	}
 
-	public void setActivationKey(Long activationKey) {
+	public void setActivationKey(String activationKey) {
 		this.activationKey = activationKey;
 	}
 
