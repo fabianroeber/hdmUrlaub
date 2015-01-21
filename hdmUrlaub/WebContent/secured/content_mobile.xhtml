@@ -53,9 +53,8 @@
 				<p:menu>
 					<p:menuitem outcome="pm:second?transition=slide"
 						value="Urlaubsantrag stellen"></p:menuitem>
-					<p:menuitem outcome="pm:third?transition=slide"
-						value="Urlaubsübersicht" update="urlaube">
-					<f:actionListener ></f:actionListener>
+					<p:menuitem value="Urlaubsübersicht"
+						action="#{urlaubsUebersichtBean.load()}">
 					</p:menuitem>
 				</p:menu>
 				<br></br>

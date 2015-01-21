@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ActionEvent;
 
 import de.hdm.hdmUrlaub.bo.UrlaubsantragBo;
 import de.hdm.hdmUrlaub.db.mapper.UrlaubsantragMapper;
@@ -61,6 +62,9 @@ public class UrlaubUebersichtBean implements Serializable {
 		getAllUrlaubsantrags();
 	}
 
+	/**
+	 * Diese Methode holt alle {@link UrlaubsantragBo} aus der Datenbank.
+	 */
 	public void getAllUrlaubsantrags() {
 		if (userBean.getMitarbeiter() != null) {
 			urlaubsantrags = urlaubsantragMapper.getBoList(dataAccessBean
@@ -68,6 +72,11 @@ public class UrlaubUebersichtBean implements Serializable {
 							userBean.getMitarbeiter().getId()));
 		}
 
+	}
+
+	public String load() {
+		getAllUrlaubsantrags();
+		return navigationBean.toThirdPage();
 	}
 
 	public String getDates() {

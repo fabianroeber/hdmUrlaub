@@ -46,8 +46,8 @@ public class DataAccess implements Serializable {
 
 		List<Urlaubsantrag> urlaubsantrags = entityManager
 				.createQuery(
-						"Select urlaubsantrag FROM Urlaubsantrag urlaubsantrag WHERE urlaubsantrag.mitarbeiter_id ='"
-								+ mitarbeiterId + "'", Urlaubsantrag.class)
+						"Select urlaubsantrag FROM Urlaubsantrag urlaubsantrag WHERE urlaubsantrag.mitarbeiter = "
+								+ mitarbeiterId, Urlaubsantrag.class)
 				.getResultList();
 
 		return urlaubsantrags;
