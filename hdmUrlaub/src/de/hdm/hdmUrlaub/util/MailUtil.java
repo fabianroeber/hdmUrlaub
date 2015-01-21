@@ -1,7 +1,22 @@
 package de.hdm.hdmUrlaub.util;
 
+import java.util.Properties;
+
+import javax.mail.Address;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+import com.sun.mail.handlers.message_rfc822;
+
 import de.hdm.hdmUrlaub.bo.FachvorgesetzterBo;
 import de.hdm.hdmUrlaub.bo.UrlaubsantragBo;
+import de.hdm.hdmUrlaub.bo.ZeitraumBo;
 import de.hdm.hdmUrlaub.db.dbmodel.Urlaubsantrag;
 
 /**
@@ -18,9 +33,69 @@ public class MailUtil {
 	 * Genehmigung.
 	 * 
 	 * @param urlaubsantragBo
+	 * 
 	 */
 	public static void sendRequestMail(UrlaubsantragBo urlaubsantragBo) {
+		String host = "mx.freenet.de";
+		final String username = "markusschmieder@freenet.de";
+		final String password = "hdmurlaub";
 
+		String to = "markusschmieder1986@googlemail.com";
+		String from = "markusschmieder@freenet.de";
+
+		String zeitraueme = "";
+		for (ZeitraumBo zeitraumBo : urlaubsantragBo.getZeitraums()) {
+			zeitraueme = zeitraueme + " \n " + "- " + zeitraueme;
+		}
+
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", host);
+		props.put("mail.smtp.port", "587");
+
+		Session session = Session.getInstance(props, new Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		});
+
+		PasswordAuthentication auth = new PasswordAuthentication(
+				"markusschmieder", "hdmurlaub");
+
+		MimeMessage message = new MimeMessage(session);
+		try {
+			message.setFrom(from);
+			message.setRecipients(Message.RecipientType.TO,
+					InternetAddress.parse(to));
+			message.setSubject("HdM Urlaub: Urlaubsantrag");
+
+			message.setText("Hallo, \n \n"
+					+ urlaubsantragBo.getMitarbeiter().getVorname()
+					+ " "
+					+ urlaubsantragBo.getMitarbeiter().getNachname()
+					+ " beantragt "
+					+ urlaubsantragBo.getAnzahltage()
+					+ " Tage Urlaub "
+					+ (urlaubsantragBo.getZeitraums().size() > 1 ? "in den Zeiträumen: \n "
+							: "im Zeitraum: \n")
+					+ zeitraueme
+					+ "\n \n"
+					+ (urlaubsantragBo.getVertretung() != "" ? "Vertretung: "
+							+ urlaubsantragBo.getVertretung() : ""));
+
+			Transport.send(message);
+
+			System.out.println("Sent message successfully.");
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private javax.mail.internet.InternetAddress InternetAddress(String string) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**
@@ -42,8 +117,8 @@ public class MailUtil {
 	}
 
 	/**
-	 * Schickt eine Mail an den Mitarbeiter, dass sein Urlaubsantrag best&auml;tigt
-	 * wurde.
+	 * Schickt eine Mail an den Mitarbeiter, dass sein Urlaubsantrag
+	 * best&auml;tigt wurde.
 	 */
 	public static void sendConfirmedMail() {
 
