@@ -20,7 +20,7 @@ body, input, select, textarea, button, .ui-btn {
 	font-size: 1em;
 	line-height: 1.3;
 	font-family: HdM Frutiger Next Pro Light;
-	src: url('#{resource["fonts/HdMFrutigerNextPro-Light.otf"]}');
+	src: url('../fonts/HdMFrutigerNextPro-Light.otf');
 }
 
 legend, .ui-input-text input, .ui-input-search input {
@@ -34,13 +34,13 @@ legend, .ui-input-text input, .ui-input-search input {
 }
 
 .ui-widget {
-	font-family: HdM Frutiger Next Pro Light;
-	src: url('/resources/fonts/HdMFrutigerNextPro-Light.otf') format('otf');
+	font-family: 'HdM Frutiger Next Pro Light';
+	src: url('../resources/fonts/HdMFrutigerNextPro-Light.otf');
 }
 
 @font-face {
-	font-family: HdM Frutiger Next Pro Light;
-	src: url('#{resource["fonts/HdMFrutigerNextPro-Light.otf"]}');
+	font-family: 'HdM Frutiger Next Pro Light';
+	src: url('../resources/fonts/HdMFrutigerNextPro-Light.otf');
 }
 
 /* Separators
