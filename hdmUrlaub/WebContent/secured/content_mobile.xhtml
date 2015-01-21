@@ -45,6 +45,7 @@
 	</script>
 </h:head>
 <h:body>
+	<h:outputStylesheet library="css" name="main.css" />
 	<pm:page id="first" swatch="a">
 
 		<pm:header title="Menu"></pm:header>
@@ -54,7 +55,7 @@
 					<p:menuitem outcome="pm:second?transition=slide"
 						value="Urlaubsantrag stellen"></p:menuitem>
 					<p:menuitem value="Urlaubsübersicht"
-						action="#{urlaubsUebersichtBean.load()}">
+						outcome="pm:third?transition=slide">
 					</p:menuitem>
 				</p:menu>
 				<br></br>

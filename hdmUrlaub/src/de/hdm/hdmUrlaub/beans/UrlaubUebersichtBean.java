@@ -75,8 +75,8 @@ public class UrlaubUebersichtBean implements Serializable {
 	}
 
 	public String load() {
-		getAllUrlaubsantrags();
-		return navigationBean.toThirdPage();
+		// getAllUrlaubsantrags();
+		return "pm:third?transition=slide";
 	}
 
 	public String getDates() {
