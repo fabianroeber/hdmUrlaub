@@ -57,6 +57,8 @@ public class UrlaubsantragMapper implements
 			zeitraums.add(zeitraumMapper.getBo(zeitraum));
 		}
 		urlaubsantragBo.setZeitraums(zeitraums);
+		urlaubsantragBo.setBegruendung(dbobject.getBegruendung());
+		urlaubsantragBo.setKey(dbobject.getActivationKey());
 		return urlaubsantragBo;
 	}
 
@@ -88,9 +90,14 @@ public class UrlaubsantragMapper implements
 			zeitraums.add(zeitraumMapper.getDbObject(zeitraumbo));
 		}
 
-		return new Urlaubsantrag(bo.getId(), mitarbeitermapper.getDbObject(bo
-				.getMitarbeiter()), fachvorgesetzterMapper.getDbObject(bo
-				.getFachvorgesetzter()), status, bo.getAnzahltage(),
-				bo.getVertretung(), zeitraums);
+		Urlaubsantrag urlaubsantrag = new Urlaubsantrag(bo.getId(),
+				mitarbeitermapper.getDbObject(bo.getMitarbeiter()),
+				fachvorgesetzterMapper.getDbObject(bo.getFachvorgesetzter()),
+				status, bo.getAnzahltage(), bo.getVertretung(), zeitraums);
+
+		urlaubsantrag.setActivationKey(bo.getKey());
+		urlaubsantrag.setBegruendung(bo.getBegruendung());
+
+		return urlaubsantrag;
 	}
 }

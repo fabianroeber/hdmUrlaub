@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -107,10 +108,17 @@ public class UrlaubsAntragBean implements Serializable {
 		urlaubsantrag.setStatus(Status.OFFEN);
 		urlaubsantrag.setMitarbeiter(userBean.getMitarbeiter());
 		urlaubsantrag.setFachvorgesetzter(fachvorgesetzterBo);
-		// Hier Mail verschicken!
-		dataAccessBean.getDataAccess().saveUrlaubsantrag(
-				urlaubsantragMapper.getDbObject(urlaubsantrag));
-		return navigationBean.toThirdPage();
+		urlaubsantrag.setKey(UUID.randomUUID().getLeastSignificantBits());
+
+		try {
+			dataAccessBean.getDataAccess().saveUrlaubsantrag(
+					urlaubsantragMapper.getDbObject(urlaubsantrag));
+
+		} catch (Exception e) {
+			// TODO
+		}
+		urlaubsantrag = new UrlaubsantragBo();
+		return navigationBean.toSecondPage();
 	}
 
 	public UrlaubsantragBo getUrlaubsantrag() {
