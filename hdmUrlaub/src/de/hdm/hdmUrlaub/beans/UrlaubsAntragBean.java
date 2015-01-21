@@ -16,6 +16,7 @@ import de.hdm.hdmUrlaub.bo.ZeitraumBo;
 import de.hdm.hdmUrlaub.db.mapper.FachvorgesetzterMapper;
 import de.hdm.hdmUrlaub.db.mapper.UrlaubsantragMapper;
 import de.hdm.hdmUrlaub.enums.Status;
+import de.hdm.hdmUrlaub.util.MailUtil;
 
 /**
  * Diese Bean verwaltet die Erstellung eines {@link UrlaubsantragBo}.
@@ -113,10 +114,11 @@ public class UrlaubsAntragBean implements Serializable {
 		try {
 			dataAccessBean.getDataAccess().saveUrlaubsantrag(
 					urlaubsantragMapper.getDbObject(urlaubsantrag));
-
+			MailUtil.sendRequestMail(urlaubsantrag);
 		} catch (Exception e) {
 			// TODO
 		}
+
 		urlaubsantrag = new UrlaubsantragBo();
 		return navigationBean.toSecondPage();
 	}
