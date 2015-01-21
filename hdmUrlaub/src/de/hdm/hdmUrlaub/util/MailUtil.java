@@ -46,11 +46,10 @@ public class MailUtil {
 			zeitraueme = zeitraueme
 					+ " \n "
 					+ "- "
-					+ (zeitraumBo.getBeginn().compareTo(zeitraumBo.getEnde()) == 0 ? " am " + zeitraumBo
-							.getBeginnAsString() : " von " + zeitraumBo
-							.getBeginnAsString()
-							+ " bis "
-							+ zeitraumBo.getEndeAsString());
+					+ (zeitraumBo.getBeginn().compareTo(zeitraumBo.getEnde()) == 0 ? " am "
+							+ zeitraumBo.getBeginnAsString()
+							: " von " + zeitraumBo.getBeginnAsString()
+									+ " bis " + zeitraumBo.getEndeAsString());
 		}
 
 		Properties props = new Properties();
@@ -65,7 +64,7 @@ public class MailUtil {
 			}
 		});
 
-			MimeMessage message = new MimeMessage(session);
+		MimeMessage message = new MimeMessage(session);
 		try {
 			message.setFrom(from);
 			message.setRecipients(Message.RecipientType.TO,
@@ -76,7 +75,9 @@ public class MailUtil {
 					+ urlaubsantragBo.getMitarbeiter().getVorname()
 					+ " "
 					+ urlaubsantragBo.getMitarbeiter().getNachname()
-					+ " beantragt "
+					+ " ("
+					+ urlaubsantragBo.getMitarbeiter().getEmail()
+					+ ") beantragt "
 					+ urlaubsantragBo.getAnzahltage()
 					+ " Tage Urlaub "
 					+ (urlaubsantragBo.getZeitraums().size() > 1 ? "in den Zeiträumen: \n "
@@ -84,7 +85,10 @@ public class MailUtil {
 					+ zeitraueme
 					+ "\n \n"
 					+ (urlaubsantragBo.getVertretung() != "" ? "Vertretung: "
-							+ urlaubsantragBo.getVertretung() : ""));
+							+ urlaubsantragBo.getVertretung() : "")
+					+ "\n \n"
+					+ "Um den Urlaubsantrag zu genehmigen oder abzulehnen folgende Seite aufrufen: http://localhost:8080/hdmUrlaub/confirmpage.xhtml?key"
+					+ urlaubsantragBo.getKey());
 
 			Transport.send(message);
 

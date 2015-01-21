@@ -23,7 +23,7 @@ public class MailTest {
 
 	UrlaubsantragBo urlaubsantragBo = new UrlaubsantragBo(10001, "Marc Hauck",
 			new FachvorgesetzterBo(10006, "Engstler", "Martin",
-					"markusschmieder@gmx.de"), 5, new MitarbeiterBo(100005,
+					"markusschmieder1986@googlemail.com"), 5, new MitarbeiterBo(100005,
 					"Markus", "Schmieder", "ms332@hdm-stuttgart.de"));
 
 	List<ZeitraumBo> list;
