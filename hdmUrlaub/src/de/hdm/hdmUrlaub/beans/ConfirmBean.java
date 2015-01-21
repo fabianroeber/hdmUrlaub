@@ -23,6 +23,9 @@ public class ConfirmBean {
 
 	private UrlaubsantragBo urlaubsantrag;
 
+	@ManagedProperty(value = "#{dataAccesBean}")
+	private DataAccessBean dataAccessBean;
+
 	/**
 	 * Diese Managedproperty enth&auml;lt den Key, der f&uuml;r die Aktivierung
 	 * eines {@link UrlaubsantragBo} generiert wurde.
@@ -40,7 +43,8 @@ public class ConfirmBean {
 	}
 
 	public void getUrlaubsantragByKey(String key) {
-
+		urlaubsantrag = urlaubsantragMapper.getBo(dataAccessBean
+				.getDataAccess().getUrlaubsantragByKey(key));
 	}
 
 	public UrlaubsantragBo getUrlaubsantrag() {
@@ -57,6 +61,14 @@ public class ConfirmBean {
 
 	public void setKey(Long key) {
 		this.key = key;
+	}
+
+	public DataAccessBean getDataAccessBean() {
+		return dataAccessBean;
+	}
+
+	public void setDataAccessBean(DataAccessBean dataAccessBean) {
+		this.dataAccessBean = dataAccessBean;
 	}
 
 }

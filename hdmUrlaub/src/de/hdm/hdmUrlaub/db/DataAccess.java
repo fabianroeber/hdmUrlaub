@@ -77,6 +77,16 @@ public class DataAccess implements Serializable {
 		return mitarbeiter;
 	}
 
+	public Urlaubsantrag getUrlaubsantragByKey(String key) {
+
+		Urlaubsantrag urlaubsantrag = entityManager
+				.createQuery(
+						"SELECT urlaubsantrag FROM Urlaubsantrag urlaubsantrag where urlaubsantrag.activationKey = '"
+								+ key + "'", Urlaubsantrag.class)
+				.getSingleResult();
+		return urlaubsantrag;
+	}
+
 	/**
 	 * Methode zum Abrufen aller Fachvorgesetzten.
 	 * 

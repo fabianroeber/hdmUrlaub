@@ -90,7 +90,7 @@ public class MailUtil {
 					+ (urlaubsantragBo.getVertretung() != "" ? "Vertretung: "
 							+ urlaubsantragBo.getVertretung() : "")
 					+ "\n \n"
-					+ "Um den Urlaubsantrag zu genehmigen oder abzulehnen folgende Seite aufrufen: http://localhost:8080/hdmUrlaub/confirmpage.xhtml?key"
+					+ "Um den Urlaubsantrag zu genehmigen oder abzulehnen folgende Seite aufrufen: http://localhost:8080/hdmUrlaub/confirmpage.xhtml?key="
 					+ urlaubsantragBo.getKey());
 
 			Transport.send(message);

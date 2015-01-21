@@ -56,6 +56,10 @@ public class UrlaubsAntragBean implements Serializable {
 	@ManagedProperty(value = "#{navigationBean}")
 	private NavigationBean navigationBean;
 
+	/**
+	 * Hier wird die Klasse UserBean injiziert, um Informationen &uuml;ber den
+	 * aktuell angemeldeten User zu bekommen.
+	 */
 	@ManagedProperty(value = "#{userBean}")
 	private UserBean userBean;
 
