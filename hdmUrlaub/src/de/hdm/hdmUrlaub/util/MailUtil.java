@@ -42,7 +42,7 @@ public class MailUtil {
 	}
 
 	/**
-	 * Schickt eine Mail an den Mitarbeiter, dass sein Urlaubsantrag bestätigt
+	 * Schickt eine Mail an den Mitarbeiter, dass sein Urlaubsantrag best&auml;tigt
 	 * wurde.
 	 */
 	public static void sendConfirmedMail() {
