@@ -9,10 +9,10 @@ public class DataBaseTestUrlaubsantragLoeschen {
 
 	@Test
 	public void test() {
-		
+
 		DataAccess dataAcces = new DataAccess();
-		Urlaubsantrag urlaubsantrag = dataAcces.getAllUrlaubsantrags().get(0);
-		
+		Urlaubsantrag urlaubsantrag = dataAcces.getAllUrlaubsantrags(9).get(0);
+
 		dataAcces.deleteUrlaubsantrag(urlaubsantrag);
 	}
 }

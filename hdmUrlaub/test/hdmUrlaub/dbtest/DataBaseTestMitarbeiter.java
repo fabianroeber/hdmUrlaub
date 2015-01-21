@@ -13,7 +13,7 @@ public class DataBaseTestMitarbeiter {
 	public void test() {
 		DataAccess dataAcces = new DataAccess();
 
-		List<Urlaubsantrag> liste = dataAcces.getAllUrlaubsantrags();
+		List<Urlaubsantrag> liste = dataAcces.getAllUrlaubsantrags(9);
 
 		for (Urlaubsantrag urlaubsantrag : liste) {
 			System.out.println(urlaubsantrag.getId());
