@@ -12,8 +12,6 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import com.sun.mail.handlers.message_rfc822;
-
 import de.hdm.hdmUrlaub.bo.FachvorgesetzterBo;
 import de.hdm.hdmUrlaub.bo.UrlaubsantragBo;
 import de.hdm.hdmUrlaub.bo.ZeitraumBo;
@@ -40,12 +38,19 @@ public class MailUtil {
 		final String username = "markusschmieder@freenet.de";
 		final String password = "hdmurlaub";
 
-		String to = "markusschmieder1986@googlemail.com";
+		String to = urlaubsantragBo.getFachvorgesetzter().getEmail();
 		String from = "markusschmieder@freenet.de";
 
 		String zeitraueme = "";
 		for (ZeitraumBo zeitraumBo : urlaubsantragBo.getZeitraums()) {
-			zeitraueme = zeitraueme + " \n " + "- " + zeitraueme;
+			zeitraueme = zeitraueme
+					+ " \n "
+					+ "- "
+					+ (zeitraumBo.getBeginn().compareTo(zeitraumBo.getEnde()) == 0 ? " am " + zeitraumBo
+							.getBeginnAsString() : " von " + zeitraumBo
+							.getBeginnAsString()
+							+ " bis "
+							+ zeitraumBo.getEndeAsString());
 		}
 
 		Properties props = new Properties();
@@ -60,10 +65,7 @@ public class MailUtil {
 			}
 		});
 
-		PasswordAuthentication auth = new PasswordAuthentication(
-				"markusschmieder", "hdmurlaub");
-
-		MimeMessage message = new MimeMessage(session);
+			MimeMessage message = new MimeMessage(session);
 		try {
 			message.setFrom(from);
 			message.setRecipients(Message.RecipientType.TO,

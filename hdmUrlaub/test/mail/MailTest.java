@@ -44,10 +44,21 @@ public class MailTest {
 		cal.set(Calendar.DAY_OF_MONTH, 5);
 		Date date2 = cal.getTime();
 
-		ZeitraumBo zeitraum = new ZeitraumBo(1, date1, date2);
+		cal.set(Calendar.YEAR, 2015);
+		cal.set(Calendar.MONTH, Calendar.SEPTEMBER);
+		cal.set(Calendar.DAY_OF_MONTH, 15);
+		Date date3 = cal.getTime();
 
-		// Scheißdreck
-		list.add(zeitraum);
+		cal.set(Calendar.YEAR, 2015);
+		cal.set(Calendar.MONTH, Calendar.SEPTEMBER);
+		cal.set(Calendar.DAY_OF_MONTH, 15);
+		Date date4 = cal.getTime();
+		
+		ZeitraumBo zeitraum1 = new ZeitraumBo(1, date1, date2);
+		ZeitraumBo zeitraum2 = new ZeitraumBo(1, date3, date4);
+
+		list.add(zeitraum1);
+		list.add(zeitraum2);
 		urlaubsantragBo.setZeitraums(list);
 
 		MailUtil mailUtil = new MailUtil();
