@@ -24,7 +24,7 @@ public class UrlaubsantragBo extends HdmUrlaubBusinessObject {
 
 	private MitarbeiterBo mitarbeiter;
 
-	private Long key;
+	private String key;
 
 	private String begruendung;
 
@@ -93,20 +93,20 @@ public class UrlaubsantragBo extends HdmUrlaubBusinessObject {
 		this.zeitraums = zeitraums;
 	}
 
-	public Long getKey() {
-		return key;
-	}
-
-	public void setKey(Long key) {
-		this.key = key;
-	}
-
 	public String getBegruendung() {
 		return begruendung;
 	}
 
 	public void setBegruendung(String begruendung) {
 		this.begruendung = begruendung;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
 	}
 
 }
