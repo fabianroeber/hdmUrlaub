@@ -178,7 +178,7 @@ public class DataAccess implements Serializable {
 	}
 
 	/**
-	 * Schließt den {@link EntityManager} und die {@link EntityManagerFactory};
+	 * Schlieï¿½t den {@link EntityManager} und die {@link EntityManagerFactory};
 	 */
 	public void closeEntityManagerAndFactory() {
 		entityManager.close();

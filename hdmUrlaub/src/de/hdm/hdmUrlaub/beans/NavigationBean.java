@@ -7,6 +7,7 @@ import javax.faces.bean.SessionScoped;
 
 /**
  * Dieses Bean stellt Navigationsaktionen zwischen Views und Seiten bereit.
+ * 
  * @author Fabian
  *
  */
@@ -61,8 +62,22 @@ public class NavigationBean implements Serializable {
 		return "/logout.xhtml?faces-redirect=true";
 	}
 
+	/**
+	 * Go to third Page.
+	 * 
+	 * @return
+	 */
 	public String toThirdPage() {
 		return "pm:third?transition=slide";
+	}
+
+	/**
+	 * Go to Second Page.
+	 * 
+	 * @return
+	 */
+	public String toSecondPage() {
+		return "pm:second?transition=slide";
 	}
 
 }
