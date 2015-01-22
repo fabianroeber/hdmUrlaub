@@ -23,8 +23,51 @@
 		<pm:header title="HdM Urlaubsantrag"></pm:header>
 		<pm:content>
 			<h:form>
-				<p:panel id="antrag"></p:panel>
-				<p:panel id="closed"></p:panel>
+
+				<p:panel id="antrag"
+					rendered="#{confirmBean.urlaubsantrag.status == 'OFFEN'}">
+					<p:dataTable value="#{confirmBean.urlaubsantrag}" var="antrag">
+						<p:column headerText="Vorname"></p:column>
+						<p:outputLabel value="#{antrag.mitarbeiter.vorname}"></p:outputLabel>
+						<p:column headerText="Nachname">
+							<p:outputLabel value="#{antrag.mitarbeiter.nachname}"></p:outputLabel>
+						</p:column>
+						<p:column headerText="Zeitraum">
+							<p:dataTable value="#{antrag.zeitraums}" var="zeitraum">
+								<p:column>
+									<p:outputLabel value="#{zeitraum.getBeginnAsString()} bis "></p:outputLabel>
+								</p:column>
+								<p:column>
+									<p:outputLabel value="#{zeitraum.getEndeAsString()}"></p:outputLabel>
+								</p:column>
+							</p:dataTable>
+						</p:column>
+						<p:column headerText="Tage">
+							<p:outputLabel value="#{antrag.anzahltage}"></p:outputLabel>
+						</p:column>
+					</p:dataTable>
+					<p:commandButton value="Genehmnigen" action="#{confirmBean.saveAntrag(true)}" update="@form"></p:commandButton>
+					<p:commandButton value="Ablehnen" action="#{confirmBean.saveAntrag(false)}" update="@form"></p:commandButton>
+					<p:inputText value="#{confirmBean.begruendung}" title="Begründung (optional)" label="Begründung (optional)"></p:inputText>
+				</p:panel>
+
+				<p:panel id="closed"
+					rendered="#{confirmBean.urlaubsantrag.status == 'GENEHMIGT'}">
+					<p:outputLabel value="Der Antrag wurde bereits genehmigt"></p:outputLabel>
+				</p:panel>
+
+				<p:panel id="Abgelehnt"
+					rendered="#{confirmBean.urlaubsantrag.status == 'ABGELEHNT'}">
+					<p:outputLabel value="Der Antrag wurde abgelehnt"></p:outputLabel>
+					<p:spacer></p:spacer>
+					<p:outputLabel style="color: red;"
+						value="Grund: #{confirmBean.urlaubsantrag.begruendung}"></p:outputLabel>
+				</p:panel>
+
+				<p:panel rendered="#{confirmBean.urlaubsantrag == null}">
+					<p:outputLabel
+						value="Zu dem von ihnen angeforderten Urlaubsantrag ist kein Datensatz vorhanden. Möglicherweise wurde er gelöscht oder zurückgezogen" />
+				</p:panel>
 			</h:form>
 		</pm:content>
 	</pm:page>

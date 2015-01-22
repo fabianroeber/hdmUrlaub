@@ -123,6 +123,8 @@ public class DataAccess implements Serializable {
 		urlaubsantragToSave.setVertretung(urlaubsantrag.getVertretung());
 		urlaubsantragToSave.setFachvorgesetzter(urlaubsantrag
 				.getFachvorgesetzter());
+		urlaubsantragToSave.setActivationKey(urlaubsantrag.getActivationKey());
+		urlaubsantragToSave.setBegruendung(urlaubsantrag.getBegruendung());
 
 		entityManager.persist(urlaubsantragToSave);
 
@@ -160,6 +162,9 @@ public class DataAccess implements Serializable {
 		}
 		mitarbeiterToSave.setNachname(mitarbeiter.getNachname());
 		mitarbeiterToSave.setVorname(mitarbeiter.getVorname());
+		mitarbeiterToSave.setEmail(mitarbeiter.getEmail());
+		mitarbeiterToSave.setUsername(mitarbeiter.getUsername());
+
 		entityManager.persist(mitarbeiter);
 		entityManager.getTransaction().commit();
 	}
