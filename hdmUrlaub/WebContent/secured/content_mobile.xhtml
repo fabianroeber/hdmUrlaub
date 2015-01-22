@@ -34,15 +34,17 @@
 	background-color: green !important;
 }
 </style>
+
 	<h:outputScript library="js" name="scripts.js" />
+
+
 	<script type="text/javascript">
-		var specialDays = null;
-		jQuery(function() {
-			specialDays = #{urlaubsUebersichtBean.dates};
-			window.setTimeout('bindEventsHighlights()', 500);
-					
-		});
-	</script> -->
+		var urlaubstage = [ "5-15-2015", "6-23-2015" ];
+		var dates = [ "5-16-2015", "6-24-2015" ];
+	</script>
+
+
+
 </h:head>
 <h:body>
 	<h:outputStylesheet library="css" name="main.css" />
@@ -62,8 +64,9 @@
 				<br></br>
 				<div>
 					<p:panel header="Kalender">
-						<p:calendar id="firstcal" locale="pt" value="#{urlaubsUebersichtBean.date}"
-							mode="inline" navigator="true" disabledWeekends="true"></p:calendar>
+						<p:calendar id="firstcal" value="#{urlaubsUebersichtBean.date}"
+							beforeShowDay="disableAllTheseDays" mode="inline" locale="pt"
+							navigator="true" disabledWeekends="true"></p:calendar>
 					</p:panel>
 				</div>
 

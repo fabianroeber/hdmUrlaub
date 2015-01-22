@@ -13,7 +13,7 @@ import de.hdm.hdmUrlaub.bo.UrlaubsantragBo;
 import de.hdm.hdmUrlaub.db.mapper.UrlaubsantragMapper;
 
 /**
- * Dieses Bean verwaltet die Übersicht über alle Urlaube eines Mitarbeiters.
+ * Dieses Bean verwaltet die ï¿½bersicht ï¿½ber alle Urlaube eines Mitarbeiters.
  * (urlaubuebersicht.xhtml)
  * 
  * @author Fabian
@@ -73,12 +73,20 @@ public class UrlaubUebersichtBean implements Serializable {
 
 	}
 
-	public String getDates() {
-		// mock implementation.
-		return "{'2015':{" + "'1':{" + "'1':true}," + "'4':{" + "'1':true,"
-				+ "'10':true," + "'15':true }," + "'5':{" + "'17':true}" + "}"
-				+ "}";
+	public String[] getDates() {
+
+		String[] dates = new String[2];
+		dates[1] = "2015-01-01";
+
+		return dates;
 	}
+
+	// public String getDates() {
+	// // mock implementation.
+	// return "{'2015':{" + "'1':{" + "'1':true}," + "'4':{" + "'1':true,"
+	// + "'10':true," + "'15':true }," + "'5':{" + "'17':true}" + "}"
+	// + "}";
+	// }
 
 	public List<UrlaubsantragBo> getUrlaubsantrags() {
 		return urlaubsantrags;
