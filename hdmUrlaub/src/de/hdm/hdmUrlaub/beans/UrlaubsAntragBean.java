@@ -9,6 +9,7 @@ import java.util.UUID;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.persistence.PersistenceException;
 
 import de.hdm.hdmUrlaub.bo.FachvorgesetzterBo;
 import de.hdm.hdmUrlaub.bo.UrlaubsantragBo;
@@ -119,8 +120,8 @@ public class UrlaubsAntragBean implements Serializable {
 			dataAccessBean.getDataAccess().saveUrlaubsantrag(
 					urlaubsantragMapper.getDbObject(urlaubsantrag));
 			MailUtil.sendRequestMail(urlaubsantrag);
-		} catch (Exception e) {
-			// TODO
+		} catch (PersistenceException e) {
+			// JETZT SCHMIEDER
 		}
 
 		urlaubsantrag = new UrlaubsantragBo();
