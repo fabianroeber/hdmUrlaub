@@ -12,6 +12,9 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.eclipse.jdt.internal.compiler.ast.Javadoc;
+import org.eclipse.jdt.internal.compiler.ast.JavadocArgumentExpression;
+
 import de.hdm.hdmUrlaub.bo.FachvorgesetzterBo;
 import de.hdm.hdmUrlaub.bo.UrlaubsantragBo;
 import de.hdm.hdmUrlaub.bo.ZeitraumBo;
@@ -271,8 +274,8 @@ public class MailUtil {
 	}
 
 	/**
-	 * Schickt eine Mail an den Mitarbeiter, dass sein Urlaubsantrag
-	 * best&auml;tigt wurde.
+	 * Schickt eine Mail an den Mitarbeiter und die Personalabteilung, dass der
+	 * Urlaubsantrag best&auml;tigt wurde.
 	 */
 	public static void sendConfirmedMail(UrlaubsantragBo urlaubsantragBo) {
 		String host = "mx.freenet.de";
@@ -335,6 +338,44 @@ public class MailUtil {
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
+
+		// E-Mail-Adresse der Personalabteilung
+		to = "markusschmieder1986@googlemail.com";
+
+		MimeMessage message2 = new MimeMessage(session);
+		try {
+			message2.setFrom(from);
+			message2.setRecipients(Message.RecipientType.TO,
+					InternetAddress.parse(to));
+			message2.setSubject("HdM Urlaub: Urlaubsantrag wurde genehmigt");
+
+			message2.setText("Hallo, \n \n"
+					+ urlaubsantragBo.getFachvorgesetzter().getVorname()
+					+ " "
+					+ urlaubsantragBo.getFachvorgesetzter().getNachname()
+					+ " ("
+					+ urlaubsantragBo.getFachvorgesetzter().getEmail()
+					+ ") hat den folgenden Urlausantrag genehmigt: Mitarbeiter: "
+					+ urlaubsantragBo.getMitarbeiter().getVorname()
+					+ " "
+					+ urlaubsantragBo.getMitarbeiter().getNachname()
+					+ ", "
+					+ urlaubsantragBo.getAnzahltage()
+					+ " Tage Urlaub "
+					+ (urlaubsantragBo.getZeitraums().size() > 1 ? "in den Zeiträumen: \n "
+							: "im Zeitraum: \n")
+					+ zeitraueme
+					+ "\n \n"
+					+ (urlaubsantragBo.getVertretung() != "" ? "Vertretung: "
+							+ urlaubsantragBo.getVertretung() : "") + "\n \n");
+
+			Transport.send(message);
+
+			System.out.println("Sent message successfully.");
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }
