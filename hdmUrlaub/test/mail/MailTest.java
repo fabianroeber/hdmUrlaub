@@ -62,7 +62,7 @@ public class MailTest {
 		urlaubsantragBo.setZeitraums(list);
 
 		MailUtil mailUtil = new MailUtil();
-		MailUtil.sendRequestMail(urlaubsantragBo);
+		MailUtil.sendCancellationMail(urlaubsantragBo);
 	}
 
 }
