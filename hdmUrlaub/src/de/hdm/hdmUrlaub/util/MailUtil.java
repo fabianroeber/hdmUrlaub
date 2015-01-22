@@ -59,8 +59,6 @@ public class MailUtil {
 		props.put("mail.smtp.port", "587");
 		props.put("mail.smtp.ssl.trust", host);
 
-
-
 		Session session = Session.getInstance(props, new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(username, password);
@@ -68,6 +66,7 @@ public class MailUtil {
 		});
 
 		MimeMessage message = new MimeMessage(session);
+		MimeMessage message2 = new MimeMessage(session);
 		try {
 			message.setFrom(from);
 			message.setRecipients(Message.RecipientType.TO,
@@ -94,6 +93,35 @@ public class MailUtil {
 					+ urlaubsantragBo.getKey());
 
 			Transport.send(message);
+
+			System.out.println("Sent message successfully.");
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+
+		to = urlaubsantragBo.getMitarbeiter().getEmail();
+		try {
+			message2.setFrom(from);
+			message2.setRecipients(Message.RecipientType.TO,
+					InternetAddress.parse(to));
+			message2.setSubject("HdM Urlaub: Urlaubsantrag");
+
+			message2.setText("Hallo, \n \n"
+					+ "folgender Urlaubsantrag wurde erfolgreich an den Fachvorgesetzten "
+					+ urlaubsantragBo.getFachvorgesetzter().getVorname()
+					+ " "
+					+ urlaubsantragBo.getFachvorgesetzter().getNachname()
+					+ " zur Genhemigung gesendet: "
+					+ urlaubsantragBo.getAnzahltage()
+					+ " Tage Urlaub "
+					+ (urlaubsantragBo.getZeitraums().size() > 1 ? "in den Zeiträumen: \n "
+							: "im Zeitraum: \n")
+					+ zeitraueme
+					+ "\n \n"
+					+ (urlaubsantragBo.getVertretung() != "" ? "Vertretung: "
+							+ urlaubsantragBo.getVertretung() : ""));
+
+			Transport.send(message2);
 
 			System.out.println("Sent message successfully.");
 		} catch (MessagingException e) {
@@ -135,8 +163,6 @@ public class MailUtil {
 		props.put("mail.smtp.port", "587");
 		props.put("mail.smtp.ssl.trust", host);
 
-
-
 		Session session = Session.getInstance(props, new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(username, password);
@@ -164,8 +190,7 @@ public class MailUtil {
 					+ zeitraueme
 					+ "\n \n"
 					+ (urlaubsantragBo.getVertretung() != "" ? "Vertretung: "
-							+ urlaubsantragBo.getVertretung() : "")
-					+ "\n \n"
+							+ urlaubsantragBo.getVertretung() : "") + "\n \n"
 					+ "Der Urlaubsantrag wurde damit aus dem System gelöscht.");
 
 			Transport.send(message);
@@ -176,8 +201,6 @@ public class MailUtil {
 		}
 
 	}
-		
-	
 
 	/**
 	 * Schickt eine Mail an den Mitarbeiter, dass sein Urlaubsantrag abgelehnt
@@ -209,8 +232,6 @@ public class MailUtil {
 		props.put("mail.smtp.port", "587");
 		props.put("mail.smtp.ssl.trust", host);
 
-
-
 		Session session = Session.getInstance(props, new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(username, password);
@@ -238,8 +259,7 @@ public class MailUtil {
 					+ zeitraueme
 					+ "\n \n"
 					+ (urlaubsantragBo.getVertretung() != "" ? "Vertretung: "
-							+ urlaubsantragBo.getVertretung() : "")
-					+ "\n \n"
+							+ urlaubsantragBo.getVertretung() : "") + "\n \n"
 					+ "Begründung: " + urlaubsantragBo.getBegruendung());
 
 			Transport.send(message);
@@ -280,8 +300,6 @@ public class MailUtil {
 		props.put("mail.smtp.port", "587");
 		props.put("mail.smtp.ssl.trust", host);
 
-
-
 		Session session = Session.getInstance(props, new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(username, password);
@@ -309,8 +327,7 @@ public class MailUtil {
 					+ zeitraueme
 					+ "\n \n"
 					+ (urlaubsantragBo.getVertretung() != "" ? "Vertretung: "
-							+ urlaubsantragBo.getVertretung() : "")
-					+ "\n \n");
+							+ urlaubsantragBo.getVertretung() : "") + "\n \n");
 
 			Transport.send(message);
 
