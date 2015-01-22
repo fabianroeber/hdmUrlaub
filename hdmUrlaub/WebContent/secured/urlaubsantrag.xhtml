@@ -24,7 +24,7 @@
 							<p:column>
 								<p:commandButton id="delete" title="Entfernen"
 									action="#{urlaubsantragBean.removeZeitraum(row)}"
-									icon="ui-icon-minus" update="zeitraumlist" ></p:commandButton>
+									icon="ui-icon-minus" update="zeitraumlist"></p:commandButton>
 							</p:column>
 						</pm:field>
 					</p:dataList>
@@ -71,9 +71,13 @@
 			</p:panel>
 			<pm:field>
 				<p:commandButton value="Speichern" ajax="false"
+					update="growl, :#{p:component('growlMenue')}" global="true"
 					action="#{urlaubsantragBean.saveUrlaubsantrag()}"></p:commandButton>
 				<p:button value="Zurück" outcome="pm:first?transition=slide"></p:button>
 			</pm:field>
+			<p:growl id="growl" showDetail="true" sticky="true" />
+
+
 
 		</pm:content>
 

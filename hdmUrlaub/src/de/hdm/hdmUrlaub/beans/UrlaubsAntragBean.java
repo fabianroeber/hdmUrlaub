@@ -6,9 +6,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.persistence.PersistenceException;
 
 import de.hdm.hdmUrlaub.bo.FachvorgesetzterBo;
@@ -116,16 +118,25 @@ public class UrlaubsAntragBean implements Serializable {
 		urlaubsantrag.setFachvorgesetzter(fachvorgesetzterBo);
 		urlaubsantrag.setKey(UUID.randomUUID().toString());
 
+		FacesContext context = FacesContext.getCurrentInstance();
+
 		try {
 			dataAccessBean.getDataAccess().saveUrlaubsantrag(
 					urlaubsantragMapper.getDbObject(urlaubsantrag));
 			MailUtil.sendRequestMail(urlaubsantrag);
 		} catch (PersistenceException e) {
-			// JETZT SCHMIEDER
+			context.addMessage(null, new FacesMessage("Fehlgeschlagen",
+					"Vorgang fehlgeschlagen! \n " + e.getMessage()));
 		}
 
+		context.addMessage(
+				null,
+				new FacesMessage(
+						"Erfolgreich",
+						"Der Urlaubsantrag wurde gespeichert und an den Fachvorgesetzten zur Genehmigung gesendet!"));
 		urlaubsantrag = new UrlaubsantragBo();
 		return navigationBean.toSecondPage();
+
 	}
 
 	public UrlaubsantragBo getUrlaubsantrag() {
