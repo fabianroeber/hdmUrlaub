@@ -25,7 +25,7 @@ PrimeFaces.locales['pt'] = {
 	currentText : 'Início',
 	monthNames : [ 'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli',
 			'August', 'September', 'Oktober', 'November', 'Dezember' ],
-	monthNamesShort : [ 'Jan', 'Fev', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug',
+	monthNamesShort : [ 'Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug',
 			'Sep', 'Okt', 'Nov', 'Dez' ],
 	dayNames : [ 'Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag',
 			'Freitag', 'Samstag' ],

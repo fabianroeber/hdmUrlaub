@@ -1,6 +1,9 @@
 package de.hdm.hdmUrlaub.beans;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +13,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 import de.hdm.hdmUrlaub.bo.UrlaubsantragBo;
+import de.hdm.hdmUrlaub.bo.ZeitraumBo;
 import de.hdm.hdmUrlaub.db.mapper.UrlaubsantragMapper;
 
 /**
@@ -27,10 +31,10 @@ public class UrlaubUebersichtBean implements Serializable {
 
 	private Date date;
 
-	private List<UrlaubsantragBo> urlaubsantrags;
+	private List<UrlaubsantragBo> urlaubsantraege;
 
 	private UrlaubsantragMapper urlaubsantragMapper;
-	
+
 	private String[] dates;
 
 	public void setDates(String[] dates) {
@@ -64,15 +68,15 @@ public class UrlaubUebersichtBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		getAllUrlaubsantrags();
+		getAllUrlaubsantraege();
 	}
 
 	/**
 	 * Diese Methode holt alle {@link UrlaubsantragBo} aus der Datenbank.
 	 */
-	public void getAllUrlaubsantrags() {
+	public void getAllUrlaubsantraege() {
 		if (userBean.getMitarbeiter() != null) {
-			urlaubsantrags = urlaubsantragMapper.getBoList(dataAccessBean
+			urlaubsantraege = urlaubsantragMapper.getBoList(dataAccessBean
 					.getDataAccess().getAllUrlaubsantrags(
 							userBean.getMitarbeiter().getId()));
 		}
@@ -80,19 +84,44 @@ public class UrlaubUebersichtBean implements Serializable {
 	}
 
 	public String[] getDates() {
-		// HIER SCHMIEDER DATEN AUS DEN ANTRÄGEN LADEN
-		String[] dates = new String[2];
-		dates[0] = "5-16-2015";
-		
-		return dates;
+		// HIER SCHMIEDER DATEN AUS DEN ANTRÄGEN LADEN // "5-16-2015";
+		List<String> result = new ArrayList<String>();
+		Calendar start = Calendar.getInstance();
+		Calendar end = Calendar.getInstance();
+
+		SimpleDateFormat formatter = new SimpleDateFormat("M-d-yyyy");
+
+		for (UrlaubsantragBo ua : urlaubsantraege) {
+
+			for (ZeitraumBo zr : ua.getZeitraums()) {
+				start.setTime(zr.getBeginn());
+				end.setTime(zr.getEnde());
+				end.add(Calendar.DAY_OF_YEAR, 1); // Add 1 day to endDate to
+													// make sure endDate is
+													// included into the final
+													// list
+				while (start.before(end)) {
+					
+					result.add(formatter.format(start.getTime()));
+					start.add(Calendar.DAY_OF_YEAR, 1);
+				}
+
+			}
+
+		}
+		String[] resultAr = new String[result.size()];
+		resultAr = result.toArray(resultAr);
+		for(String s : resultAr)
+		    System.out.println(s);
+		return resultAr;
 	}
 
 	public List<UrlaubsantragBo> getUrlaubsantrags() {
-		return urlaubsantrags;
+		return urlaubsantraege;
 	}
 
-	public void setUrlaubsantrags(List<UrlaubsantragBo> urlaubsantrags) {
-		this.urlaubsantrags = urlaubsantrags;
+	public void setUrlaubsantrags(List<UrlaubsantragBo> urlaubsantraege) {
+		this.urlaubsantraege = urlaubsantraege;
 	}
 
 	public Date getDate() {
