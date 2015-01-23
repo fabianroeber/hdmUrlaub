@@ -7,7 +7,7 @@
 	xmlns:o="http://omnifaces.org/ui"
 	xmlns:of="http://omnifaces.org/functions"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-	<h:form>
+	<h:form id="form">
 		<pm:header title="Urlaubsantrag stellen">
 		</pm:header>
 		<pm:content>
@@ -24,7 +24,7 @@
 							<p:column>
 								<p:commandButton id="delete" title="Entfernen"
 									action="#{urlaubsantragBean.removeZeitraum(row)}"
-									icon="ui-icon-minus" update="zeitraumlist"></p:commandButton>
+									icon="ui-icon-minus" update="zeitraumlist :second:form:anzahltagelabel"></p:commandButton>
 							</p:column>
 						</pm:field>
 					</p:dataList>

@@ -80,7 +80,7 @@ public class ZeitraumBo extends HdmUrlaubBusinessObject {
 
 		int anzahltage = 0;
 
-		// Eins zurückgeben, wenn Start und Ende der gleiche Tag und kein
+		// Eins zurï¿½ckgeben, wenn Start und Ende der gleiche Tag und kein
 		// Wochenende oder Feiertag
 		if (!HolidayUtil.isHoliday(startCal) && startCal.equals(endCal)) {
 			return 1;
@@ -92,10 +92,10 @@ public class ZeitraumBo extends HdmUrlaubBusinessObject {
 		}
 
 		do {
-			startCal.add(Calendar.DAY_OF_MONTH, 1);
 			if (!HolidayUtil.isHoliday(startCal)) {
 				anzahltage++;
 			}
+			startCal.add(Calendar.DAY_OF_MONTH, 1);
 		} while (startCal.getTimeInMillis() <= endCal.getTimeInMillis());
 
 		return anzahltage;
