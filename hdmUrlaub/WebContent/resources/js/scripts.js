@@ -1,5 +1,13 @@
 function disableAllTheseDays(date) {
 	var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+
+	
+	if (date.getDay() === 6) {
+		return [ false, '' ]
+	}
+	if (date.getDay() === 0) {
+		return [ false, '' ]
+	}
 	for (i = 0; i < urlaubstage.length; i++) {
 		if ($.inArray((m + 1) + '-' + d + '-' + y, urlaubstage) != -1) {
 			return [ false, 'markOrange' ];

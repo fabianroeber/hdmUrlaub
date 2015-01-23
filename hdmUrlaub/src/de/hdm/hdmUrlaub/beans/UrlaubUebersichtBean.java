@@ -30,6 +30,12 @@ public class UrlaubUebersichtBean implements Serializable {
 	private List<UrlaubsantragBo> urlaubsantrags;
 
 	private UrlaubsantragMapper urlaubsantragMapper;
+	
+	private String[] dates;
+
+	public void setDates(String[] dates) {
+		this.dates = dates;
+	}
 
 	/**
 	 * Hier wird die Klasse {@link DataAccessBean} injiziert, die den
@@ -74,19 +80,12 @@ public class UrlaubUebersichtBean implements Serializable {
 	}
 
 	public String[] getDates() {
-
+		// HIER SCHMIEDER DATEN AUS DEN ANTRÄGEN LADEN
 		String[] dates = new String[2];
-		dates[1] = "2015-01-01";
-
+		dates[0] = "5-16-2015";
+		
 		return dates;
 	}
-
-	// public String getDates() {
-	// // mock implementation.
-	// return "{'2015':{" + "'1':{" + "'1':true}," + "'4':{" + "'1':true,"
-	// + "'10':true," + "'15':true }," + "'5':{" + "'17':true}" + "}"
-	// + "}";
-	// }
 
 	public List<UrlaubsantragBo> getUrlaubsantrags() {
 		return urlaubsantrags;
