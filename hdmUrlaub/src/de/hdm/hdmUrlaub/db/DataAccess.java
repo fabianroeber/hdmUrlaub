@@ -35,7 +35,7 @@ public class DataAccess implements Serializable {
 	private static final String PERSISTENCEUNIT = "hdmUrlaub";
 
 	public DataAccess() {
-		getEntityManager();
+		getEntityManagerFactory();
 	}
 
 	/**
@@ -45,6 +45,8 @@ public class DataAccess implements Serializable {
 	 */
 	public List<Urlaubsantrag> getAllUrlaubsantrags(Integer mitarbeiterId)
 			throws PersistenceException {
+
+		entityManager = entityManagerFactory.createEntityManager();
 
 		List<Urlaubsantrag> urlaubsantrags = entityManager
 				.createQuery(
@@ -62,9 +64,13 @@ public class DataAccess implements Serializable {
 	 */
 	public List<Mitarbeiter> getAllMitarbeiter() throws PersistenceException {
 
+		entityManager = entityManagerFactory.createEntityManager();
+
 		List<Mitarbeiter> mitarbeiters = entityManager.createQuery(
 				"Select mitarbeiter FROM Mitarbeiter mitarbeiter",
 				Mitarbeiter.class).getResultList();
+
+		entityManager.close();
 
 		return mitarbeiters;
 	}
@@ -72,22 +78,32 @@ public class DataAccess implements Serializable {
 	public Mitarbeiter getMitarbeiterByUserName(String username)
 			throws PersistenceException {
 
+		entityManager = entityManagerFactory.createEntityManager();
+
 		Mitarbeiter mitarbeiter = entityManager
 				.createQuery(
 						"SELECT mitarbeiter FROM Mitarbeiter mitarbeiter where mitarbeiter.username = '"
 								+ username + "'", Mitarbeiter.class)
 				.getSingleResult();
+
+		entityManager.close();
+
 		return mitarbeiter;
 	}
 
 	public Urlaubsantrag getUrlaubsantragByKey(String key)
 			throws PersistenceException {
 
+		entityManager = entityManagerFactory.createEntityManager();
+
 		Urlaubsantrag urlaubsantrag = entityManager
 				.createQuery(
 						"SELECT urlaubsantrag FROM Urlaubsantrag urlaubsantrag where urlaubsantrag.activationKey = '"
 								+ key + "'", Urlaubsantrag.class)
 				.getSingleResult();
+
+		entityManager.close();
+
 		return urlaubsantrag;
 	}
 
@@ -98,10 +114,15 @@ public class DataAccess implements Serializable {
 	 */
 	public List<Fachvorgesetzter> getAllFachvorgesetzter()
 			throws PersistenceException {
+
+		entityManager = entityManagerFactory.createEntityManager();
+
 		List<Fachvorgesetzter> fachvorgesetzters = entityManager
 				.createQuery(
 						"Select fachvorgesetzter FROM Fachvorgesetzter fachvorgesetzter",
 						Fachvorgesetzter.class).getResultList();
+
+		entityManager.close();
 
 		return fachvorgesetzters;
 	}
@@ -113,6 +134,9 @@ public class DataAccess implements Serializable {
 	 */
 	public void saveUrlaubsantrag(Urlaubsantrag urlaubsantrag)
 			throws PersistenceException {
+
+		entityManager = entityManagerFactory.createEntityManager();
+
 		entityManager.getTransaction().begin();
 		Urlaubsantrag urlaubsantragToSave;
 		if (urlaubsantrag.getId() != null) {
@@ -150,6 +174,8 @@ public class DataAccess implements Serializable {
 			entityManager.persist(zeitraumToSave);
 		}
 		entityManager.getTransaction().commit();
+
+		entityManager.close();
 	}
 
 	/**
@@ -159,6 +185,9 @@ public class DataAccess implements Serializable {
 	 */
 	public void saveMitarbeiter(Mitarbeiter mitarbeiter)
 			throws PersistenceException {
+
+		entityManager = entityManagerFactory.createEntityManager();
+
 		entityManager.getTransaction().begin();
 		Mitarbeiter mitarbeiterToSave;
 		if (mitarbeiter.getId() != null) {
@@ -174,6 +203,8 @@ public class DataAccess implements Serializable {
 
 		entityManager.persist(mitarbeiter);
 		entityManager.getTransaction().commit();
+
+		entityManager.close();
 	}
 
 	/**
@@ -183,9 +214,14 @@ public class DataAccess implements Serializable {
 	 */
 	public void deleteUrlaubsantrag(Urlaubsantrag urlaubsantrag)
 			throws PersistenceException {
+
+		entityManager = entityManagerFactory.createEntityManager();
+
 		entityManager.getTransaction().begin();
 		entityManager.remove(urlaubsantrag);
 		entityManager.getTransaction().commit();
+
+		entityManager.close();
 	}
 
 	/**
@@ -194,17 +230,15 @@ public class DataAccess implements Serializable {
 	 * 
 	 * @return
 	 */
-	private void getEntityManager() {
+	private void getEntityManagerFactory() {
 		entityManagerFactory = Persistence
 				.createEntityManagerFactory(PERSISTENCEUNIT);
-		entityManager = entityManagerFactory.createEntityManager();
 	}
 
 	/**
 	 * Schlie�t den {@link EntityManager} und die {@link EntityManagerFactory};
 	 */
-	public void closeEntityManagerAndFactory() {
-		entityManager.close();
+	public void closeEntityManagerFactory() {
 		entityManagerFactory.close();
 	}
 

@@ -34,6 +34,6 @@ public class DataBaseTestUrlaubsantragSpeichern {
 		antrag.setFachvorgesetzter(fachvorgesetzter);
 
 		dataAcces.saveUrlaubsantrag(antrag);
-		dataAcces.closeEntityManagerAndFactory();
+
 	}
 }
