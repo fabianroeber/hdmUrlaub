@@ -12,14 +12,17 @@
 		<h:form>
 			<ui:repeat var="antrag"
 				value="#{urlaubsUebersichtBean.urlaubsantrags}">
-				<p:panel
-					header="#{zeitraum.getBeginnAsString()} bis #{zeitraum.getEndeAsString()} | #{zeitraum.getAnzahltage()} Urlaubstag/e"
-					value="#{antrag.zeitraums}" var="zeitraum">
-					<p:outputLabel value="Status" />
-					<p:button
-						styleClass="#{antrag.status == 'OFFEN' ? 'markOrange' : antrag.status == 'GENEHMIGT' ? 'markGreen' : antrag.status == 'ABGELEHNT' ? 'markRed' : ''}"
-						value="#{antrag.status.text}"></p:button>
-				</p:panel>
+				<ui:repeat var="zeitraum" value="#{antrag.zeitraums}">
+					<p:panel
+						header="#{zeitraum.getBeginnAsString()} bis #{zeitraum.getEndeAsString()} | #{zeitraum.getAnzahltage()} Urlaubstag/e"
+						value="#{antrag.zeitraums}" var="zeitraum">
+						<p:outputLabel value="Status" />
+						<p:button
+							styleClass="#{antrag.status == 'OFFEN' ? 'markOrange' : antrag.status == 'GENEHMIGT' ? 'markGreen' : antrag.status == 'ABGELEHNT' ? 'markRed' : ''}"
+							value="#{antrag.status.text}"></p:button>
+					</p:panel>
+					<p:spacer></p:spacer>
+				</ui:repeat>
 			</ui:repeat>
 			<p:button value="Zurück" outcome="pm:first?transition=slide"></p:button>
 		</h:form>
