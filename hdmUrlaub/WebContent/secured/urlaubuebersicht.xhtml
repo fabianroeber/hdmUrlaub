@@ -10,34 +10,17 @@
 	<pm:header title="Urlaubsübersicht"></pm:header>
 	<pm:content>
 		<h:form>
-			<p:panel header="Geplante Urlaube">
-				<p:dataTable var="antrag" id="urlaube"
-					value="#{urlaubsUebersichtBean.urlaubsantrags}">
-					<p:column headerText="Zeiträume">
-						<p:dataTable value="#{antrag.zeitraums}" var="zeitraum">
-							<p:column priority="1">
-								<p:outputLabel
-									value="#{zeitraum.getBeginnAsString()} bis #{zeitraum.getEndeAsString()} " />
-							</p:column>
-							<p:column>
-								<p:outputLabel style="font-weight: bold;"
-									value=" | #{zeitraum.getAnzahltage()} Urlaubstag/e" />
-							</p:column>
-						</p:dataTable>
-					</p:column>
-
-					<p:column headerText="Fachvorgesetzter">
-						<p:outputLabel
-							value="#{antrag.fachvorgesetzter.vorname} #{antrag.fachvorgesetzter.nachname}"></p:outputLabel>
-					</p:column>
-					<p:column headerText="Status">
-						<p:button
-							styleClass="#{antrag.status == 'OFFEN' ? 'markOrange' : antrag.status == 'GENEHMIGT' ? 'markGreen' : antrag.status == 'ABGELEHNT' ? 'markRed' : ''}"
-							value="#{antrag.status.text}"></p:button>
-					</p:column>
-				</p:dataTable>
-
-			</p:panel>
+			<ui:repeat var="antrag"
+				value="#{urlaubsUebersichtBean.urlaubsantrags}">
+				<p:panel
+					header="#{zeitraum.getBeginnAsString()} bis #{zeitraum.getEndeAsString()} | #{zeitraum.getAnzahltage()} Urlaubstag/e"
+					value="#{antrag.zeitraums}" var="zeitraum">
+					<p:outputLabel value="Status" />
+					<p:button
+						styleClass="#{antrag.status == 'OFFEN' ? 'markOrange' : antrag.status == 'GENEHMIGT' ? 'markGreen' : antrag.status == 'ABGELEHNT' ? 'markRed' : ''}"
+						value="#{antrag.status.text}"></p:button>
+				</p:panel>
+			</ui:repeat>
 			<p:button value="Zurück" outcome="pm:first?transition=slide"></p:button>
 		</h:form>
 	</pm:content>
