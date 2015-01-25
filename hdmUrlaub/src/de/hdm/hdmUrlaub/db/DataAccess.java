@@ -201,7 +201,7 @@ public class DataAccess implements Serializable {
 		mitarbeiterToSave.setEmail(mitarbeiter.getEmail());
 		mitarbeiterToSave.setUsername(mitarbeiter.getUsername());
 
-		entityManager.persist(mitarbeiter);
+		entityManager.persist(mitarbeiterToSave);
 		entityManager.getTransaction().commit();
 
 		entityManager.close();
