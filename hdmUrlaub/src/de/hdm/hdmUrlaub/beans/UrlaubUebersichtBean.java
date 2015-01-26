@@ -8,13 +8,19 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.persistence.PersistenceException;
 
 import de.hdm.hdmUrlaub.bo.UrlaubsantragBo;
 import de.hdm.hdmUrlaub.bo.ZeitraumBo;
+import de.hdm.hdmUrlaub.db.DataAccess;
+import de.hdm.hdmUrlaub.db.dbmodel.Urlaubsantrag;
 import de.hdm.hdmUrlaub.db.mapper.UrlaubsantragMapper;
+import de.hdm.hdmUrlaub.util.MailUtil;
 
 /**
  * Dieses Bean verwaltet die �bersicht �ber alle Urlaube eines Mitarbeiters.
@@ -83,6 +89,25 @@ public class UrlaubUebersichtBean implements Serializable {
 
 	}
 
+	public void deleteUrlaubsantrag(UrlaubsantragBo urlaubsantrag) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		try {
+			dataAccessBean.getDataAccess().deleteUrlaubsantrag(
+					urlaubsantragMapper.getDbObject(urlaubsantrag));
+			MailUtil.sendCancellationMail(urlaubsantrag);
+		} catch (PersistenceException e) {
+			context.addMessage(null, new FacesMessage("Fehlgeschlagen",
+					"Löschvorgang fehlgeschlagen! \n " + e.getMessage()));
+		}
+
+		context.addMessage(
+				null,
+				new FacesMessage(
+						"Erfolgreich",
+						"Der Urlaubsantrag wurde erfolgreich gelöscht. Ihr Fachvorgesetzter wurde über die Löschung informiert."));
+
+	}
+
 	public String[] getDates() {
 		// HIER SCHMIEDER DATEN AUS DEN ANTRÄGEN LADEN // "5-16-2015";
 		List<String> result = new ArrayList<String>();
@@ -101,7 +126,7 @@ public class UrlaubUebersichtBean implements Serializable {
 													// included into the final
 													// list
 				while (start.before(end)) {
-					
+
 					result.add(formatter.format(start.getTime()));
 					start.add(Calendar.DAY_OF_YEAR, 1);
 				}
@@ -111,8 +136,6 @@ public class UrlaubUebersichtBean implements Serializable {
 		}
 		String[] resultAr = new String[result.size()];
 		resultAr = result.toArray(resultAr);
-		for(String s : resultAr)
-		    System.out.println(s);
 		return resultAr;
 	}
 

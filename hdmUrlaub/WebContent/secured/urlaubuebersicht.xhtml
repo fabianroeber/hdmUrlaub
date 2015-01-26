@@ -10,7 +10,7 @@
 	<pm:header title="Urlaubsübersicht"></pm:header>
 	<pm:content>
 		<h:form>
-			<ui:repeat var="antrag"
+			<ui:repeat id="repeat" var="antrag"
 				value="#{urlaubsUebersichtBean.urlaubsantrags}">
 				<ui:repeat var="zeitraum" value="#{antrag.zeitraums}">
 					<p:panel
@@ -34,9 +34,11 @@
 								</p:button>
 							</p:column>
 							<p:column>
-								<p:button value="Löschen" icon="ui-icon-star"
+								<p:commandButton value="Löschen" icon="ui-icon-star" global="true" update="growl"
+									action="#{urlaubsUebersichtBean.deleteUrlaubsantrag(antrag)}"
 									style="width:170px">
-								</p:button>
+								</p:commandButton>
+								<p:growl id="growl" showDetail="true" sticky="true" />
 							</p:column>
 
 						</p:panelGrid>
