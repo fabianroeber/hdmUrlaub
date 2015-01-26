@@ -107,6 +107,12 @@ public class UrlaubUebersichtBean implements Serializable {
 						"Der Urlaubsantrag wurde erfolgreich gelöscht. Ihr Fachvorgesetzter wurde über die Löschung informiert."));
 
 	}
+	
+	public String editUrlaubsantrag(UrlaubsantragBo urlaubsantrag) {
+		
+		return navigationBean.toSecondPage();
+
+	}
 
 	public String[] getDates() {
 		// HIER SCHMIEDER DATEN AUS DEN ANTRÄGEN LADEN // "5-16-2015";

@@ -29,12 +29,15 @@
 									value="#{antrag.status}" />
 							</p:column>
 							<p:column>
-								<p:button value="Bearbeiten" icon="ui-icon-star"
+								<p:commandButton value="Bearbeiten"
+									outcome="pm:second?transition=slide" icon="ui-icon-star"
+									action="#{urlaubsUebersichtBean.editUrlaubsantrag(antrag)}"
 									style="width:170px">
-								</p:button>
+								</p:commandButton>
 							</p:column>
 							<p:column>
-								<p:commandButton value="Löschen" icon="ui-icon-star" global="true" update="growl"
+								<p:commandButton value="Löschen" icon="ui-icon-star"
+									global="true" update="growl"
 									action="#{urlaubsUebersichtBean.deleteUrlaubsantrag(antrag)}"
 									style="width:170px">
 								</p:commandButton>
@@ -48,6 +51,9 @@
 					<p:spacer></p:spacer>
 				</ui:repeat>
 			</ui:repeat>
+			<pm:page id="second" swatch="a">
+				<ui:include src="urlaubsantrag.xhtml"></ui:include>
+			</pm:page>
 			<p:button value="Zurück" outcome="pm:first?transition=slide"></p:button>
 		</h:form>
 	</pm:content>
