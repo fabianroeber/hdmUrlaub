@@ -16,35 +16,33 @@
 					<p:panel
 						header="#{zeitraum.getBeginnAsString()} bis #{zeitraum.getEndeAsString()} | #{zeitraum.getAnzahltage()} Urlaubstag/e"
 						value="#{antrag.zeitraums}" var="zeitraum">
-						<p:panelGrid columnClasses="column1,column2,column3" columns="4"
-							style="width: 800px">
-							<p:column>
+						<pm:field>
+							<p:panelGrid columns="2">
 								<p:graphicImage id="status"
 									value="#{antrag.status == 'OFFEN' ? '/resources/images/clock.png' : antrag.status == 'GENEHMIGT' ? '/resources/images/like.png' : antrag.status == 'ABGELEHNT' ? '/resources/images/dislike.png' : ''}"
 									height="60px" width="60px"></p:graphicImage>
-							</p:column>
-							<p:column>
+
 								<p:tooltip id="toolTipFade" for="status"
 									style="margin-top: 20px; width: 90px; text-align: center;"
 									value="#{antrag.status}" />
-							</p:column>
-							<p:column>
-								<p:commandButton value="Bearbeiten"
-									outcome="pm:second?transition=slide" icon="ui-icon-star"
-									action="#{urlaubsUebersichtBean.editUrlaubsantrag(antrag)}"
-									style="width:170px">
-								</p:commandButton>
-							</p:column>
-							<p:column>
-								<p:commandButton value="Löschen" icon="ui-icon-star"
-									global="true" update="growl"
-									action="#{urlaubsUebersichtBean.deleteUrlaubsantrag(antrag)}"
-									style="width:170px">
-								</p:commandButton>
-								<p:growl id="growl" showDetail="true" sticky="true" />
-							</p:column>
+							</p:panelGrid>
+						</pm:field>
+						<pm:field>
+							<p:commandButton value="Bearbeiten"
+								outcome="pm:second?transition=slide" icon="ui-icon-edit"
+								action="#{urlaubsUebersichtBean.editUrlaubsantrag(antrag)}"
+								style="width:170px">
+							</p:commandButton>
+						</pm:field>
+						<pm:field>
+							<p:commandButton value="Löschen" icon="ui-icon-delete"
+								global="true" update="growl"
+								action="#{urlaubsUebersichtBean.deleteUrlaubsantrag(antrag)}"
+								style="width:170px">
+							</p:commandButton>
+						</pm:field>
+						<p:growl id="growl" showDetail="true" sticky="true" />
 
-						</p:panelGrid>
 
 
 					</p:panel>

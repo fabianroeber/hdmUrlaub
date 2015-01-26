@@ -3,6 +3,7 @@ package de.hdm.hdmUrlaub.beans;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -41,11 +42,7 @@ public class UrlaubUebersichtBean implements Serializable {
 
 	private UrlaubsantragMapper urlaubsantragMapper;
 
-	private String[] dates;
-
-	public void setDates(String[] dates) {
-		this.dates = dates;
-	}
+	private String dates;
 
 	/**
 	 * Hier wird die Klasse {@link DataAccessBean} injiziert, die den
@@ -75,6 +72,7 @@ public class UrlaubUebersichtBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		getAllUrlaubsantraege();
+		loadDates();
 	}
 
 	/**
@@ -107,15 +105,14 @@ public class UrlaubUebersichtBean implements Serializable {
 						"Der Urlaubsantrag wurde erfolgreich gelöscht. Ihr Fachvorgesetzter wurde über die Löschung informiert."));
 
 	}
-	
+
 	public String editUrlaubsantrag(UrlaubsantragBo urlaubsantrag) {
-		
+
 		return navigationBean.toSecondPage();
 
 	}
 
-	public String[] getDates() {
-		// HIER SCHMIEDER DATEN AUS DEN ANTRÄGEN LADEN // "5-16-2015";
+	private void loadDates() {
 		List<String> result = new ArrayList<String>();
 		Calendar start = Calendar.getInstance();
 		Calendar end = Calendar.getInstance();
@@ -133,7 +130,7 @@ public class UrlaubUebersichtBean implements Serializable {
 													// list
 				while (start.before(end)) {
 
-					result.add(formatter.format(start.getTime()));
+					result.add("'" + formatter.format(start.getTime()) +"'");
 					start.add(Calendar.DAY_OF_YEAR, 1);
 				}
 
@@ -142,7 +139,9 @@ public class UrlaubUebersichtBean implements Serializable {
 		}
 		String[] resultAr = new String[result.size()];
 		resultAr = result.toArray(resultAr);
-		return resultAr;
+
+		dates = Arrays.toString(resultAr);
+
 	}
 
 	public List<UrlaubsantragBo> getUrlaubsantrags() {
@@ -185,4 +184,11 @@ public class UrlaubUebersichtBean implements Serializable {
 		this.userBean = userBean;
 	}
 
+	public String getDates() {
+		return dates;
+	}
+
+	public void setDates(String dates) {
+		this.dates = dates;
+	}
 }

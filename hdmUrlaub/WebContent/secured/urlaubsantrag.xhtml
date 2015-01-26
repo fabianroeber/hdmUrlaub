@@ -24,20 +24,23 @@
 							<p:column>
 								<p:commandButton id="delete" title="Entfernen"
 									action="#{urlaubsantragBean.removeZeitraum(row)}"
-									icon="ui-icon-minus" update="zeitraumlist :second:form:anzahltagelabel"></p:commandButton>
+									icon="ui-icon-delete"
+									update="zeitraumlist :second:form:anzahltagelabel"></p:commandButton>
 							</p:column>
 						</pm:field>
 					</p:dataList>
 				</pm:field>
 				<pm:field>
 					<p:outputLabel for="beginn" value="Urlaubsbeginn: "></p:outputLabel>
-					<p:calendar readonlyInput="true" disabledWeekends="true" id="beginn" required="true"
-						value="#{urlaubsantragBean.beginn}"></p:calendar>
+					<p:calendar readonlyInput="true" disabledWeekends="true" beforeShowDay="disableAllTheseDays"
+						id="beginn" required="true" value="#{urlaubsantragBean.beginn}"
+						locale="pt"></p:calendar>
 				</pm:field>
 				<pm:field>
-					<p:outputLabel for="ende" value="Urlaubsanfang: "></p:outputLabel>
-					<p:calendar readonlyInput="true" disabledWeekends="true" id="ende" required="true"
-						value="#{urlaubsantragBean.ende}"></p:calendar>
+					<p:outputLabel for="ende" value="Urlaubsende: "></p:outputLabel>
+					<p:calendar readonlyInput="true" disabledWeekends="true" id="ende"
+						beforeShowDay="disableAllTheseDays" required="true"
+						value="#{urlaubsantragBean.ende}" locale="pt"></p:calendar>
 				</pm:field>
 				<pm:field>
 					<p:commandButton value="Zeitraum hinzufügen"
