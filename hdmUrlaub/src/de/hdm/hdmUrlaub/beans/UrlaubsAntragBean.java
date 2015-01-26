@@ -1,11 +1,15 @@
 package de.hdm.hdmUrlaub.beans;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -31,8 +35,16 @@ import de.hdm.hdmUrlaub.util.MailUtil;
 @ManagedBean(name = "urlaubsantragBean")
 @ViewScoped
 public class UrlaubsAntragBean implements Serializable {
+	
+	
 
 	private static final long serialVersionUID = 8393254310160065177L;
+
+	private Date date;
+
+	private List<UrlaubsantragBo> urlaubsantraege;
+
+	private String dates;
 
 	private Date beginn;
 	private Date ende;
@@ -73,6 +85,11 @@ public class UrlaubsAntragBean implements Serializable {
 		urlaubsantragMapper = new UrlaubsantragMapper();
 	}
 
+	@PostConstruct
+	public void init() {
+		getAllUrlaubsantraege();
+	}
+
 	/**
 	 * F&uuml;gt einen Zeitraum zu einem Urlaubsantrag hinzu.
 	 */
@@ -84,6 +101,7 @@ public class UrlaubsAntragBean implements Serializable {
 		anzahltage = anzahltage + zeitraumBo.getAnzahltage();
 		beginn = null;
 		ende = null;
+
 	}
 
 	/**
@@ -117,6 +135,7 @@ public class UrlaubsAntragBean implements Serializable {
 		urlaubsantrag.setMitarbeiter(userBean.getMitarbeiter());
 		urlaubsantrag.setFachvorgesetzter(fachvorgesetzterBo);
 		urlaubsantrag.setKey(UUID.randomUUID().toString());
+		urlaubsantrag.setAnzahltage(anzahltage);
 
 		FacesContext context = FacesContext.getCurrentInstance();
 
@@ -134,8 +153,76 @@ public class UrlaubsAntragBean implements Serializable {
 				new FacesMessage(
 						"Erfolgreich",
 						"Der Urlaubsantrag wurde gespeichert und an den Fachvorgesetzten zur Genehmigung gesendet!"));
+		anzahltage = 0;
+		beginn = null;
+		ende = null;
 		urlaubsantrag = new UrlaubsantragBo();
+		zeitraums = new ArrayList<ZeitraumBo>();
+		getAllUrlaubsantraege();
 		return navigationBean.toSecondPage();
+	}
+
+	/**
+	 * Diese Methode holt alle {@link UrlaubsantragBo} aus der Datenbank.
+	 */
+	public void getAllUrlaubsantraege() {
+		if (userBean.getMitarbeiter() != null) {
+			urlaubsantraege = urlaubsantragMapper.getBoList(dataAccessBean
+					.getDataAccess().getAllUrlaubsantrags(
+							userBean.getMitarbeiter().getId()));
+		}
+		loadDates();
+
+	}
+
+	public void deleteUrlaubsantrag(UrlaubsantragBo urlaubsantrag) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		try {
+			dataAccessBean.getDataAccess().deleteUrlaubsantrag(
+					urlaubsantragMapper.getDbObject(urlaubsantrag));
+			MailUtil.sendCancellationMail(urlaubsantrag);
+			context.addMessage(
+					null,
+					new FacesMessage(
+							"Erfolgreich",
+							"Der Urlaubsantrag wurde erfolgreich gelöscht. Ihr Fachvorgesetzter wurde über die Löschung informiert."));
+		} catch (PersistenceException e) {
+			context.addMessage(null, new FacesMessage("Fehlgeschlagen",
+					"Löschvorgang fehlgeschlagen! \n " + e.getMessage()));
+		}
+		getAllUrlaubsantraege();
+
+	}
+
+	private void loadDates() {
+		List<String> result = new ArrayList<String>();
+		Calendar start = Calendar.getInstance();
+		Calendar end = Calendar.getInstance();
+
+		SimpleDateFormat formatter = new SimpleDateFormat("M-d-yyyy");
+
+		for (UrlaubsantragBo ua : urlaubsantraege) {
+
+			for (ZeitraumBo zr : ua.getZeitraums()) {
+				start.setTime(zr.getBeginn());
+				end.setTime(zr.getEnde());
+				end.add(Calendar.DAY_OF_YEAR, 1); // Add 1 day to endDate to
+													// make sure endDate is
+													// included into the final
+													// list
+				while (start.before(end)) {
+
+					result.add("'" + formatter.format(start.getTime()) + "'");
+					start.add(Calendar.DAY_OF_YEAR, 1);
+				}
+
+			}
+
+		}
+		String[] resultAr = new String[result.size()];
+		resultAr = result.toArray(resultAr);
+
+		dates = Arrays.toString(resultAr);
 
 	}
 
@@ -209,6 +296,30 @@ public class UrlaubsAntragBean implements Serializable {
 
 	public void setUserBean(UserBean userBean) {
 		this.userBean = userBean;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public List<UrlaubsantragBo> getUrlaubsantraege() {
+		return urlaubsantraege;
+	}
+
+	public void setUrlaubsantraege(List<UrlaubsantragBo> urlaubsantraege) {
+		this.urlaubsantraege = urlaubsantraege;
+	}
+
+	public String getDates() {
+		return dates;
+	}
+
+	public void setDates(String dates) {
+		this.dates = dates;
 	}
 
 }

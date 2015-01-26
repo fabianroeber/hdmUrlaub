@@ -34,17 +34,10 @@
 	background-color: green !important;
 }
 </style>
-
 	<h:outputScript library="js" name="scripts.js" />
-
-
 	<script type="text/javascript">
-		var urlaubstage = #{urlaubsUebersichtBean.dates};
-
+		var urlaubstage = #{urlaubsantragBean.dates};
 	</script>
-
-
-
 </h:head>
 <h:body>
 	<h:outputStylesheet library="css" name="main.css" />
@@ -52,10 +45,11 @@
 
 		<pm:header title="Menu"></pm:header>
 		<pm:content>
-			<h:form>
+			<h:form id="menu">
+				<p:growl id="firstgrowl" showDetail="true" sticky="true" />
 				<p:menu>
 					<p:menuitem outcome="pm:second?transition=slide"
-						value="Urlaubsantrag stellen"></p:menuitem>
+						value="Urlaubsantrag stellen" update=":second:antragview"></p:menuitem>
 					<p:menuitem value="Urlaubsübersicht"
 						outcome="pm:third?transition=slide">
 					</p:menuitem>
@@ -64,23 +58,156 @@
 				<br></br>
 				<div>
 					<p:panel header="Kalender">
-						<p:calendar id="firstcal" value="#{urlaubsUebersichtBean.date}"
+						<p:calendar id="firstcal" value="#{urlaubsantragBean.date}"
 							beforeShowDay="disableAllTheseDays" mode="inline" locale="pt"
 							navigator="true" disabledWeekends="true"></p:calendar>
 					</p:panel>
 				</div>
-
 			</h:form>
 		</pm:content>
 		<ui:include src="footer.xhtml"></ui:include>
 	</pm:page>
-	<pm:page id="second" swatch="a">
-		<ui:include src="urlaubsantrag.xhtml"></ui:include>
-	</pm:page>
-	<pm:page id="third" swatch="a">
-		<ui:include src="urlaubuebersicht.xhtml"></ui:include>
-	</pm:page>
-	<p:growl id="growlMenue" showDetail="true" sticky="true" />
-</h:body>
 
+
+
+
+
+
+	<pm:page id="second" swatch="a">
+		<pm:header title="Urlaubsantrag stellen">
+		</pm:header>
+		<pm:content>
+			<h:form id="antragview">
+				<p:growl id="secondgrowl" showDetail="true" sticky="true" />
+				<p:panel header="Zeiträume definieren">
+					<pm:field>
+						<p:dataList id="zeitraumlist" rowIndexVar="row"
+							value="#{urlaubsantragBean.zeitraums}" var="zeitraum">
+							<pm:field>
+								<p:column>
+									<p:outputLabel for="delete"
+										value="#{zeitraum.getBeginnAsString()} - #{zeitraum.getEndeAsString()} | #{zeitraum.getAnzahltage()} Tag/e">
+									</p:outputLabel>
+								</p:column>
+								<p:column>
+									<p:commandButton id="delete" title="Entfernen"
+										action="#{urlaubsantragBean.removeZeitraum(row)}"
+										icon="ui-icon-delete"
+										update="zeitraumlist :second:antragview:anzahltagelabel"></p:commandButton>
+								</p:column>
+							</pm:field>
+						</p:dataList>
+					</pm:field>
+					<pm:field>
+						<p:outputLabel for="beginn" value="Urlaubsbeginn: "></p:outputLabel>
+						<p:calendar readonlyInput="true" disabledWeekends="true"
+							beforeShowDay="disableAllTheseDays" id="beginn"
+							value="#{urlaubsantragBean.beginn}" locale="pt"></p:calendar>
+					</pm:field>
+					<pm:field>
+						<p:outputLabel for="ende" value="Urlaubsende: "></p:outputLabel>
+						<p:calendar readonlyInput="true" disabledWeekends="true" id="ende"
+							beforeShowDay="disableAllTheseDays"
+							value="#{urlaubsantragBean.ende}" locale="pt"></p:calendar>
+					</pm:field>
+					<pm:field>
+						<p:commandButton value="Zeitraum hinzufügen"
+							action="#{urlaubsantragBean.addZeitraum()}"
+							update="zeitraumlist anzahltagelabel">
+						</p:commandButton>
+					</pm:field>
+					<p:outputLabel value="Gesamtzahl Urlaubstage: " />
+					<b> <p:outputLabel id="anzahltagelabel"
+							style="font-weight: bold;"
+							value="#{urlaubsantragBean.anzahltage}" />
+					</b>
+				</p:panel>
+				<p:panel header="Fachvorgesetzen und Vertretung wählen">
+					<pm:field>
+						<p:outputLabel for="fachvorgesetzter" value="Fachvorgesetzter: " />
+						<p:selectOneMenu converter="omnifaces.SelectItemsConverter"
+							value="#{urlaubsantragBean.fachvorgesetzterBo}"
+							id="fachvorgesetzter">
+							<f:selectItems
+								value="#{urlaubsantragBean.getAllFachVorgesetzter()}"
+								var="fachvorg" itemValue="#{fachvorg}"
+								itemLabel="#{fachvorg.vorname}  #{fachvorg.nachname}">
+							</f:selectItems>
+						</p:selectOneMenu>
+					</pm:field>
+					<pm:field>
+						<p:outputLabel for="vertretung" value="Vertretung: " />
+						<p:inputText id="vertretung"
+							value="#{urlaubsantragBean.urlaubsantrag.vertretung}" />
+					</pm:field>
+				</p:panel>
+				<pm:field>
+					<p:commandButton value="Speichern"
+						update=":second:antragview:secondgrowl zeitraumlist anzahltagelabel :third:uebersicht"
+						global="true" action="#{urlaubsantragBean.saveUrlaubsantrag()}">
+					</p:commandButton>
+					<p:button value="Zurück" outcome="pm:first?transition=slide"></p:button>
+				</pm:field>
+			</h:form>
+
+		</pm:content>
+		<ui:include src="footer.xhtml"></ui:include>
+
+	</pm:page>
+
+
+
+
+
+
+
+
+	<pm:page id="third" swatch="a">
+
+		<pm:header title="Urlaubsübersicht"></pm:header>
+		<pm:content>
+			<h:form id="uebersicht">
+				<ui:repeat var="antrag" value="#{urlaubsantragBean.urlaubsantraege}">
+					<p:panel 
+						header="#{antrag.status.text} | #{antrag.anzahltage} Urlaubstag/e"
+						value="#{antrag.zeitraums}" var="zeitraum">
+						<pm:field>
+							<p:panelGrid columns="2">
+								<ui:repeat var="zeitraum" value="#{antrag.zeitraums}">
+									<p:outputLabel
+										value="#{zeitraum.getBeginnAsString()} bis #{zeitraum.getEndeAsString()} | #{zeitraum.getAnzahltage()} Urlaubstag/e"></p:outputLabel>
+								</ui:repeat>
+								<p:graphicImage id="status"
+									value="#{antrag.status == 'OFFEN' ? '/resources/images/clock.png' : antrag.status == 'GENEHMIGT' ? '/resources/images/like.png' : antrag.status == 'ABGELEHNT' ? '/resources/images/dislike.png' : ''}"
+									height="60px" width="60px"></p:graphicImage>
+							</p:panelGrid>
+						</pm:field>
+						<pm:field rendered="#{antrag.status == 'OFFEN'}">
+							<p:commandButton value="Bearbeiten" ajax="false"
+								update=":second:antragview:zeitraumlist"
+								action="pm:second?transition=slide">
+								<f:setPropertyActionListener value="#{antrag}"
+									target="#{urlaubsantragBean.urlaubsantrag}" />
+							</p:commandButton>
+
+						</pm:field>
+						<pm:field>
+							<p:commandButton value="Löschen" icon="ui-icon-delete"
+								update="@form, thirdgrowl, :first:menu:firstcal"
+								action="#{urlaubsantragBean.deleteUrlaubsantrag(antrag)}"
+								style="width:170px">
+							</p:commandButton>
+							<p:growl id="thirdgrowl" showDetail="true" sticky="true" />
+						</pm:field>
+					</p:panel>
+					<p:spacer></p:spacer>
+				</ui:repeat>
+				<p:button value="Zurück" outcome="pm:first?transition=slide"></p:button>
+			</h:form>
+		</pm:content>
+		<ui:include src="footer.xhtml"></ui:include>
+
+	</pm:page>
+
+</h:body>
 </html>

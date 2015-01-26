@@ -46,8 +46,6 @@ public class DataAccess implements Serializable {
 	public List<Urlaubsantrag> getAllUrlaubsantrags(Integer mitarbeiterId)
 			throws PersistenceException {
 
-		entityManager = entityManagerFactory.createEntityManager();
-
 		List<Urlaubsantrag> urlaubsantrags = entityManager
 				.createQuery(
 						"Select urlaubsantrag FROM Urlaubsantrag urlaubsantrag WHERE urlaubsantrag.mitarbeiter = "
@@ -64,13 +62,9 @@ public class DataAccess implements Serializable {
 	 */
 	public List<Mitarbeiter> getAllMitarbeiter() throws PersistenceException {
 
-		entityManager = entityManagerFactory.createEntityManager();
-
 		List<Mitarbeiter> mitarbeiters = entityManager.createQuery(
 				"Select mitarbeiter FROM Mitarbeiter mitarbeiter",
 				Mitarbeiter.class).getResultList();
-
-		entityManager.close();
 
 		return mitarbeiters;
 	}
@@ -78,15 +72,11 @@ public class DataAccess implements Serializable {
 	public Mitarbeiter getMitarbeiterByUserName(String username)
 			throws PersistenceException {
 
-		entityManager = entityManagerFactory.createEntityManager();
-
 		Mitarbeiter mitarbeiter = entityManager
 				.createQuery(
 						"SELECT mitarbeiter FROM Mitarbeiter mitarbeiter where mitarbeiter.username = '"
 								+ username + "'", Mitarbeiter.class)
 				.getSingleResult();
-
-		entityManager.close();
 
 		return mitarbeiter;
 	}
@@ -94,15 +84,11 @@ public class DataAccess implements Serializable {
 	public Urlaubsantrag getUrlaubsantragByKey(String key)
 			throws PersistenceException {
 
-		entityManager = entityManagerFactory.createEntityManager();
-
 		Urlaubsantrag urlaubsantrag = entityManager
 				.createQuery(
 						"SELECT urlaubsantrag FROM Urlaubsantrag urlaubsantrag where urlaubsantrag.activationKey = '"
 								+ key + "'", Urlaubsantrag.class)
 				.getSingleResult();
-
-		entityManager.close();
 
 		return urlaubsantrag;
 	}
@@ -115,14 +101,10 @@ public class DataAccess implements Serializable {
 	public List<Fachvorgesetzter> getAllFachvorgesetzter()
 			throws PersistenceException {
 
-		entityManager = entityManagerFactory.createEntityManager();
-
 		List<Fachvorgesetzter> fachvorgesetzters = entityManager
 				.createQuery(
 						"Select fachvorgesetzter FROM Fachvorgesetzter fachvorgesetzter",
 						Fachvorgesetzter.class).getResultList();
-
-		entityManager.close();
 
 		return fachvorgesetzters;
 	}
@@ -134,8 +116,6 @@ public class DataAccess implements Serializable {
 	 */
 	public void saveUrlaubsantrag(Urlaubsantrag urlaubsantrag)
 			throws PersistenceException {
-
-		entityManager = entityManagerFactory.createEntityManager();
 
 		entityManager.getTransaction().begin();
 		Urlaubsantrag urlaubsantragToSave;
@@ -175,7 +155,6 @@ public class DataAccess implements Serializable {
 		}
 		entityManager.getTransaction().commit();
 
-		entityManager.close();
 	}
 
 	/**
@@ -185,8 +164,6 @@ public class DataAccess implements Serializable {
 	 */
 	public void saveMitarbeiter(Mitarbeiter mitarbeiter)
 			throws PersistenceException {
-
-		entityManager = entityManagerFactory.createEntityManager();
 
 		entityManager.getTransaction().begin();
 		Mitarbeiter mitarbeiterToSave;
@@ -204,7 +181,6 @@ public class DataAccess implements Serializable {
 		entityManager.persist(mitarbeiterToSave);
 		entityManager.getTransaction().commit();
 
-		entityManager.close();
 	}
 
 	/**
@@ -215,13 +191,12 @@ public class DataAccess implements Serializable {
 	public void deleteUrlaubsantrag(Urlaubsantrag urlaubsantrag)
 			throws PersistenceException {
 
-		entityManager = entityManagerFactory.createEntityManager();
-
 		entityManager.getTransaction().begin();
-		entityManager.remove(urlaubsantrag);
+		entityManager
+				.remove(entityManager.contains(urlaubsantrag) ? urlaubsantrag
+						: entityManager.merge(urlaubsantrag));
 		entityManager.getTransaction().commit();
 
-		entityManager.close();
 	}
 
 	/**
@@ -233,6 +208,7 @@ public class DataAccess implements Serializable {
 	private void getEntityManagerFactory() {
 		entityManagerFactory = Persistence
 				.createEntityManagerFactory(PERSISTENCEUNIT);
+		entityManager = entityManagerFactory.createEntityManager();
 	}
 
 	/**
