@@ -16,10 +16,32 @@
 					<p:panel
 						header="#{zeitraum.getBeginnAsString()} bis #{zeitraum.getEndeAsString()} | #{zeitraum.getAnzahltage()} Urlaubstag/e"
 						value="#{antrag.zeitraums}" var="zeitraum">
-						<p:outputLabel value="Status" />
-						<p:button
-							styleClass="#{antrag.status == 'OFFEN' ? 'markOrange' : antrag.status == 'GENEHMIGT' ? 'markGreen' : antrag.status == 'ABGELEHNT' ? 'markRed' : ''}"
-							value="#{antrag.status.text}"></p:button>
+						<p:panelGrid columnClasses="column1,column2,column3" columns="4"
+							style="width: 800px">
+							<p:column>
+								<p:graphicImage id="status"
+									value="#{antrag.status == 'OFFEN' ? '/resources/images/clock.png' : antrag.status == 'GENEHMIGT' ? '/resources/images/like.png' : antrag.status == 'ABGELEHNT' ? '/resources/images/dislike.png' : ''}"
+									height="60px" width="60px"></p:graphicImage>
+							</p:column>
+							<p:column>
+								<p:tooltip id="toolTipFade" for="status"
+									style="margin-top: 20px; width: 90px; text-align: center;"
+									value="#{antrag.status}" />
+							</p:column>
+							<p:column>
+								<p:button value="Bearbeiten" icon="ui-icon-star"
+									style="width:170px">
+								</p:button>
+							</p:column>
+							<p:column>
+								<p:button value="Löschen" icon="ui-icon-star"
+									style="width:170px">
+								</p:button>
+							</p:column>
+
+						</p:panelGrid>
+
+
 					</p:panel>
 					<p:spacer></p:spacer>
 				</ui:repeat>
