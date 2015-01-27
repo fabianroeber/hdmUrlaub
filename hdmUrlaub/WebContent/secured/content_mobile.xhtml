@@ -142,9 +142,9 @@
 					</pm:field>
 				</p:panel>
 				<pm:field>
-					<p:commandButton value="Speichern"
-						update=":second:antragview:secondgrowl zeitraumlist anzahltagelabel :third:uebersicht :third:uebersicht:zeitraumpanel"
-						global="true" action="#{urlaubsantragBean.saveUrlaubsantrag()}">
+					<p:commandButton value="Speichern" ajax="true"
+						update=":second:antragview:secondgrowl zeitraumlist anzahltagelabel @(.datalist1) @(.datalist2)"
+						action="#{urlaubsantragBean.saveUrlaubsantrag()}">
 					</p:commandButton>
 					<p:button value="Zurück" outcome="pm:first?transition=slide"></p:button>
 				</pm:field>
@@ -158,43 +158,43 @@
 		<pm:header title="Urlaubsübersicht"></pm:header>
 		<pm:content>
 			<h:form id="uebersicht">
-				<ui:repeat var="antrag" value="#{urlaubsantragBean.urlaubsantraege}">
-					<p:panel
-						header="#{antrag.status.text} | #{antrag.anzahltage} Urlaubstag/e"
-						value="#{antrag.zeitraums}" var="zeitraum">
-						<pm:field>
-							<p:panelGrid columns="2">
-								<p:outputPanel id="zeitraumpanel">
-									<ui:repeat var="zeitraum" value="#{antrag.zeitraums}">
-										<p:outputLabel
-											value="#{zeitraum.getBeginnAsString()} bis #{zeitraum.getEndeAsString()} | #{zeitraum.getAnzahltage()} Urlaubstag/e"></p:outputLabel>
-									</ui:repeat>
-								</p:outputPanel>
-								<p:graphicImage id="status"
-									value="#{antrag.status == 'OFFEN' ? '/resources/images/clock.png' : antrag.status == 'GENEHMIGT' ? '/resources/images/like.png' : antrag.status == 'ABGELEHNT' ? '/resources/images/dislike.png' : ''}"
-									height="60px" width="60px"></p:graphicImage>
-							</p:panelGrid>
-						</pm:field>
-						<pm:field rendered="#{antrag.status == 'OFFEN'}">
-							<p:commandButton value="Bearbeiten" ajax="false"
-								update=":second:antragview:zeitraumlist"
-								action="pm:second?transition=slide">
-								<f:setPropertyActionListener value="#{antrag}"
-									target="#{urlaubsantragBean.urlaubsantrag}" />
-							</p:commandButton>
+				<p:outputPanel styleClass="datalist1" id="outputpanel">
+					<ui:repeat var="antrag"
+						value="#{urlaubsantragBean.urlaubsantraege}">
 
-						</pm:field>
-						<pm:field>
-							<p:commandButton value="Löschen" icon="ui-icon-delete"
-								update="@form, thirdgrowl, :first:menu:firstcal"
-								action="#{urlaubsantragBean.deleteUrlaubsantrag(antrag)}"
-								style="width:170px">
-							</p:commandButton>
-							<p:growl id="thirdgrowl" showDetail="true" sticky="true" />
-						</pm:field>
-					</p:panel>
-					<p:spacer></p:spacer>
-				</ui:repeat>
+						<p:panel id="panel"
+							header="#{antrag.status.text} | #{antrag.anzahltage} Urlaubstag/e | #{antrag.zeitraeume}"
+							value="#{antrag.zeitraums}" var="zeitraum">
+
+							<h:outputText value="#{antrag.zeitraeume}"></h:outputText>
+							<p:graphicImage id="status"
+								value="#{antrag.status == 'OFFEN' ? '/resources/images/clock.png' : antrag.status == 'GENEHMIGT' ? '/resources/images/like.png' : antrag.status == 'ABGELEHNT' ? '/resources/images/dislike.png' : ''}"
+								height="60px" width="60px"></p:graphicImage>
+
+							<pm:field rendered="#{antrag.status == 'OFFEN'}">
+								<p:commandButton value="Bearbeiten" ajax="false"
+									update=":second:antragview:zeitraumlist"
+									action="pm:second?transition=slide">
+									<f:setPropertyActionListener value="#{antrag}"
+										target="#{urlaubsantragBean.urlaubsantrag}" />
+								</p:commandButton>
+
+							</pm:field>
+							<pm:field>
+								<p:commandButton value="Löschen" icon="ui-icon-delete"
+									update="@form, thirdgrowl, :first:menu:firstcal"
+									action="#{urlaubsantragBean.deleteUrlaubsantrag(antrag)}"
+									style="width:170px">
+								</p:commandButton>
+								<p:growl id="thirdgrowl" showDetail="true" sticky="true" />
+							</pm:field>
+						</p:panel>
+
+
+
+						<p:spacer></p:spacer>
+					</ui:repeat>>
+				</p:outputPanel>
 				<p:button value="Zurück" outcome="pm:first?transition=slide"></p:button>
 			</h:form>
 		</pm:content>

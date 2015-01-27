@@ -26,6 +26,8 @@ public class UrlaubsantragBo extends HdmUrlaubBusinessObject {
 
 	private String key;
 
+	private String zeitraeume;
+
 	private String begruendung;
 
 	private List<ZeitraumBo> zeitraums;
@@ -107,6 +109,17 @@ public class UrlaubsantragBo extends HdmUrlaubBusinessObject {
 
 	public void setKey(String key) {
 		this.key = key;
+	}
+
+	public String getZeitraeume() {
+		for (ZeitraumBo zr : zeitraums)
+			zeitraeume = zeitraeume + zr.getBeginnAsString() + " bis "
+					+ zr.getEndeAsString() + "\n";
+		return zeitraeume;
+	}
+
+	public void setZeitraeume(String zeitraeume) {
+		this.zeitraeume = zeitraeume;
 	}
 
 }

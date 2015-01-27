@@ -321,5 +321,4 @@ public class UrlaubsAntragBean implements Serializable {
 	public void setDates(String dates) {
 		this.dates = dates;
 	}
-
 }
