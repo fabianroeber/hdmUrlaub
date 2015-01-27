@@ -13,6 +13,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.PersistenceException;
@@ -20,6 +21,7 @@ import javax.persistence.PersistenceException;
 import de.hdm.hdmUrlaub.bo.FachvorgesetzterBo;
 import de.hdm.hdmUrlaub.bo.UrlaubsantragBo;
 import de.hdm.hdmUrlaub.bo.ZeitraumBo;
+import de.hdm.hdmUrlaub.db.dbmodel.Urlaubsantrag;
 import de.hdm.hdmUrlaub.db.mapper.FachvorgesetzterMapper;
 import de.hdm.hdmUrlaub.db.mapper.UrlaubsantragMapper;
 import de.hdm.hdmUrlaub.enums.Status;
@@ -35,8 +37,6 @@ import de.hdm.hdmUrlaub.util.MailUtil;
 @ManagedBean(name = "urlaubsantragBean")
 @ViewScoped
 public class UrlaubsAntragBean implements Serializable {
-	
-	
 
 	private static final long serialVersionUID = 8393254310160065177L;
 
@@ -129,7 +129,7 @@ public class UrlaubsAntragBean implements Serializable {
 	/**
 	 * Methode zum Speichern eines Urlaubsantrags {@link UrlaubsantragBo}
 	 */
-	public String saveUrlaubsantrag() {
+	public void saveUrlaubsantrag() {
 		urlaubsantrag.setZeitraums(zeitraums);
 		urlaubsantrag.setStatus(Status.OFFEN);
 		urlaubsantrag.setMitarbeiter(userBean.getMitarbeiter());
@@ -159,7 +159,7 @@ public class UrlaubsAntragBean implements Serializable {
 		urlaubsantrag = new UrlaubsantragBo();
 		zeitraums = new ArrayList<ZeitraumBo>();
 		getAllUrlaubsantraege();
-		return navigationBean.toSecondPage();
+
 	}
 
 	/**
@@ -172,7 +172,6 @@ public class UrlaubsAntragBean implements Serializable {
 							userBean.getMitarbeiter().getId()));
 		}
 		loadDates();
-
 	}
 
 	public void deleteUrlaubsantrag(UrlaubsantragBo urlaubsantrag) {
@@ -191,7 +190,6 @@ public class UrlaubsAntragBean implements Serializable {
 					"Löschvorgang fehlgeschlagen! \n " + e.getMessage()));
 		}
 		getAllUrlaubsantraege();
-
 	}
 
 	private void loadDates() {

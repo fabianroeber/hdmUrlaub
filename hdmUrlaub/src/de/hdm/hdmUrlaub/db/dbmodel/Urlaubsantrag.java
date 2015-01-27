@@ -129,7 +129,7 @@ public class Urlaubsantrag extends HibernateObject {
 		this.vertretung = vertretung;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "urlaubsantrag", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "urlaubsantrag", cascade = CascadeType.ALL)
 	public Set<Zeitraum> getZeitraums() {
 		return this.zeitraums;
 	}

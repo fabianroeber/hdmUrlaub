@@ -9,7 +9,7 @@ import com.unboundid.ldap.sdk.LDAPException;
 import de.hdm.hdmUrlaub.ldap.LdapAuthentificator;
 
 /**
- * Test für den LDAP test
+ * Test fï¿½r den LDAP test
  * @author Fabian
  *
  */
@@ -20,7 +20,7 @@ public class LDAPtest {
 		LdapAuthentificator ldapAuthentificator = new LdapAuthentificator();
 
 		try {
-			String test = ldapAuthentificator.authenticate("fr031", "passwort zum testes hier einfügen");
+			String test = ldapAuthentificator.authenticate("fr031", "beispiel");
 			System.out.println(test);
 			
 		} catch (LDAPException | GeneralSecurityException e) {

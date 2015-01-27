@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view renderKitId="PRIMEFACES_MOBILE" />
+
+<h:head>
+	<link rel="stylesheet" href="../themes/hdm.css" />
+	<link rel="stylesheet" href="../themes/hdm.min.css" />
+	<link rel="stylesheet"
+		href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+
+
+</h:head>
+<h:body>
+	<h:outputStylesheet library="css" name="main.css" />
+	<pm:page id="third" swatch="a">
+		<pm:header title="Urlaubsübersicht"></pm:header>
+		<pm:content>
+			<h:form id="uebersicht">
+				<p:outputPanel styleClass="datalist1" id="outputpanel">
+					<ui:repeat var="antrag"
+						value="#{urlaubsantragBean.urlaubsantraege}">
+
+						<p:panel id="panel"
+							header="#{antrag.status.text} | #{antrag.anzahltage} Urlaubstag/e | #{antrag.zeitraeume}"
+							value="#{antrag.zeitraums}" var="zeitraum">
+
+							<h:outputText value="#{antrag.zeitraeume}"></h:outputText>
+							<p:graphicImage id="status"
+								value="#{antrag.status == 'OFFEN' ? '/resources/images/clock.png' : antrag.status == 'GENEHMIGT' ? '/resources/images/like.png' : antrag.status == 'ABGELEHNT' ? '/resources/images/dislike.png' : ''}"
+								height="60px" width="60px"></p:graphicImage>
+
+							<pm:field rendered="#{antrag.status == 'OFFEN'}">
+								<p:commandButton value="Bearbeiten" ajax="false">
+									<f:setPropertyActionListener value="#{antrag}"
+										target="#{urlaubsantragBean.urlaubsantrag}" />
+								</p:commandButton>
+
+							</pm:field>
+							<pm:field>
+								<p:commandButton value="Löschen" icon="ui-icon-delete"
+									update="@form, thirdgrowl"
+									action="#{urlaubsantragBean.deleteUrlaubsantrag(antrag)}"
+									style="width:170px">
+								</p:commandButton>
+								<p:growl id="thirdgrowl" showDetail="true" sticky="true" />
+							</pm:field>
+						</p:panel>
+						<p:spacer></p:spacer>
+					</ui:repeat>
+				</p:outputPanel>
+				<p:button value="Zurück"
+					outcome="/secured/content_mobile.xhtml?transition=slide"></p:button>
+			</h:form>
+		</pm:content>
+
+		<ui:include src="footer.xhtml"></ui:include>
+	</pm:page>
+</h:body>
+</html>

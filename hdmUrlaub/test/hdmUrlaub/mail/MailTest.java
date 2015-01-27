@@ -1,4 +1,4 @@
-package mail;
+package hdmUrlaub.mail;
 
 import java.util.ArrayList;
 import java.util.Calendar;

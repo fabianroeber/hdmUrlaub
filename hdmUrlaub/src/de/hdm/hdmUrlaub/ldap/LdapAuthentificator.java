@@ -47,7 +47,7 @@ public class LdapAuthentificator implements Serializable {
 		try {
 			if (ldapUserIdAuthenticated) {
 
-				// Der Suchstring muss wie benötigt angepasst werden
+				// Der Suchstring muss wie benï¿½tigt angepasst werden
 				sr = ldaps.search("ou=People,o=group", SearchScope.SUB, "(uid="
 						+ ldapUserId + ")");
 				// cn = full name
@@ -73,11 +73,14 @@ public class LdapAuthentificator implements Serializable {
 		SSLUtil sslUtil = new SSLUtil(new TrustAllTrustManager());
 		LDAPConnection ldaps = null;
 		try {
-			// Der Servername und uid Suchstring muss wie benötigt angepasst
+			// Der Servername und uid Suchstring muss wie benï¿½tigt angepasst
 			// werden
+			// ldaps = new LDAPConnection(sslUtil.createSSLSocketFactory(),
+			// "ldap.hdm-stuttgart.de", 389, "uid=" + ldapUserId
+			// + ",ou=userlist,dc=hdm-stuttgart,dc=de", password);
 			ldaps = new LDAPConnection(sslUtil.createSSLSocketFactory(),
-					"ldap.hdm-stuttgart.de", 636, "uid=" + ldapUserId
-							+ ",ou=userlist,dc=hdm-stuttgart,dc=de", password);
+					"ldap.hdm-stuttgart.de", 389);
+			ldaps = new LDAPConnection("ldap.hdm-stuttgart.de", 389);
 		} catch (Exception e) {
 			System.out.println("Start LDAP Authentication failed: "
 					+ ldapUserId);

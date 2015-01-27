@@ -152,8 +152,6 @@
 		</pm:content>
 		<ui:include src="footer.xhtml"></ui:include>
 	</pm:page>
-
-
 	<pm:page id="third" swatch="a">
 		<pm:header title="Urlaubsübersicht"></pm:header>
 		<pm:content>
@@ -172,9 +170,7 @@
 								height="60px" width="60px"></p:graphicImage>
 
 							<pm:field rendered="#{antrag.status == 'OFFEN'}">
-								<p:commandButton value="Bearbeiten" ajax="false"
-									update=":second:antragview:zeitraumlist"
-									action="pm:second?transition=slide">
+								<p:commandButton value="Bearbeiten" ajax="false">
 									<f:setPropertyActionListener value="#{antrag}"
 										target="#{urlaubsantragBean.urlaubsantrag}" />
 								</p:commandButton>
@@ -182,25 +178,25 @@
 							</pm:field>
 							<pm:field>
 								<p:commandButton value="Löschen" icon="ui-icon-delete"
-									update="@form, thirdgrowl, :first:menu:firstcal"
+									update="@form, thirdgrowl"
 									action="#{urlaubsantragBean.deleteUrlaubsantrag(antrag)}"
 									style="width:170px">
 								</p:commandButton>
 								<p:growl id="thirdgrowl" showDetail="true" sticky="true" />
 							</pm:field>
 						</p:panel>
-
-
-
 						<p:spacer></p:spacer>
-					</ui:repeat>>
+					</ui:repeat>
 				</p:outputPanel>
-				<p:button value="Zurück" outcome="pm:first?transition=slide"></p:button>
+				<p:button value="Zurück"
+					outcome="pm:first?transition=slide"></p:button>
 			</h:form>
 		</pm:content>
-		<ui:include src="footer.xhtml"></ui:include>
 
+		<ui:include src="footer.xhtml"></ui:include>
 	</pm:page>
+
+
 
 </h:body>
 </html>

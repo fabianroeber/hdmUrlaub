@@ -59,7 +59,7 @@ public class Zeitraum extends HibernateObject {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "urlaubsantrag_id", nullable = false)
 	public Urlaubsantrag getUrlaubsantrag() {
 		return this.urlaubsantrag;

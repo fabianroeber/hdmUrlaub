@@ -46,6 +46,8 @@ public class DataAccess implements Serializable {
 	public List<Urlaubsantrag> getAllUrlaubsantrags(Integer mitarbeiterId)
 			throws PersistenceException {
 
+		entityManager = entityManagerFactory.createEntityManager();
+
 		List<Urlaubsantrag> urlaubsantrags = entityManager
 				.createQuery(
 						"Select urlaubsantrag FROM Urlaubsantrag urlaubsantrag WHERE urlaubsantrag.mitarbeiter = "
@@ -117,6 +119,8 @@ public class DataAccess implements Serializable {
 	public void saveUrlaubsantrag(Urlaubsantrag urlaubsantrag)
 			throws PersistenceException {
 
+		entityManagerFactory.createEntityManager();
+
 		entityManager.getTransaction().begin();
 		Urlaubsantrag urlaubsantragToSave;
 		if (urlaubsantrag.getId() != null) {
@@ -153,7 +157,12 @@ public class DataAccess implements Serializable {
 			zeitraumToSave.setUrlaubsantrag(urlaubsantragToSave);
 			entityManager.persist(zeitraumToSave);
 		}
+
+		entityManager.persist(urlaubsantragToSave);
+
 		entityManager.getTransaction().commit();
+
+		entityManager.close();
 
 	}
 
