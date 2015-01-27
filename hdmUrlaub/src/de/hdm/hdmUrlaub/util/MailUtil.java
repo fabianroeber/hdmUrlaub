@@ -84,7 +84,7 @@ public class MailUtil {
 					+ urlaubsantragBo.getMitarbeiter().getEmail()
 					+ ") beantragt "
 					+ urlaubsantragBo.getAnzahltage()
-					+ " Tage Urlaub "
+					+ (urlaubsantragBo.getAnzahltage() > 1?" Tage Urlaub ":" Tag Urlaub ")
 					+ (urlaubsantragBo.getZeitraums().size() > 1 ? "in den Zeiträumen: \n "
 							: "im Zeitraum: \n")
 					+ zeitraueme
@@ -116,7 +116,7 @@ public class MailUtil {
 					+ urlaubsantragBo.getFachvorgesetzter().getNachname()
 					+ " zur Genhemigung gesendet: "
 					+ urlaubsantragBo.getAnzahltage()
-					+ " Tage Urlaub "
+					+ (urlaubsantragBo.getAnzahltage() > 1?" Tage Urlaub ":" Tag Urlaub ")
 					+ (urlaubsantragBo.getZeitraums().size() > 1 ? "in den Zeiträumen: \n "
 							: "im Zeitraum: \n")
 					+ zeitraueme
@@ -187,7 +187,7 @@ public class MailUtil {
 					+ urlaubsantragBo.getMitarbeiter().getEmail()
 					+ ") hat den folgenden Urlausantrag zurückgezogen: "
 					+ urlaubsantragBo.getAnzahltage()
-					+ " Tage Urlaub "
+					+ (urlaubsantragBo.getAnzahltage() > 1?" Tage Urlaub ":" Tag Urlaub ")
 					+ (urlaubsantragBo.getZeitraums().size() > 1 ? "in den Zeiträumen: \n "
 							: "im Zeitraum: \n")
 					+ zeitraueme
@@ -256,7 +256,7 @@ public class MailUtil {
 					+ urlaubsantragBo.getFachvorgesetzter().getEmail()
 					+ ") hat den folgenden Urlausantrag abgelehnt: "
 					+ urlaubsantragBo.getAnzahltage()
-					+ " Tage Urlaub "
+					+ (urlaubsantragBo.getAnzahltage() > 1?" Tage Urlaub ":" Tag Urlaub ")
 					+ (urlaubsantragBo.getZeitraums().size() > 1 ? "in den Zeiträumen: \n "
 							: "im Zeitraum: \n")
 					+ zeitraueme
@@ -324,7 +324,7 @@ public class MailUtil {
 					+ urlaubsantragBo.getFachvorgesetzter().getEmail()
 					+ ") hat den folgenden Urlausantrag genehmigt: "
 					+ urlaubsantragBo.getAnzahltage()
-					+ " Tage Urlaub "
+					+ (urlaubsantragBo.getAnzahltage() > 1?" Tage Urlaub ":" Tag Urlaub ")
 					+ (urlaubsantragBo.getZeitraums().size() > 1 ? "in den Zeiträumen: \n "
 							: "im Zeitraum: \n")
 					+ zeitraueme
@@ -361,7 +361,7 @@ public class MailUtil {
 					+ urlaubsantragBo.getMitarbeiter().getNachname()
 					+ ", "
 					+ urlaubsantragBo.getAnzahltage()
-					+ " Tage Urlaub "
+					+ (urlaubsantragBo.getAnzahltage() > 1?" Tage Urlaub ":" Tag Urlaub ")
 					+ (urlaubsantragBo.getZeitraums().size() > 1 ? "in den Zeiträumen: \n "
 							: "im Zeitraum: \n")
 					+ zeitraueme
