@@ -57,11 +57,15 @@
 				<br></br>
 				<br></br>
 				<div>
+
 					<p:panel header="Kalender">
-						<p:calendar id="firstcal" value="#{urlaubsantragBean.date}"
-							beforeShowDay="disableAllTheseDays" mode="inline" locale="pt"
-							navigator="true" disabledWeekends="true"></p:calendar>
+						<p:outputPanel id="menueOutputpanel" styleClass="kalender">
+							<p:calendar id="firstcal" value="#{urlaubsantragBean.date}"
+								beforeShowDay="disableAllTheseDays" mode="inline" locale="pt"
+								navigator="true" disabledWeekends="true"></p:calendar>
+						</p:outputPanel>
 					</p:panel>
+
 				</div>
 			</h:form>
 		</pm:content>
@@ -151,7 +155,7 @@
 				</p:panel>
 				<pm:field>
 					<p:commandButton value="Speichern" ajax="true"
-						update=":second:antragview:secondgrowl zeitraumlist anzahltagelabel @(.datalist1) @(.datalist2)"
+						update=":second:antragview:secondgrowl zeitraumlist anzahltagelabel :first:menu:menueOutputpanel @(.datalist1) @(.datalist2)"
 						action="#{urlaubsantragBean.saveUrlaubsantrag()}">
 					</p:commandButton>
 					<p:button value="Zurück" outcome="pm:first?transition=slide"></p:button>

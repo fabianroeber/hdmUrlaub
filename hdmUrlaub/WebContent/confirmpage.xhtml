@@ -46,9 +46,13 @@
 							<p:outputLabel value="#{antrag.anzahltage}"></p:outputLabel>
 						</p:column>
 					</p:dataTable>
-					<p:commandButton value="Genehmnigen" action="#{confirmBean.saveAntrag(true)}" update="@form"></p:commandButton>
-					<p:commandButton value="Ablehnen" action="#{confirmBean.saveAntrag(false)}" update="@form"></p:commandButton>
-					<p:inputText value="#{confirmBean.begruendung}" title="Begründung (optional)" label="Begründung (optional)"></p:inputText>
+					<p:commandButton value="Genehmigen"
+						action="#{confirmBean.saveAntrag(true)}" update="@form"></p:commandButton>
+					<p:commandButton value="Ablehnen"
+						action="#{confirmBean.saveAntrag(false)}" update="@form"></p:commandButton>
+					<p:outputLabel value="Begründung (optional)" for="begruendung"></p:outputLabel>
+					<p:inputText id="begruendung" value="#{confirmBean.begruendung}"
+						title="Begründung (optional)" label="Begründung (optional)"></p:inputText>
 				</p:panel>
 
 				<p:panel id="closed"

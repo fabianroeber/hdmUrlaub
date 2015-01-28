@@ -95,34 +95,45 @@ public class UrlaubsAntragBean implements Serializable {
 	}
 
 	/**
-	 * F&uuml;gt einen Zeitraum zu einem Urlaubsantrag hinzu.
+	 * F&uuml;gt einen Zeitraum zu einem Urlaubsantrag hinzu. Hierfür muss
+	 * zuerst überprüft werden ob sich dieser Zeitraum mit Zeiträumen bereits
+	 * genehmigter oder offenen Urlaubsanträge überschneidet. Ist dies nicht der
+	 * Fall, wird überprüft ob er sich mit Zeiträumen des aktuellen
+	 * Urlaubsantrages überschneidet.
 	 */
 	public void addZeitraum() {
-		boolean ueberschneidung = false;
 
-		if (zeitraums.size() == 0) {
-			ZeitraumBo zeitraumBo = new ZeitraumBo();
-			zeitraumBo.setBeginn(beginn);
-			zeitraumBo.setEnde(ende);
-			zeitraums.add(zeitraumBo);
-			anzahltage = anzahltage + zeitraumBo.getAnzahltage();
-			beginn = null;
-			ende = null;
+		boolean ueberschnBestehende = false;
 
-			// FacesContext context = FacesContext.getCurrentInstance();
-			// context.addMessage(null, new FacesMessage("Erfolgreich",
-			// "Zeitraum hinzugefügt!"));
-		} else {
-			for (int i = 0; i < zeitraums.size() && ueberschneidung == false; i++) {
-				if (!zeitraums.get(i).getBeginn().after(ende)
-						&& !beginn.after(zeitraums.get(i).getEnde())) {
-					ueberschneidung = true;
-					FacesContext context = FacesContext.getCurrentInstance();
-					context.addMessage(null, new FacesMessage("Fehlgeschlagen",
-							"Die Zeiträume überschneiden sich!"));
-				}
+		for (UrlaubsantragBo ua : urlaubsantraege) {
+			if (ua != null) {
+				if (ua.getStatus().getText() != "Abgelehnt")
+					for (int i = 0; i < ua.getZeitraums().size()
+							&& ueberschnBestehende == false; i++) {
+						if (ua.getZeitraums().get(i) != null)
+							if (!ua.getZeitraums().get(i).getBeginn()
+									.after(ende)
+									&& !beginn.after(ua.getZeitraums().get(i)
+											.getEnde())) {
+								ueberschnBestehende = true;
+								FacesContext context = FacesContext
+										.getCurrentInstance();
+								context.addMessage(
+										null,
+										new FacesMessage(
+												"Nicht möglich",
+												"Der ausgewählte Zeitraum überschneidet sich mit einem genehmigten oder offenen Urlaubsantrag!"));
+
+							}
+					}
 			}
-			if (ueberschneidung == false) {
+		}
+
+		if (ueberschnBestehende == false) {
+
+			boolean ueberschneidung = false;
+
+			if (zeitraums.size() == 0) {
 				ZeitraumBo zeitraumBo = new ZeitraumBo();
 				zeitraumBo.setBeginn(beginn);
 				zeitraumBo.setEnde(ende);
@@ -130,11 +141,39 @@ public class UrlaubsAntragBean implements Serializable {
 				anzahltage = anzahltage + zeitraumBo.getAnzahltage();
 				beginn = null;
 				ende = null;
+
 				// FacesContext context = FacesContext.getCurrentInstance();
 				// context.addMessage(null, new FacesMessage("Erfolgreich",
 				// "Zeitraum hinzugefügt!"));
-			}
+			} else {
+				for (int i = 0; i < zeitraums.size()
+						&& ueberschneidung == false; i++) {
+					if (!zeitraums.get(i).getBeginn().after(ende)
+							&& !beginn.after(zeitraums.get(i).getEnde())) {
+						ueberschneidung = true;
+						FacesContext context = FacesContext
+								.getCurrentInstance();
+						context.addMessage(null, new FacesMessage(
+								"Nicht möglich",
+								"Die Zeiträume überschneiden sich!"));
+					}
+				}
+				if (ueberschneidung == false) {
+					ZeitraumBo zeitraumBo = new ZeitraumBo();
+					zeitraumBo.setBeginn(beginn);
+					zeitraumBo.setEnde(ende);
+					zeitraums.add(zeitraumBo);
+					anzahltage = anzahltage + zeitraumBo.getAnzahltage();
+					beginn = null;
+					ende = null;
+					// FacesContext context =
+					// FacesContext.getCurrentInstance();
+					// context.addMessage(null, new
+					// FacesMessage("Erfolgreich",
+					// "Zeitraum hinzugefügt!"));
+				}
 
+			}
 		}
 
 	}
