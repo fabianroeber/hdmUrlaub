@@ -105,9 +105,9 @@ public class UrlaubsAntragBean implements Serializable {
 			beginn = null;
 			ende = null;
 
-			FacesContext context = FacesContext.getCurrentInstance();
-			context.addMessage(null, new FacesMessage("Erfolgreich",
-					"Zeitraum hinzugefügt!"));
+			// FacesContext context = FacesContext.getCurrentInstance();
+			// context.addMessage(null, new FacesMessage("Erfolgreich",
+			// "Zeitraum hinzugefügt!"));
 		} else {
 			for (int i = 0; i < zeitraums.size() && ueberschneidung == false; i++) {
 				if (!zeitraums.get(i).getBeginn().after(ende)
@@ -116,7 +116,7 @@ public class UrlaubsAntragBean implements Serializable {
 					FacesContext context = FacesContext.getCurrentInstance();
 					context.addMessage(null, new FacesMessage("Fehlgeschlagen",
 							"Die Zeiträume überschneiden sich!"));
-				} 
+				}
 			}
 			if (ueberschneidung == false) {
 				ZeitraumBo zeitraumBo = new ZeitraumBo();
@@ -126,9 +126,9 @@ public class UrlaubsAntragBean implements Serializable {
 				anzahltage = anzahltage + zeitraumBo.getAnzahltage();
 				beginn = null;
 				ende = null;
-				FacesContext context = FacesContext.getCurrentInstance();
-				context.addMessage(null, new FacesMessage("Erfolgreich",
-						"Zeitraum hinzugefügt!"));
+				// FacesContext context = FacesContext.getCurrentInstance();
+				// context.addMessage(null, new FacesMessage("Erfolgreich",
+				// "Zeitraum hinzugefügt!"));
 			}
 
 		}
@@ -161,36 +161,42 @@ public class UrlaubsAntragBean implements Serializable {
 	 * Methode zum Speichern eines Urlaubsantrags {@link UrlaubsantragBo}
 	 */
 	public void saveUrlaubsantrag() {
-		urlaubsantrag.setZeitraums(zeitraums);
-		urlaubsantrag.setStatus(Status.OFFEN);
-		urlaubsantrag.setMitarbeiter(userBean.getMitarbeiter());
-		urlaubsantrag.setFachvorgesetzter(fachvorgesetzterBo);
-		urlaubsantrag.setKey(UUID.randomUUID().toString());
-		urlaubsantrag.setAnzahltage(anzahltage);
-
 		FacesContext context = FacesContext.getCurrentInstance();
 
-		try {
-			dataAccessBean.getDataAccess().saveUrlaubsantrag(
-					urlaubsantragMapper.getDbObject(urlaubsantrag));
-			MailUtil.sendRequestMail(urlaubsantrag);
-		} catch (PersistenceException e) {
+		if (fachvorgesetzterBo == null) {
 			context.addMessage(null, new FacesMessage("Fehlgeschlagen",
-					"Vorgang fehlgeschlagen! \n " + e.getMessage()));
+					"Bitte einen Fachvorgesetzten auswählen! \n"));
+		} else {
+
+			urlaubsantrag.setZeitraums(zeitraums);
+			urlaubsantrag.setStatus(Status.OFFEN);
+			urlaubsantrag.setMitarbeiter(userBean.getMitarbeiter());
+			urlaubsantrag.setFachvorgesetzter(fachvorgesetzterBo);
+			urlaubsantrag.setKey(UUID.randomUUID().toString());
+			urlaubsantrag.setAnzahltage(anzahltage);
+
+			try {
+				dataAccessBean.getDataAccess().saveUrlaubsantrag(
+						urlaubsantragMapper.getDbObject(urlaubsantrag));
+				MailUtil.sendRequestMail(urlaubsantrag);
+			} catch (PersistenceException e) {
+				context.addMessage(null, new FacesMessage("Fehlgeschlagen",
+						"Vorgang fehlgeschlagen! \n " + e.getMessage()));
+			}
+
+			context.addMessage(
+					null,
+					new FacesMessage(
+							"Erfolgreich",
+							"Der Urlaubsantrag wurde gespeichert und an den Fachvorgesetzten zur Genehmigung gesendet!"));
+			anzahltage = 0;
+			beginn = null;
+			ende = null;
+			urlaubsantrag = new UrlaubsantragBo();
+			zeitraums = new ArrayList<ZeitraumBo>();
+			getAllUrlaubsantraege();
+
 		}
-
-		context.addMessage(
-				null,
-				new FacesMessage(
-						"Erfolgreich",
-						"Der Urlaubsantrag wurde gespeichert und an den Fachvorgesetzten zur Genehmigung gesendet!"));
-		anzahltage = 0;
-		beginn = null;
-		ende = null;
-		urlaubsantrag = new UrlaubsantragBo();
-		zeitraums = new ArrayList<ZeitraumBo>();
-		getAllUrlaubsantraege();
-
 	}
 
 	/**

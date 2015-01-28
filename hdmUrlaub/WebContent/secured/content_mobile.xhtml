@@ -133,6 +133,7 @@
 						<p:selectOneMenu converter="omnifaces.SelectItemsConverter"
 							value="#{urlaubsantragBean.fachvorgesetzterBo}"
 							id="fachvorgesetzter">
+							<f:selectItem itemLabel="Fachvorgesetzten auswählen" itemValue="" required = "true"/>
 							<f:selectItems
 								value="#{urlaubsantragBean.getAllFachVorgesetzter()}"
 								var="fachvorg" itemValue="#{fachvorg}"
