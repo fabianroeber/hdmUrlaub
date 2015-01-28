@@ -171,18 +171,24 @@
 				<p:outputPanel styleClass="datalist1" id="outputpanel">
 					<ui:repeat var="antrag"
 						value="#{urlaubsantragBean.urlaubsantraege}">
-
-						<p:panel id="panel"
-							header="#{antrag.status.text} | #{antrag.anzahltage} Urlaubstag/e | #{antrag.zeitraeume}"
+						<p:panel
+							header="#{antrag.status.text} | #{antrag.anzahltage} Urlaubstag/e"
 							value="#{antrag.zeitraums}" var="zeitraum">
-
-							<h:outputText value="#{antrag.zeitraeume}"></h:outputText>
-							<p:graphicImage id="status"
-								value="#{antrag.status == 'OFFEN' ? '/resources/images/clock.png' : antrag.status == 'GENEHMIGT' ? '/resources/images/like.png' : antrag.status == 'ABGELEHNT' ? '/resources/images/dislike.png' : ''}"
-								height="60px" width="60px"></p:graphicImage>
-
+							<pm:field>
+								<p:panelGrid columns="2">
+									<ui:repeat var="zeitraum" value="#{antrag.zeitraums}">
+										<p:outputLabel
+											value="#{zeitraum.getBeginnAsString()} bis #{zeitraum.getEndeAsString()} | #{zeitraum.getAnzahltage()} Urlaubstag/e"></p:outputLabel>
+									</ui:repeat>
+									<p:graphicImage id="status"
+										value="#{antrag.status == 'OFFEN' ? '/resources/images/clock.png' : antrag.status == 'GENEHMIGT' ? '/resources/images/like.png' : antrag.status == 'ABGELEHNT' ? '/resources/images/dislike.png' : ''}"
+										height="60px" width="60px"></p:graphicImage>
+								</p:panelGrid>
+							</pm:field>
 							<pm:field rendered="#{antrag.status == 'OFFEN'}">
-								<p:commandButton value="Bearbeiten" ajax="false">
+								<p:commandButton value="Bearbeiten" ajax="false"
+									update=":second:antragview:zeitraumlist"
+									action="pm:second?transition=slide">
 									<f:setPropertyActionListener value="#{antrag}"
 										target="#{urlaubsantragBean.urlaubsantrag}" />
 								</p:commandButton>
@@ -190,7 +196,7 @@
 							</pm:field>
 							<pm:field>
 								<p:commandButton value="Löschen" icon="ui-icon-delete"
-									update="@form, thirdgrowl"
+									update="@form, thirdgrowl, :first:menu:firstcal"
 									action="#{urlaubsantragBean.deleteUrlaubsantrag(antrag)}"
 									style="width:170px">
 								</p:commandButton>

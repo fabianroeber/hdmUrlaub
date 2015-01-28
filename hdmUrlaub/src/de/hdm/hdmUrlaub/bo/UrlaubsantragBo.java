@@ -114,7 +114,7 @@ public class UrlaubsantragBo extends HdmUrlaubBusinessObject {
 	public String getZeitraeume() {
 		for (ZeitraumBo zr : zeitraums)
 			zeitraeume = zeitraeume + zr.getBeginnAsString() + " bis "
-					+ zr.getEndeAsString() + "\n";
+					+ zr.getEndeAsString() + " \n";
 		return zeitraeume;
 	}
 
