@@ -224,9 +224,9 @@ public class UrlaubsAntragBean implements Serializable {
 	public void deleteUrlaubsantrag(UrlaubsantragBo urlaubsantrag) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
+			MailUtil.sendCancellationMail(urlaubsantrag);
 			dataAccessBean.getDataAccess().deleteUrlaubsantrag(
 					urlaubsantragMapper.getDbObject(urlaubsantrag));
-			MailUtil.sendCancellationMail(urlaubsantrag);
 			context.addMessage(
 					null,
 					new FacesMessage(
@@ -251,20 +251,23 @@ public class UrlaubsAntragBean implements Serializable {
 		SimpleDateFormat formatter = new SimpleDateFormat("M-d-yyyy");
 
 		for (UrlaubsantragBo ua : urlaubsantraege) {
+			if (ua.getStatus().getText() != "Abgelehnt") {
+				for (ZeitraumBo zr : ua.getZeitraums()) {
+					start.setTime(zr.getBeginn());
+					end.setTime(zr.getEnde());
+					end.add(Calendar.DAY_OF_YEAR, 1); // Add 1 day to endDate to
+														// make sure endDate is
+														// included into the
+														// final
+														// list
+					while (start.before(end)) {
 
-			for (ZeitraumBo zr : ua.getZeitraums()) {
-				start.setTime(zr.getBeginn());
-				end.setTime(zr.getEnde());
-				end.add(Calendar.DAY_OF_YEAR, 1); // Add 1 day to endDate to
-													// make sure endDate is
-													// included into the final
-													// list
-				while (start.before(end)) {
+						result.add("'" + formatter.format(start.getTime())
+								+ "'");
+						start.add(Calendar.DAY_OF_YEAR, 1);
+					}
 
-					result.add("'" + formatter.format(start.getTime()) + "'");
-					start.add(Calendar.DAY_OF_YEAR, 1);
 				}
-
 			}
 
 		}
