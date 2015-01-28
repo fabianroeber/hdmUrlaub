@@ -34,6 +34,10 @@ import de.hdm.hdmUrlaub.util.MailUtil;
  * @author Fabian
  * 
  */
+/**
+ * @author Markus Schmieder
+ *
+ */
 @ManagedBean(name = "urlaubsantragBean")
 @ViewScoped
 public class UrlaubsAntragBean implements Serializable {
@@ -211,6 +215,12 @@ public class UrlaubsAntragBean implements Serializable {
 		loadDates();
 	}
 
+	/**
+	 * Ein Urlaubsantrag wird aus der Datenbank gelöscht. Daraufhin wird eine
+	 * E-Mail zur Information an den Fachvorgesetzten gesendet.
+	 * 
+	 * @param urlaubsantrag
+	 */
 	public void deleteUrlaubsantrag(UrlaubsantragBo urlaubsantrag) {
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
@@ -229,6 +239,10 @@ public class UrlaubsAntragBean implements Serializable {
 		getAllUrlaubsantraege();
 	}
 
+	/**
+	 * Sämtliche Urlaubsäntrage werden geladen und deren beantragten und
+	 * genehmigten Urlaubstage in ein Array geschrieben.
+	 */
 	private void loadDates() {
 		List<String> result = new ArrayList<String>();
 		Calendar start = Calendar.getInstance();

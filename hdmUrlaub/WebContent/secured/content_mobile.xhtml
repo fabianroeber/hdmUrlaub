@@ -129,11 +129,13 @@
 				</p:panel>
 				<p:panel header="Fachvorgesetzen und Vertretung wählen">
 					<pm:field>
-						<p:outputLabel for="fachvorgesetzter" value="Fachvorgesetzter: " />
+						<p:outputLabel for="selFachvorgesetzter"
+							value="Fachvorgesetzter: " />
 						<p:selectOneMenu converter="omnifaces.SelectItemsConverter"
 							value="#{urlaubsantragBean.fachvorgesetzterBo}"
-							id="fachvorgesetzter">
-							<f:selectItem itemLabel="Fachvorgesetzten auswählen" itemValue="" required = "true"/>
+							id="selFachvorgesetzter">
+							<f:selectItem id="fachvorgesetzter"
+								itemLabel="Fachvorgesetzten auswählen" itemValue="" />
 							<f:selectItems
 								value="#{urlaubsantragBean.getAllFachVorgesetzter()}"
 								var="fachvorg" itemValue="#{fachvorg}"
