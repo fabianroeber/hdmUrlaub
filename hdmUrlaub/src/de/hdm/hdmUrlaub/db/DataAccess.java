@@ -75,6 +75,12 @@ public class DataAccess implements Serializable {
 		return mitarbeiters;
 	}
 
+	/**
+	 * Lädt einen Mitarbeiter unter Verwendung des Usernames aus der Datenbank.
+	 * @param username
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public Mitarbeiter getMitarbeiterByUserName(String username)
 			throws PersistenceException {
 		
@@ -91,6 +97,12 @@ public class DataAccess implements Serializable {
 		return mitarbeiter;
 	}
 
+	/**
+	 * Lädt einen Urlaubsantrag nach eindeutigem Key
+	 * @param key
+	 * @return
+	 * @throws PersistenceException
+	 */
 	public Urlaubsantrag getUrlaubsantragByKey(String key)
 			throws PersistenceException {
 

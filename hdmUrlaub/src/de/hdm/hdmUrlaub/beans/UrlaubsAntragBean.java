@@ -140,9 +140,6 @@ public class UrlaubsAntragBean implements Serializable {
 				beginn = null;
 				ende = null;
 
-				// FacesContext context = FacesContext.getCurrentInstance();
-				// context.addMessage(null, new FacesMessage("Erfolgreich",
-				// "Zeitraum hinzugefügt!"));
 			} else {
 				for (int i = 0; i < zeitraums.size()
 						&& ueberschneidung == false; i++) {
@@ -164,11 +161,7 @@ public class UrlaubsAntragBean implements Serializable {
 					anzahltage = anzahltage + zeitraumBo.getAnzahltage();
 					beginn = null;
 					ende = null;
-					// FacesContext context =
-					// FacesContext.getCurrentInstance();
-					// context.addMessage(null, new
-					// FacesMessage("Erfolgreich",
-					// "Zeitraum hinzugefügt!"));
+
 				}
 
 			}

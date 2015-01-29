@@ -50,6 +50,10 @@ public class ConfirmBean {
 		getUrlaubsantragByKey(key);
 	}
 
+	/**
+	 * Sucht einen Urlaubsantrag nach dem Key in der URL in der Datenbank.
+	 * @param key
+	 */
 	public void getUrlaubsantragByKey(String key) {
 		try {
 			urlaubsantrag = urlaubsantragMapper.getBo(dataAccessBean
@@ -60,6 +64,10 @@ public class ConfirmBean {
 		
 	}
 
+	/**
+	 * Speichern einen Urlaubsantrag als Genehmigt oder Abgelehnt.
+	 * @param genehmigt
+	 */
 	public void saveAntrag(boolean genehmigt) {
 
 		FacesContext context = FacesContext.getCurrentInstance();

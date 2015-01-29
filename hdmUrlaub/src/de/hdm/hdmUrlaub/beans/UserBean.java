@@ -58,7 +58,7 @@ public class UserBean implements Serializable {
 	public String login() {
 
 		if (userName != null && password != null) {
-
+			//TESTUSER
 			if (userName.equalsIgnoreCase("devmode")) {
 
 				loggedIn = true;
@@ -66,7 +66,7 @@ public class UserBean implements Serializable {
 				return navigationBean.redirectToWelcome();
 
 			} else {
-
+				
 				try {
 					String ldapuser = ldapAuthentificator.authenticate(
 							userName, password);
