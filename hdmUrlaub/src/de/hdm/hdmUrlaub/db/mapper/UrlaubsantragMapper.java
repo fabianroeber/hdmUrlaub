@@ -80,8 +80,10 @@ public class UrlaubsantragMapper implements
 			break;
 		case ABGELEHNT:
 			status = 'a';
+			break;
 		case OFFEN:
 			status = 'o';
+			break;
 		default:
 			status = 'o';
 		}
