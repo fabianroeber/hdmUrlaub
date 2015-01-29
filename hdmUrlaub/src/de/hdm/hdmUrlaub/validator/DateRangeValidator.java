@@ -47,7 +47,7 @@ public class DateRangeValidator implements Validator {
 			throw new ValidatorException(
 					new FacesMessage(
 							FacesMessage.SEVERITY_ERROR,
-							"Eine Zeitreise in die Vergangenheit wäre auch mal ein schöner Urlaub! ;)",
+							"Das Urlaubsende kann nicht vor dem Urlaubsbeginn liegen!",
 							null));
 		}
 	}
