@@ -30,8 +30,8 @@ import de.hdm.hdmUrlaub.db.dbmodel.Urlaubsantrag;
 public class MailUtil {
 
 	/**
-	 * Schickt eine Mail an den Fachvorgesetzten und den Mitarbeiter zur
-	 * Genehmigung.
+	 * Schickt eine Mail an den Fachvorgesetzten zur Genehmigung und an den
+	 * Mitarbeiter selbst zur Information.
 	 * 
 	 * @param urlaubsantragBo
 	 * 
@@ -84,7 +84,8 @@ public class MailUtil {
 					+ urlaubsantragBo.getMitarbeiter().getEmail()
 					+ ") beantragt "
 					+ urlaubsantragBo.getAnzahltage()
-					+ (urlaubsantragBo.getAnzahltage() > 1?" Tage Urlaub ":" Tag Urlaub ")
+					+ (urlaubsantragBo.getAnzahltage() > 1 ? " Tage Urlaub "
+							: " Tag Urlaub ")
 					+ (urlaubsantragBo.getZeitraums().size() > 1 ? "in den Zeiträumen: \n "
 							: "im Zeitraum: \n")
 					+ zeitraueme
@@ -116,7 +117,8 @@ public class MailUtil {
 					+ urlaubsantragBo.getFachvorgesetzter().getNachname()
 					+ " zur Genhemigung gesendet: "
 					+ urlaubsantragBo.getAnzahltage()
-					+ (urlaubsantragBo.getAnzahltage() > 1?" Tage Urlaub ":" Tag Urlaub ")
+					+ (urlaubsantragBo.getAnzahltage() > 1 ? " Tage Urlaub "
+							: " Tag Urlaub ")
 					+ (urlaubsantragBo.getZeitraums().size() > 1 ? "in den Zeiträumen: \n "
 							: "im Zeitraum: \n")
 					+ zeitraueme
@@ -187,7 +189,8 @@ public class MailUtil {
 					+ urlaubsantragBo.getMitarbeiter().getEmail()
 					+ ") hat den folgenden Urlausantrag zurückgezogen: "
 					+ urlaubsantragBo.getAnzahltage()
-					+ (urlaubsantragBo.getAnzahltage() > 1?" Tage Urlaub ":" Tag Urlaub ")
+					+ (urlaubsantragBo.getAnzahltage() > 1 ? " Tage Urlaub "
+							: " Tag Urlaub ")
 					+ (urlaubsantragBo.getZeitraums().size() > 1 ? "in den Zeiträumen: \n "
 							: "im Zeitraum: \n")
 					+ zeitraueme
@@ -256,7 +259,8 @@ public class MailUtil {
 					+ urlaubsantragBo.getFachvorgesetzter().getEmail()
 					+ ") hat den folgenden Urlausantrag abgelehnt: "
 					+ urlaubsantragBo.getAnzahltage()
-					+ (urlaubsantragBo.getAnzahltage() > 1?" Tage Urlaub ":" Tag Urlaub ")
+					+ (urlaubsantragBo.getAnzahltage() > 1 ? " Tage Urlaub "
+							: " Tag Urlaub ")
 					+ (urlaubsantragBo.getZeitraums().size() > 1 ? "in den Zeiträumen: \n "
 							: "im Zeitraum: \n")
 					+ zeitraueme
@@ -324,7 +328,8 @@ public class MailUtil {
 					+ urlaubsantragBo.getFachvorgesetzter().getEmail()
 					+ ") hat den folgenden Urlausantrag genehmigt: "
 					+ urlaubsantragBo.getAnzahltage()
-					+ (urlaubsantragBo.getAnzahltage() > 1?" Tage Urlaub ":" Tag Urlaub ")
+					+ (urlaubsantragBo.getAnzahltage() > 1 ? " Tage Urlaub "
+							: " Tag Urlaub ")
 					+ (urlaubsantragBo.getZeitraums().size() > 1 ? "in den Zeiträumen: \n "
 							: "im Zeitraum: \n")
 					+ zeitraueme
@@ -361,7 +366,8 @@ public class MailUtil {
 					+ urlaubsantragBo.getMitarbeiter().getNachname()
 					+ ", "
 					+ urlaubsantragBo.getAnzahltage()
-					+ (urlaubsantragBo.getAnzahltage() > 1?" Tage Urlaub ":" Tag Urlaub ")
+					+ (urlaubsantragBo.getAnzahltage() > 1 ? " Tage Urlaub "
+							: " Tag Urlaub ")
 					+ (urlaubsantragBo.getZeitraums().size() > 1 ? "in den Zeiträumen: \n "
 							: "im Zeitraum: \n")
 					+ zeitraueme
