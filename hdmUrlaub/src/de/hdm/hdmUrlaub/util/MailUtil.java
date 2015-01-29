@@ -115,7 +115,7 @@ public class MailUtil {
 					+ urlaubsantragBo.getFachvorgesetzter().getVorname()
 					+ " "
 					+ urlaubsantragBo.getFachvorgesetzter().getNachname()
-					+ " zur Genhemigung gesendet: "
+					+ " zur Genehmigung gesendet: "
 					+ urlaubsantragBo.getAnzahltage()
 					+ (urlaubsantragBo.getAnzahltage() > 1 ? " Tage Urlaub "
 							: " Tag Urlaub ")
