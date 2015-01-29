@@ -1,10 +1,14 @@
 package de.hdm.hdmUrlaub.beans;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.persistence.PersistenceException;
 
 import de.hdm.hdmUrlaub.bo.UrlaubsantragBo;
 import de.hdm.hdmUrlaub.db.mapper.UrlaubsantragMapper;
@@ -18,7 +22,7 @@ import de.hdm.hdmUrlaub.enums.Status;
  *
  */
 @ManagedBean(name = "confirmBean")
-@RequestScoped
+@ViewScoped
 public class ConfirmBean {
 
 	private UrlaubsantragMapper urlaubsantragMapper;
@@ -30,11 +34,6 @@ public class ConfirmBean {
 	@ManagedProperty(value = "#{dataAccesBean}")
 	private DataAccessBean dataAccessBean;
 
-	/**
-	 * Diese Managedproperty enth&auml;lt den Key, der f&uuml;r die Aktivierung
-	 * eines {@link UrlaubsantragBo} generiert wurde.
-	 */
-	@ManagedProperty(value = "#{param.key}")
 	private String key;
 
 	public ConfirmBean() {
@@ -43,6 +42,10 @@ public class ConfirmBean {
 
 	@PostConstruct
 	public void init() {
+	
+	}
+
+	public void getAntrag() {
 		getUrlaubsantragByKey(key);
 	}
 
@@ -52,6 +55,9 @@ public class ConfirmBean {
 	}
 
 	public void saveAntrag(boolean genehmigt) {
+
+		FacesContext context = FacesContext.getCurrentInstance();
+
 		if (genehmigt) {
 			urlaubsantrag.setStatus(Status.GENEHMIGT);
 		} else {
@@ -61,8 +67,10 @@ public class ConfirmBean {
 		try {
 			dataAccessBean.getDataAccess().saveUrlaubsantrag(
 					urlaubsantragMapper.getDbObject(urlaubsantrag));
-		} catch (Exception e) {
-			// TODO: handle exception
+			context.addMessage(null, new FacesMessage(
+					"Antrag erfolgreich gespeichert"));
+		} catch (PersistenceException e) {
+			context.addMessage(null, new FacesMessage("Fehler beim Speichern"));
 		}
 
 	}

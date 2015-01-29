@@ -10,6 +10,11 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <f:view renderKitId="PRIMEFACES_MOBILE" />
+<f:metadata>
+
+	<f:event type="preRenderView" listener="#{keyBean.init()}" />
+	<f:event listener="#{confirmBean.getAntrag()}" type="preRenderView"></f:event>
+</f:metadata>
 
 <h:head>
 	<link rel="stylesheet" href="themes/hdm.css" />
@@ -19,16 +24,17 @@
 
 </h:head>
 <h:body>
+
 	<pm:page swatch="a">
 		<pm:header title="HdM Urlaubsantrag"></pm:header>
 		<pm:content>
-			<h:form>
+			<h:form id="confirmForm">
 
+				<p:growl id="growl" showDetail="true" sticky="true" />
 				<p:panel id="antrag"
 					rendered="#{confirmBean.urlaubsantrag.status == 'OFFEN'}">
 					<p:dataTable value="#{confirmBean.urlaubsantrag}" var="antrag">
-						<p:column headerText="Vorname"></p:column>
-						<p:outputLabel value="#{antrag.mitarbeiter.vorname}"></p:outputLabel>
+
 						<p:column headerText="Nachname">
 							<p:outputLabel value="#{antrag.mitarbeiter.nachname}"></p:outputLabel>
 						</p:column>
@@ -47,9 +53,10 @@
 						</p:column>
 					</p:dataTable>
 					<p:commandButton value="Genehmigen"
-						action="#{confirmBean.saveAntrag(true)}" update="@form"></p:commandButton>
+						action="#{confirmBean.saveAntrag(true)}" update="confirmForm"></p:commandButton>
 					<p:commandButton value="Ablehnen"
-						action="#{confirmBean.saveAntrag(false)}" update="@form"></p:commandButton>
+						actionListener="#{confirmBean.saveAntrag(false)}"
+						update="@form growl"></p:commandButton>
 					<p:outputLabel value="Begründung (optional)" for="begruendung"></p:outputLabel>
 					<p:inputText id="begruendung" value="#{confirmBean.begruendung}"
 						title="Begründung (optional)" label="Begründung (optional)"></p:inputText>

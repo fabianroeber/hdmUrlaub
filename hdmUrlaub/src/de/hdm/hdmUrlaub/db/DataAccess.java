@@ -63,16 +63,22 @@ public class DataAccess implements Serializable {
 	 * @return {@link List}<{@link Mitarbeiter}>
 	 */
 	public List<Mitarbeiter> getAllMitarbeiter() throws PersistenceException {
+		
+		entityManager = entityManagerFactory.createEntityManager();
 
 		List<Mitarbeiter> mitarbeiters = entityManager.createQuery(
 				"Select mitarbeiter FROM Mitarbeiter mitarbeiter",
 				Mitarbeiter.class).getResultList();
+		
+	
 
 		return mitarbeiters;
 	}
 
 	public Mitarbeiter getMitarbeiterByUserName(String username)
 			throws PersistenceException {
+		
+		entityManager = entityManagerFactory.createEntityManager();
 
 		Mitarbeiter mitarbeiter = entityManager
 				.createQuery(
@@ -80,17 +86,23 @@ public class DataAccess implements Serializable {
 								+ username + "'", Mitarbeiter.class)
 				.getSingleResult();
 
+	
+		
 		return mitarbeiter;
 	}
 
 	public Urlaubsantrag getUrlaubsantragByKey(String key)
 			throws PersistenceException {
 
+		entityManager = entityManagerFactory.createEntityManager();
+		
 		Urlaubsantrag urlaubsantrag = entityManager
 				.createQuery(
 						"SELECT urlaubsantrag FROM Urlaubsantrag urlaubsantrag where urlaubsantrag.activationKey = '"
 								+ key + "'", Urlaubsantrag.class)
 				.getSingleResult();
+		
+		
 
 		return urlaubsantrag;
 	}
@@ -102,11 +114,15 @@ public class DataAccess implements Serializable {
 	 */
 	public List<Fachvorgesetzter> getAllFachvorgesetzter()
 			throws PersistenceException {
+		
+		entityManager = entityManagerFactory.createEntityManager();
 
 		List<Fachvorgesetzter> fachvorgesetzters = entityManager
 				.createQuery(
 						"Select fachvorgesetzter FROM Fachvorgesetzter fachvorgesetzter",
 						Fachvorgesetzter.class).getResultList();
+		
+		
 
 		return fachvorgesetzters;
 	}
@@ -119,7 +135,7 @@ public class DataAccess implements Serializable {
 	public void saveUrlaubsantrag(Urlaubsantrag urlaubsantrag)
 			throws PersistenceException {
 
-		entityManagerFactory.createEntityManager();
+		entityManager = entityManagerFactory.createEntityManager();
 
 		entityManager.getTransaction().begin();
 		Urlaubsantrag urlaubsantragToSave;
@@ -173,6 +189,8 @@ public class DataAccess implements Serializable {
 	 */
 	public void saveMitarbeiter(Mitarbeiter mitarbeiter)
 			throws PersistenceException {
+		
+		entityManager = entityManagerFactory.createEntityManager();
 
 		entityManager.getTransaction().begin();
 		Mitarbeiter mitarbeiterToSave;
@@ -189,6 +207,8 @@ public class DataAccess implements Serializable {
 
 		entityManager.persist(mitarbeiterToSave);
 		entityManager.getTransaction().commit();
+		
+		entityManager.close();
 
 	}
 
@@ -199,12 +219,15 @@ public class DataAccess implements Serializable {
 	 */
 	public void deleteUrlaubsantrag(Urlaubsantrag urlaubsantrag)
 			throws PersistenceException {
+		entityManager = entityManagerFactory.createEntityManager();
 
 		entityManager.getTransaction().begin();
 		entityManager
 				.remove(entityManager.contains(urlaubsantrag) ? urlaubsantrag
 						: entityManager.merge(urlaubsantrag));
 		entityManager.getTransaction().commit();
+		
+		entityManager.close();
 
 	}
 
@@ -217,7 +240,7 @@ public class DataAccess implements Serializable {
 	private void getEntityManagerFactory() {
 		entityManagerFactory = Persistence
 				.createEntityManagerFactory(PERSISTENCEUNIT);
-		entityManager = entityManagerFactory.createEntityManager();
+		
 	}
 
 	/**

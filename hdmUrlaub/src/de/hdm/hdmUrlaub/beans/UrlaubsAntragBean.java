@@ -13,7 +13,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.PersistenceException;
@@ -21,7 +20,6 @@ import javax.persistence.PersistenceException;
 import de.hdm.hdmUrlaub.bo.FachvorgesetzterBo;
 import de.hdm.hdmUrlaub.bo.UrlaubsantragBo;
 import de.hdm.hdmUrlaub.bo.ZeitraumBo;
-import de.hdm.hdmUrlaub.db.dbmodel.Urlaubsantrag;
 import de.hdm.hdmUrlaub.db.mapper.FachvorgesetzterMapper;
 import de.hdm.hdmUrlaub.db.mapper.UrlaubsantragMapper;
 import de.hdm.hdmUrlaub.enums.Status;
@@ -282,7 +280,7 @@ public class UrlaubsAntragBean implements Serializable {
 	 * Sämtliche Urlaubsäntrage werden geladen und deren beantragten und
 	 * genehmigten Urlaubstage in ein Array geschrieben.
 	 */
-	private void loadDates() {
+	public void loadDates() {
 		List<String> result = new ArrayList<String>();
 		Calendar start = Calendar.getInstance();
 		Calendar end = Calendar.getInstance();

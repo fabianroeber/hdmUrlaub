@@ -62,7 +62,11 @@
 						<p:outputPanel id="menueOutputpanel" styleClass="kalender">
 							<p:calendar id="firstcal" value="#{urlaubsantragBean.date}"
 								beforeShowDay="disableAllTheseDays" mode="inline" locale="pt"
-								navigator="true" disabledWeekends="true"></p:calendar>
+								navigator="true" disabledWeekends="true">
+								<p:ajax event="dateSelect"
+									listener="#{urlaubsantragBean.loadDates()}"
+									update="#{menueOutputpanel}" />
+							</p:calendar>
 						</p:outputPanel>
 					</p:panel>
 
