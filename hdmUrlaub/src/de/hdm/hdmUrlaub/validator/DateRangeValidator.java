@@ -1,4 +1,4 @@
-package validator;
+package de.hdm.hdmUrlaub.validator;
 
 import java.util.Date;
 
