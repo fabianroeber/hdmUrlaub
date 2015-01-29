@@ -8,6 +8,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 
 import de.hdm.hdmUrlaub.bo.UrlaubsantragBo;
@@ -50,8 +51,13 @@ public class ConfirmBean {
 	}
 
 	public void getUrlaubsantragByKey(String key) {
-		urlaubsantrag = urlaubsantragMapper.getBo(dataAccessBean
-				.getDataAccess().getUrlaubsantragByKey(key));
+		try {
+			urlaubsantrag = urlaubsantragMapper.getBo(dataAccessBean
+					.getDataAccess().getUrlaubsantragByKey(key));
+		} catch (NoResultException e) {
+			// TODO: handle exception
+		}
+		
 	}
 
 	public void saveAntrag(boolean genehmigt) {
