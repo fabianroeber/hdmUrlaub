@@ -185,15 +185,6 @@
 										height="60px" width="60px"></p:graphicImage>
 								</p:panelGrid>
 							</pm:field>
-							<pm:field rendered="#{antrag.status == 'OFFEN'}">
-								<p:commandButton value="Bearbeiten" ajax="false"
-									update=":second:antragview:zeitraumlist"
-									action="pm:second?transition=slide">
-									<f:setPropertyActionListener value="#{antrag}"
-										target="#{urlaubsantragBean.urlaubsantrag}" />
-								</p:commandButton>
-
-							</pm:field>
 							<pm:field>
 								<p:commandButton value="Löschen" icon="ui-icon-delete"
 									update="@form, thirdgrowl, :first:menu:firstcal"
